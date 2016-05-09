@@ -15,6 +15,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+CUSTOM_MEDIA_HOME = os.path.dirname(os.path.join( os.path.dirname ( __file__), os.path.pardir))
 
 
 # Quick-start development settings - unsuitable for production
@@ -122,7 +123,7 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-MEDIA_ROOT = os.path.join(PROJECT_ROOT,"media")
+MEDIA_ROOT = os.path.join(CUSTOM_MEDIA_HOME,"media")
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'

@@ -64,6 +64,7 @@ TEMPLATES = (
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mainsite.custom_processor.default_vals',
             ],
             'debug': DEBUG,
         },
@@ -134,3 +135,11 @@ STATICFILES_DIRS = [
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+
+# ***********************************CUSTOM SETTINGS************************
+SITE_TITLE = 'Joyce Cakes'
+MOBILE_CONTACT = ['+2348038655003']
+
+
+#***************************************************************************

@@ -403,6 +403,7 @@ footer{
 	max-width: 400px;
 	max-height: 400px;
 	margin: 20px;
+	border-radius: 20px;
 }
 #iteminfo{
 	max-width: 300px;

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Login - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}	
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<form action="{% url 'user_login' %}" id="logincontainer" class="midpagecontainer" method="post">
+			{% csrf_token %}	
+			<h4>{{form.get_title}}</h4>
+			{{form.username}}
+			{{form.password}}
+			{{form.non_field_errors}}
+			<input type="submit" value="Login" />
+			<p><a href="{% url 'forgot_password' %}">Forgot password?</a></p>
+	</form>
+{% endblock %}

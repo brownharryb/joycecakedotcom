@@ -1,0 +1,62 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 ie-lt10 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!--
+		HTML5 Reset: https://github.com/murtaugh/HTML5-Reset
+		Free to use
+	-->
+
+	<!-- Always force latest IE rendering engine (even in intranet) -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+	<!--  Mobile Viewport
+	http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
+	device-width : Occupy full width of the screen in its current orientation
+	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width (wrong for most sites)
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<!-- Important stuff for SEO, don't neglect. (And don't dupicate values across your site!) -->
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 1024px)" href="{% static 'css/_1024.css' %}">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 960px)" href="{% static 'css/_960.css' %}">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)" href="{% static 'css/_767.css' %}">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px)" href="{% static 'css/_480.css' %}">	
+	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+<div id="wrapper">
+
+{% block topnavbar%}
+{% include 'topnavbar.html' %}	
+{% endblock %}
+
+{% block header %}
+{% include 'header.html' %}	
+{% endblock %}
+
+{% block bodycontent %}
+{% endblock %}
+
+</div>
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+
+</body>
+
+</html>

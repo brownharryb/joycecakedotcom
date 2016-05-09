@@ -1,0 +1,32 @@
+<div id="giftitemscontainer" class="midpagecontainer">
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<div id="carouselgift" class="carouselitems">
+		<div>
+			<div class="midpagecontainer striptitle"><h4 style="color:#555555;">You might also like</h4>
+			<a class="viewallbtn" href="#">View All</a></div>
+			
+			<div class="itemscontainer midpagecontainer">
+			<p class="prevarrow">&#8249;</p>
+			<p class="nextarrow">&#8250;</p>
+			<ul>
+			{% for i in gifts %}
+				<li><a href="{%url 'shop-item-detail-view' i.category.slug i.slug %}">
+					<img src="{{i.image_file.url}}">
+					<p>{{i.name}}</p>
+					{% if i.old_price > 0%}
+					<strike>N4000</strike>
+					{% endif %}
+					<span><b>{{i.sale_price}}</b></span>
+					<p style="opacity:0.3">Category:{{i.category}}</p>
+					</a>
+				</li>
+				{% endfor %}				
+			</ul>
+
+			</div>
+
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+		
+	</div>

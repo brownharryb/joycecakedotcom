@@ -1,0 +1,15 @@
+<div id="stripcontainer" class="midpagecontainer">
+	<ul id="gallerytitlestrip">
+	<p>{{categories}}</p>
+		{%for i in default_vals.categories%}
+			{%if category|lower == i.name|lower %}
+				<li class="active"><a href="{%url 'shop-gallery-view-category' i.slug %}">{{category}}</a></li>
+			{% else %}
+				<li><a href="{%url 'shop-gallery-view-category' i.slug %}">{{i.name}}</a></li>							
+			{% endif %}
+		{% endfor %}
+				
+	</ul>
+	<p id="prevtitlearrow">&#8249;</p>
+	<p id="nexttitlearrow">&#8250;</p>
+</div>

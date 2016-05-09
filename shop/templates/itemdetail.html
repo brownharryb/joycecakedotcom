@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+{{item.name}}{{default_vals.main_title_extra}}
+{% endblock %}
+
+
+
+{% block bodycontent %}
+<hr style="border-color:rgba(0,0,0,0.1);">
+<ul id="itemdetailcontainer" class="midpagecontainer">
+		<li><img src="{{item.image_file.url}}"></li>
+		<li>
+			<div id="iteminfo">
+				<h1>{{item.name}}</h1>
+				{% if item.old_price > 0 %}
+				<strike>&#8358;{{item.old_price}}</strike>
+				{% endif %}
+				<h3>&#8358;{{item.sale_price}}</h3>					
+				<p style="color:#999999;">{{item.brief_detail}}
+				</p>						
+			</div>
+		</li>
+		{% if item.show_as_new %}
+		<p id="newbanner">Newly Added</p>
+		{% endif %}
+		<p id="addtocartbtn">Add To Cart</p>
+
+	</ul>
+	{% include 'gift_items_container.html' with gifts=gifts %}
+
+{% endblock %}

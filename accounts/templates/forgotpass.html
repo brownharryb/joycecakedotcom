@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Forgot Password - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}	
+	<hr style="border-color:rgba(0,0,0,0.1);">
+		<form id="logincontainer" class="midpagecontainer">
+			{% csrf_token %}
+			<h4>Recover Password</h4>
+			{{form.email}}
+			{{form.non_field_errors}}
+			<input type="submit" value="Recover" />
+		</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+
+{% for each_item in current_row %}
+<li>
+	<a href="{{each_item.item_link_slug}}">
+		{% if each_item.is_new%}
+		<span class="newtag">New</span>
+		{% endif %}
+		<img src="{{each_item.image_link}}">
+		<p>{{each_item.item_name}}</p>
+		{% if each_item.old_price > 0 %}
+		<strike>&#8358;{{each_item.old_price}}</strike><span>
+		{% endif %}
+		<b> &#8358;{{each_item.sale_price}}</b></span>
+		<p style="opacity:0.3">Category:{{each_item.category}}</p>
+	</a>
+</li>
+{% endfor %}

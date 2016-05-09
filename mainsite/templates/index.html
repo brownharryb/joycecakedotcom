@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block title %}
+{{default_vals.index_title}}
+{% endblock %}
+
+
+{% block bodycontent %}
+{% include 'front_banner.html'%}
+{%include 'carousel_display.html' with carousel_rows=index_object.carousel_items %}
+{% endblock %}

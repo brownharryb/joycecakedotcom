@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Gallery - Joyce Cakes
+{% endblock %}
+
+
+{% block bodycontent %}
+<hr style="border-color:rgba(0,0,0,0.1);">
+{% include 'gallery_strip_container.html' with category=cakes.0.category %}
+{% include 'gallery_items_container.html' with cakes=cakes %}
+
+{% endblock %}

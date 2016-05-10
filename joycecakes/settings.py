@@ -24,6 +24,16 @@ CUSTOM_MEDIA_HOME = os.path.dirname(os.path.join( os.path.dirname ( __file__), o
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "-re7wmuh77zv1m8)c)9z=o7n3f7455w6-4jtbqt67)(m_i1ynx"
 
+# ****************************AWS SETTINGS******************************************
+AWS_STORAGE_BUCKET_NAME = 'joycecakes-firstbucket'
+AWS_ACCESS_KEY_ID = 'AKIAJA2SUG43TNCSVYZQ'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = "https://%s/static/" % AWS_S3_CUSTOM_DOMAIN
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# **************************************************************************************
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -39,6 +49,7 @@ INSTALLED_APPS = (
     'mainsite',
     'shop',
     'accounts',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,7 +136,7 @@ ALLOWED_HOSTS = ['*']
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 MEDIA_ROOT = os.path.join(PROJECT_ROOT,"media")
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
@@ -135,12 +146,15 @@ STATICFILES_DIRS = [
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 # ***********************************CUSTOM SETTINGS************************
 SITE_TITLE = 'Joyce Cakes'
 MOBILE_CONTACT = ['+2348038655003']
 
-
+AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
 #***************************************************************************

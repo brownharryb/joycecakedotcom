@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Gallery - Joyce Cakes
+{% endblock %}
+
+
+{% block bodycontent %}
+	<hr style="border-color:rgba(0,0,0,0.1);">
+
+	<div id="cartcontainer" class="midpagecontainer">
+	<h4>Cart Items</h4>
+	<hr style="border-color:rgba(0,0,0,0.1);">
+		<ul class="eachitem">
+			<li><img src="static/media/images/cakes/2.jpg"></li>
+			<li><p>Birthday cake</p></li>
+			<li><p>N3000</p></li>
+			<li><p>Qty: <input type="text" maxlength="2"></p></li>
+			<li><p>N3000</p></li>
+			
+		</ul>
+		<hr style="border-color:rgba(0,0,0,0.1);">
+		<ul class="eachitem">
+			<li><img src="static/media/images/cakes/2.jpg"></li>
+			<li><p>Birthday cake</p></li>
+			<li><p>N3000</p></li>
+			<li><p>Qty: <input type="text" maxlength="2"></p></li>
+			<li><p>N3000</p></li>
+			
+		</ul>
+		<hr style="border-color:rgba(0,0,0,0.1);">
+		<strong>Total N3000</strong>
+		<p class="clearfix"></p>		
+		<button>Checkout</button>
+		<button>Continue Shopping</button>
+		<p class="clearfix"></p>		
+	</div>
+	<div id="giftitemscontainer" class="midpagecontainer">
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<div id="carouselgift" class="carouselitems">
+		<div>
+			<div class="midpagecontainer striptitle"><h4 style="color:#555555;">You might also like</h4>
+			<a class="viewallbtn" href="#">View All</a></div>
+			
+			<div class="itemscontainer midpagecontainer">
+			<p class="prevarrow">&#8249;</p>
+			<p class="nextarrow">&#8250;</p>
+			<ul>
+				<li><a href="#">
+					<img src="static/media/images/cakes/1.jpeg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+					</a>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/6.jpg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/2.jpg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/3.jpg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/4.jpg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/5.jpg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/1.jpeg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/1.jpeg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N5000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/1.jpeg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N6000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				<li>
+					<img src="static/media/images/cakes/1.jpeg">
+					<p>Birthday Cake</p>
+					<strike>N4000</strike><span><b> N7000</b></span>
+					<p style="opacity:0.3">Category: Birthday Cakes</p>
+				</li>
+				
+			</ul>
+
+			</div>
+
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+		
+	</div>
+{% endblock %}

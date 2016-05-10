@@ -1,71 +1,24 @@
-<!DOCTYPE html>
-<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"> <![endif]-->
-<!--[if IE 9 ]>    <html class="ie ie9 ie-lt10 no-js" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<html>
-<head>
-	<meta charset="utf-8">
-
-	<!--
-		HTML5 Reset: https://github.com/murtaugh/HTML5-Reset
-		Free to use
-	-->
-
-	<!-- Always force latest IE rendering engine (even in intranet) -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-
-	<!--  Mobile Viewport
-	http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
-	device-width : Occupy full width of the screen in its current orientation
-	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
-	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width (wrong for most sites)
-	-->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-	<!-- Important stuff for SEO, don't neglect. (And don't dupicate values across your site!) -->
-	<title>Register - Joyce Cakes</title>
-	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-	<script type="text/javascript" src="static/js/jquery.js"></script>
-	<script type="text/javascript" src="static/js/script.js"></script>
-</head>
-<body>
-	<div id="topnav">
-		<div class="midpagecontainer">
-		
-		<ul id="mainnav">
-			<li><a href="#">Login</a></li>
-			<li><a href="#">Register</a></li>
-			<li><a href="#">My Cart(5)</a></li>			
-		</ul>
-		<img src="static/media/images/logo.png">
-		<div class="clearfix"></div>
-	</div>		
-	</div>
-	<div class="midpagecontainer">	
-		<nav>
-			<a href="#">Home</a>
-			<a href="#">Cakes</a>
-			<a href="#">Contact Us</a>
-		</nav>
-		<div class="clearfix"></div>
-	</div>	
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Register - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}	
 	<hr style="border-color:rgba(0,0,0,0.1);">
 
 
 
-		<form id="registercontainer" class="midpagecontainer">
-			<h4 style="color:#cccccc;margin:auto;padding-left:20px;">Register</h4>
-			<input type="text" placeholder="Firstname"/>
-			<input type="text" placeholder="Lastname"/>
-			<input type="email" placeholder="Email"/>
-			<input type="tel" placeholder="Mobile"/>
-			<input type="text" placeholder="Username"/>
-			<input type="password" placeholder="Password"/>
-			<input type="password" placeholder="Verify password"/>
+		<form action="{% url 'user_register'%}" method="post" id="registercontainer" class="midpagecontainer">
+		{% csrf_token %}
+			<h4 style="color:#cccccc;margin:auto;padding-left:20px;">{{form.get_title}}</h4>
+			{{form.first_name}}
+			{{form.last_name}}
+			{{form.email}}
+			{{form.mobile_number}}
+			{{form.username}}
+			{{form.password}}
+			{{form.verify_password}}
+			{{form.non_field_errors}}
 			<p>Some details are required or invalid!!</p>
 			<input type="submit" value="Enter shipping details" />
 		</form>
@@ -81,9 +34,4 @@
 			<input type="submit" value="Enter shipping details" />
 		</form>
 	
-
-</body>
-<!-- <footer>
-	
-</footer> -->
-</html>
+{% endblock %}

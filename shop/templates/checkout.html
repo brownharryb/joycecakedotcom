@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 ie-lt10 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!--
+		HTML5 Reset: https://github.com/murtaugh/HTML5-Reset
+		Free to use
+	-->
+
+	<!-- Always force latest IE rendering engine (even in intranet) -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+	<!--  Mobile Viewport
+	http://j.mp/mobileviewport & http://davidbcalhoun.com/2010/viewport-metatag
+	device-width : Occupy full width of the screen in its current orientation
+	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width (wrong for most sites)
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<!-- Important stuff for SEO, don't neglect. (And don't dupicate values across your site!) -->
+	<title>Checkout - Joyce Cakes</title>
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 1024px)" href="static/css/_1024.css">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 960px)" href="static/css/_960.css">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)" href="static/css/_767.css">
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px)" href="static/css/_480.css">	
+	<script type="text/javascript" src="static/js/jquery.js"></script>
+	<script type="text/javascript" src="static/js/script.js"></script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="topnav">
+		<div class="midpagecontainer">
+		<p>Call us:+2348038655003</p>		
+		<ul id="mainnav">
+			<li><a href="#">Login</a></li>
+			<li><a href="#">Register</a></li>
+			<li><a href="#">My Cart(5)</a></li>			
+		</ul>
+		<div class="clearfix"></div>
+	</div>		
+	</div>
+
+	<div class="midpagecontainer">
+		<img id="mainlogo" src="static/media/images/logo.png">	
+		<nav>
+			<a href="#">Home</a>
+			<a href="#">Gallery</a>
+			<a href="#">Contact Us</a>
+		</nav>
+		<div class="clearfix"></div>
+	</div>
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<div id="checkoutcontainer" class="midpagecontainer">
+	<h4>Checkout</h4>
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<ul id="checkoutdetailscontainer">
+		<li>
+			<form>
+				<fieldset>
+					<legend>Delivery Information</legend>
+					<input type="text" placeholder="Address1">
+					<input type="text" placeholder="Address2">
+					<input type="text" placeholder="Town">
+					<input type="text" placeholder="City">
+				</fieldset>
+				<fieldset>
+					<legend>Contact Information</legend>
+					<input type="text" placeholder="Name">
+					<input type="tel" placeholder="Mobile">
+				</fieldset>				
+			</form>
+		</li>
+		<li>
+			<div id="summarycontainer">
+				<h5>Your Order</h5>
+				<p>Total: N12,000</p>
+				<p>Tax: N1,200</p>
+				<p>Delivery: N0</p>
+				<textarea maxlength="100" placeholder="Extra Details"></textarea>
+				<hr>
+				<h2>N13,200</h2>
+				<hr>
+				<span id="paybtn"><a href="#">Quickteller</a></span>
+				<span id="paybtn"><a href="#">Paypal</a></span>
+
+			</div>
+		</li>
+	</ul>
+	</div>	
+	</div>
+<footer>
+	
+</footer>
+
+</body>
+
+</html>

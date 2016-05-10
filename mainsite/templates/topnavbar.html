@@ -4,8 +4,8 @@
 		<ul id="mainnav">
 
 			<li><a href="{% url 'user_login'%}">{{user.username}}</a></li>
-			<li><a href="#">Register</a></li>
-			<li><a href="#">My Cart(5)</a></li>			
+			<li><a href="{% url 'user_register' %}">Register</a></li>
+			<li><a href="{% url 'shop-cart-view' %}">My Cart(5)</a></li>			
 		</ul>
 		<div class="clearfix"></div>
 	</div>		

@@ -1,9 +1,13 @@
 from django.shortcuts import render , redirect
+from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from . import forms
+from . import forms,models
+
+
+
 
 
 
@@ -30,10 +34,34 @@ class UserRegister(FormView):
 						username=username)
 			user.set_password(password)
 			user.save()
-
-			return render(request, 'success_register.html')
+			user_info = models.UserInfo(user=user,mobile_phone=mobile_number)
+			user_info.save()
+			return redirect(reverse('user_delivery'))
 		else:
 			return render(request,self.template_name, {'form':form})
+
+class UserDeliveryView(View):
+	template_name = 'delivery_form.html'
+	form_class = forms.DeliveryForm
+	initial = {'key':'value'}
+
+
+	def dispatch(self, request, *args, **kwargs):
+		if not request.user.is_authenticated:
+			return redirect(reverse('user_register'))
+		return super(UserDeliveryView, self).dispatch(request, *args, **kwargs)
+
+
+	def get(self,request,*args,**kwargs):
+		form = self.form_class(initial={'city':'Port Harcourt','state':'Rivers','country':'Nigeria'})
+		return render(request, self.template_name,{'form':form})
+
+	def post(self,request,*args, **kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			return render(request,'success.html')
+		else:
+			return render(request, self.template_name,{'form':form})			
 
 
 		

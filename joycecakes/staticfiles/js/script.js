@@ -10,7 +10,7 @@ $(document).ready(function(){
 	enablecarousel(3);
 	enablecarousel('gift');
 	enableGalleryTitle();
-
+	enableDeliveryInfoForm();
 });
 
 function getviewportwidth(){
@@ -100,12 +100,12 @@ function nextClicked(container){
 
 
 
- function gettotalallowedmargin(totalwidth,viewportwidth){
+function gettotalallowedmargin(totalwidth,viewportwidth){
  	return totalwidth - viewportwidth;
  }
 
  // *********************************Gallery*******************************
- function enableGalleryTitle(){
+function enableGalleryTitle(){
  	var prevTitleArrow = $('#prevtitlearrow');
  	var nextTitleArrow = $('#nexttitlearrow');
  	var stripContainer = $('#gallerytitlestrip');
@@ -122,3 +122,13 @@ function nextClicked(container){
  }
 
  // ************************************************************************
+
+ // *****************************Register*********************************
+function enableDeliveryInfoForm(){
+	var deliveryBtn = $('#registercontainer submit')
+	deliveryBtn.click(function(){
+		
+	});
+}
+
+ // *************************************************************************

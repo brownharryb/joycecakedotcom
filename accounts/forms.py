@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from mainsite import misc_functions
 from django.contrib.auth.models import User
+from . import models
 
 
 
@@ -20,6 +21,7 @@ class RegisterForm(forms.Form):
 
 	def clean(self):
 		super(RegisterForm, self).clean()
+		all_users_info = models.UserInfo.objects.all()
 		first_name = self.cleaned_data.get('first_name')
 		last_name = self.cleaned_data.get('last_name')
 		email = self.cleaned_data.get('email')
@@ -55,19 +57,73 @@ class RegisterForm(forms.Form):
 		if not invalidchar == 1:
 			raise ValidationError('Invalid %s' %invaliduser)
 
+
+		# *********************Username Check**************
+		all_usernames = [x.user.username for x in all_users_info]
+		if username in all_usernames:
+			raise ValidationError('Username already exists!!')
+
+		# ************************************************
+
+		# ***************Email Check*********************
 		if not misc_functions.email_is_ok(email):
 			raise ValidationError("Please check your email address!!")
+		all_emails = [x.user.email for x in all_users_info]
+		print 'all emails = '+str(all_users_info)
+		if email in all_emails:
+			raise ValidationError('That email already exists!!')
+		# *************************************************
 
-		print 'mobile number is = '+str(mobile_number)
 
+		# ***************Mobile Number*********************
 		if not misc_functions.mobile_number_is_ok(mobile_number):
 			raise ValidationError('Invalid Mobile Number')
+		all_numbers = [x.mobile_phone for x in all_users_info]
+		if mobile_number in all_numbers:
+			raise ValidationError('Mobile Number already exists!!')
 
 		if not password == verify_password:
 			raise ValidationError('Passwords don\'t match!!')
 
+		# ******************************************************
+
 		return self.cleaned_data
 
+class DeliveryForm(forms.Form):
+	address1 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
+	address2 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
+	city = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'City'}))
+	state = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'State'}))
+	country= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Country'}))
+
+	def get_title(self):
+		return 'Delivery Information'
+
+	def clean(self):
+		super(DeliveryForm,self).clean()
+		address1 = self.cleaned_data.get('address1')
+		address2 = self.cleaned_data.get('address2')
+		city = self.cleaned_data.get('city')
+		state = self.cleaned_data.get('state')
+		country = self.cleaned_data.get('country')
+
+		temp_data = {}
+		temp_data['Address 1 input'] = address1		
+		temp_data['City'] = city
+		temp_data['State'] = state
+		temp_data['Country'] = country
+
+		emptychar = misc_functions.input_is_not_empty(temp_data)
+		if not emptychar==1:
+			raise ValidationError('%s is required!!' %emptychar)
+
+		temp_data['Address 2 input'] = address2
+
+		invalidchar = misc_functions.input_is_alpha_numerals(temp_data, space_allowed=True)
+		if not invalidchar == 1:
+			raise ValidationError('%s is invalid!!' %invalidchar)
+
+		return self.cleaned_data
 
 		
 

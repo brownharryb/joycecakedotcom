@@ -8,17 +8,15 @@
 
 
 
-		<form action="{% url 'user_register'%}" method="post" id="registercontainer" class="midpagecontainer">
+		<form action="{% url 'user_delivery'%}" method="post" id="shippingcontainer" class="midpagecontainer">
 		{% csrf_token %}
 			<h4 style="color:#cccccc;margin:auto;padding-left:20px;">{{form.get_title}}</h4>
-			{{form.first_name}}
-			{{form.last_name}}
-			{{form.email}}
-			{{form.mobile_number}}
-			{{form.username}}
-			{{form.password}}
-			{{form.verify_password}}
+			{{form.address1}}
+			{{form.address2}}
+			{{form.city}}
+			{{form.state}}
+			{{form.country}}
 			{{form.non_field_errors}}
-			<input type="submit" value="Enter delivery details" />
+			<input type="submit" value="Submit" />
 		</form>	
 {% endblock %}

@@ -9,11 +9,11 @@ import datetime
 class UserInfo(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	mobile_phone = models.CharField(max_length=20)
-	delivery_address1 = models.CharField(max_length=100)
+	delivery_address1 = models.CharField(max_length=100,null=True)
 	delivery_address2 = models.CharField(max_length=100,null=True,blank=True)
-	city = models.CharField(max_length=20)
-	state = models.CharField(max_length=30, default='Rivers')
-	country=models.CharField(max_length=30, default='Nigeria')
+	city = models.CharField(max_length=20,null=True)
+	state = models.CharField(max_length=30,null=True, default='Rivers')
+	country=models.CharField(max_length=30,null=True, default='Nigeria')
 	activation_key = models.CharField(max_length=30, editable=False, null=True)
 
 	def save(self, *args, **kwargs):

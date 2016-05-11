@@ -667,3 +667,48 @@ footer{
 	border:1px solid #555555;
 }
 /*****************************************************************/
+/*******************USER PROFILE**********************************/
+#userprofilecontainer {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
+    margin: 40px auto;
+    padding: 20px;
+}
+#userprofilecontainer input[type="text"],
+#userprofilecontainer input[type="email"]{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 80%;
+}
+#userprofilecontainer input[type="submit"]{
+	border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    text-align: center;
+}
+#userprofilecontainer input[type="submit"]:hover{
+	background: #33518A;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+}
+#userprofilecontainer input[type="text"]:focus,
+#userprofilecontainer input[type="email"]:focus{
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+#userprofilecontainer fieldset{
+	margin:10px;
+	border-radius: 10px;
+}
+#userprofilecontainer fieldset legend{
+	text-transform: uppercase;
+	font-size: 11px;
+	color: rgba(0,0,0,0.3);
+}
+
+/*******************************************************************/

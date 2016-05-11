@@ -14,6 +14,7 @@ class RegisterForm(forms.Form):
 	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
 	password = forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 	verify_password= forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'placeholder':'Verify Password'}))
+	
 
 	def get_title(self):
 		return 'Register'
@@ -69,7 +70,6 @@ class RegisterForm(forms.Form):
 		if not misc_functions.email_is_ok(email):
 			raise ValidationError("Please check your email address!!")
 		all_emails = [x.user.email for x in all_users_info]
-		print 'all emails = '+str(all_users_info)
 		if email in all_emails:
 			raise ValidationError('That email already exists!!')
 		# *************************************************
@@ -82,6 +82,7 @@ class RegisterForm(forms.Form):
 		if mobile_number in all_numbers:
 			raise ValidationError('Mobile Number already exists!!')
 
+		
 		if not password == verify_password:
 			raise ValidationError('Passwords don\'t match!!')
 
@@ -163,4 +164,72 @@ class ForgotPassword(forms.Form):
 			for i in email:
 				if not i in allowed:
 					raise ValidationError('Invalid Email!!')
+		return self.cleaned_data
+
+
+class MyProfileForm(forms.Form):
+	first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
+	last_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
+	email = forms.CharField(max_length=20,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
+	mobile_number = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
+	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
+	address1 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
+	address2 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
+	city = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'City'}))
+	state = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'State'}))
+	country= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Country'}))
+
+	def clean(self):
+		super(MyProfileForm, self).clean()
+		all_users_info = models.UserInfo.objects.all()
+		first_name = self.cleaned_data.get('first_name')
+		last_name = self.cleaned_data.get('last_name')
+		email = self.cleaned_data.get('email')
+		mobile_number = self.cleaned_data.get('mobile_number')
+		username = self.cleaned_data.get('username')
+		address1 = self.cleaned_data.get('address1')
+		address2 = self.cleaned_data.get('address2')
+		city = self.cleaned_data.get('city')
+		state = self.cleaned_data.get('state')
+		country = self.cleaned_data.get('country')
+
+		temp_data = {} 
+		temp_data['Firstname'] = first_name
+		temp_data['Lastname'] = last_name		
+		temp_data['Username'] = username
+		temp_data['Email'] = email
+		temp_data['Mobile Number'] = mobile_number
+		temp_data['Address 1 input'] = address1		
+		temp_data['City'] = city
+		temp_data['State'] = state
+		temp_data['Country'] = country
+
+		emptychar = misc_functions.input_is_not_empty(temp_data)
+		if not emptychar == 1:
+			raise ValidationError('%s is required!' %emptychar)
+		temp_data = {} 
+		temp_data['Firstname'] = first_name
+		temp_data['Lastname'] = last_name
+		temp_data['Address 1 input'] = address1
+		if address2:
+			temp_data['Address 2 input'] = address2
+		temp_data['City'] = city
+		temp_data['State'] = state
+		temp_data['Country'] = country
+		
+		invalidchar = misc_functions.input_is_alpha_numerals(temp_data, space_allowed=True)
+		if not invalidchar == 1:
+			raise ValidationError('Invalid %s' %invalidchar)
+		
+		invaliduser = misc_functions.input_is_alpha_numerals({'Username':username})
+		if not invalidchar == 1:
+			raise ValidationError('Invalid %s' %invaliduser)
+		# ***************Email Check*********************
+		if not misc_functions.email_is_ok(email):
+			raise ValidationError("Please check your email address!!")
+		# *************************************************
+		# ***************Mobile Number*********************
+		if not misc_functions.mobile_number_is_ok(mobile_number):
+			raise ValidationError('Invalid Mobile Number')
+		# ******************************************************
 		return self.cleaned_data

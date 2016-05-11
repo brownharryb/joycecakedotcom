@@ -2,9 +2,13 @@
 		<div class="midpagecontainer">
 		<p>Call us:{{default_vals.mobile_numbers.0}}</p>		
 		<ul id="mainnav">
-
-			<li><a href="{% url 'user_login'%}">{{user.username}}</a></li>
+		{% if request.user.is_authenticated %}
+			<li><a href="{% url 'user_profile_page'%}">{{user.username}}</a></li>
+			<li><a href="#">Logout</a></li>
+		{% else %}
+			<li><a href="{% url 'user_login'%}">Login</a></li>
 			<li><a href="{% url 'user_register' %}">Register</a></li>
+		{% endif %}			
 			<li><a href="{% url 'shop-cart-view' %}">My Cart(5)</a></li>			
 		</ul>
 		<div class="clearfix"></div>

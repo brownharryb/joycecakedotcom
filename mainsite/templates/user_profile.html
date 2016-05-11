@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Profile - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<form action="{% url 'user_profile_page' %}" method="post" id="userprofilecontainer" class="midpagecontainer">
+	<!-- <h4>Edit Information</h4> -->
+	{% csrf_token %}
+		<fieldset>
+			<legend>Edit Personal Information</legend>
+			{{form.first_name}}
+			{{form.last_name}}
+			{{form.email}}
+			{{form.mobile_number}}
+			{{form.username}}
+			{{form.non_field_errors}}
+		</fieldset>
+		<fieldset>
+			<legend>Edit {{delivery_form.get_title}}</legend>
+			{{form.address1}}
+			{{form.address2}}
+			{{form.city}}
+			{{form.state}}
+			{{form.country}}
+			
+		</fieldset>
+		<input type="submit" value="Update">
+	
+	</form>
+	
+
+
+{% endblock %}

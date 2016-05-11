@@ -160,8 +160,8 @@ MEDIA_URL = '/media/'
 SITE_TITLE = 'Joyce Cakes'
 MOBILE_CONTACT = ['+2348038655003']
 
-AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
-        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=94608',
-    }
+# AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
+#         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+#         'Cache-Control': 'max-age=94608',
+#     }
 #***************************************************************************

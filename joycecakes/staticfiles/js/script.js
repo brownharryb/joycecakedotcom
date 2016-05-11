@@ -10,7 +10,7 @@ $(document).ready(function(){
 	enablecarousel(3);
 	enablecarousel('gift');
 	enableGalleryTitle();
-	enableDeliveryInfoForm();
+	disableUserProfileForm();
 });
 
 function getviewportwidth(){
@@ -122,13 +122,7 @@ function enableGalleryTitle(){
  }
 
  // ************************************************************************
-
- // *****************************Register*********************************
-function enableDeliveryInfoForm(){
-	var deliveryBtn = $('#registercontainer submit')
-	deliveryBtn.click(function(){
-		
-	});
+function disableUserProfileForm(){
+	var all_inputs = $('#userprofilecontainer input[type="text"], #userprofilecontainer input[type="email"]');
+	all_inputs.prop('disabled', true);
 }
-
- // *************************************************************************

@@ -83,6 +83,12 @@ class UserLogin(View):
 	form_class = forms.LoginForm
 	initial = {'key':'value'}
 
+	# def dispatch(self,request,*args,**kwargs):
+	# 	print "user = "+str(request.user.is_authenticated())
+	# 	if request.user.is_authenticated():
+	# 		return redirect(reverse('home_url'))		
+	# 	return super(UserLogin, self).dispatch(request,*args,**kwargs)
+
 	def get(self,request,*args,**kwargs):
 		form = self.form_class(initial=self.initial)
 		return render(request, self.template_name, {'form':form})
@@ -135,7 +141,7 @@ class UserProfileView(View):
 	username = ''
 
 	def dispatch(self,request,*args,**kwargs):
-		if not request.user.is_authenticated:
+		if not request.user.is_authenticated():
 			return redirect(reverse('home_url'))
 		try:
 			self.user = request.user

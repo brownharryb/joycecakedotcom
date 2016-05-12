@@ -30,9 +30,11 @@ AWS_SECRET_ACCESS_KEY = 'YXklluKsSBBafnRC20H9IXXPO46lg6gp5K4M228L'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
-STATICFILES_LOCATION = 'static'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-STATICFILES_STORAGE = 'joycecakes.custom_storages.StaticStorage'
+# STATICFILES_LOCATION = 'static'
+# STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "joycecakes","static")
+# STATICFILES_STORAGE = 'joycecakes.custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
@@ -147,9 +149,9 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT,"media")
 MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = [
-#     os.path.join(PROJECT_ROOT, 'static'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

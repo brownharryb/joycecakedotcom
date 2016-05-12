@@ -1,0 +1,12 @@
+.itemscontainer{
+	overflow: auto;
+}
+.prevarrow, .nextarrow{
+	display:none;
+}
+#stripcontainer{
+	overflow: auto;
+}
+#prevtitlearrow, #nexttitlearrow{
+	display: none;
+}

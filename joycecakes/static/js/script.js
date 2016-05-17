@@ -64,9 +64,6 @@ function prevClicked(container){
 		var marginright = parseInt(container.css('margin-right'));
 		var wd = viewportwidth - parseInt($(container).css('width'));
 
-
-		console.log('marginleft ='+marginleft);
-		console.log('width = '+wd);
 		if(marginleft<=0 && marginleft != wd){
 		container.animate({
 		marginLeft:"-="+viewportwidth+"px"			
@@ -84,7 +81,6 @@ function prevClicked(container){
 function nextClicked(container){
 	viewportwidth = getviewportwidth();
 		var marginleft = parseInt(container.css('margin-left'));
-		console.log('marginleft = '+marginleft)
 		if(marginleft<0){
 		container.animate({
 			marginLeft:"+="+viewportwidth+"px"			
@@ -147,33 +143,27 @@ function disableUserProfileForm(){
 function setupAddToCartForm(){
 	var addToCartBtn = $('.itemaddtocart');
 	addToCartBtn.click(function(){
-		addItemToCart($(this).data('urlsubmit'));
+		getCartValsFromAjax($(this).data('urlsubmit')).done(function(value){
+			var responsevals = JSON.parse(value);
+			num = responsevals.items_length;
+			mycartstr = 'My Cart('+num+')';
+			$('#id_mycart').html(mycartstr);
+			$('#checkoutdiagcartitemslength').html(' '+num);
+			var itemid_num = responsevals.item_id;
+			$('.item_id_'+itemid_num).html(responsevals.button_text);
+		});
 	});
 }
 
-function addItemToCart(urlToSubmit){
-	// TODO FINISH THIS
-	$.ajax({
+
+function getCartValsFromAjax(urlToSubmit){
+	return $.ajax({
 		url:urlToSubmit,
 		success:function(response){
-			var num = $('#id_mycart').data('cartlength');			
-			if(response=='added'){
-				num+=1
-				mycartstr = 'My Cart('+num+')';
-				$('#id_mycart').data('cartlength',num);
-				$('#id_mycart').html(mycartstr);
-				$('#checkoutdiagcartitemslength').html(' '+num);
+			var responseobj = JSON.parse(response);				
 				showcheckoutdialogue();
-			}
-			else if(response='available'){
-
-			}
-		},
-		error:function(){
-
+		// error:function(response){}
 		}
-
-
 	});
 }
 function showcheckoutdialogue(){

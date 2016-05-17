@@ -9,10 +9,9 @@
 			<li><a href="{% url 'user_login'%}?next={{request.path}}">Login</a></li>
 			<li><a href="{% url 'user_register' %}">Register</a></li>
 		{% endif %}			
-			<li><a id="id_mycart" data-cartlength="{{cart_items|length}}"href="{% url 'shop-cart-view' %}">My Cart({{cart_items}})</a>
+			<li><a id="id_mycart" href="{% url 'shop-cart-view' %}">My Cart({{cart_items|length}})</a>
 			</li>			
 		</ul>
-		<p id="allcartitems" style="display:none;">{{cart_items}}</p>
 		<div class="clearfix"></div>
 	</div>		
 </div>

@@ -12,7 +12,14 @@
 		{% endif %}
 		<b> &#8358;{{each_item.sale_price|intcomma}}</b></span>
 		<p style="opacity:0.3">Category:{{each_item.category}}</p>		
-	</a>	
-	<p><button type="submit" class="itemaddtocart" data-urlsubmit="{% url 'shop-addtocart-view' item_id=each_item.id %}">Add To Cart</button></p>
+	</a>
+	<p><button type="submit" class="itemaddtocart item_id_{{each_item.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=each_item.id %}">
+	{% if each_item.id|stringformat:"i" in request.session.cart_items %}
+	Added
+	{% else %}
+	Add To Cart
+	{% endif %}
+	</button></p>
+	
 </li>
 {% endfor %}

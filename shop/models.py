@@ -79,6 +79,8 @@ class Item(models.Model):
 		if not s_id in saved_list:
 			saved_list.append(s_id)
 			request.session['cart_items'] = saved_list
+		return request
+		
 
 	def remove_from_cart(self,request):
 		s_id = str(self.id)
@@ -86,11 +88,12 @@ class Item(models.Model):
 		if s_id in saved_list:
 			saved_list.remove(s_id)
 			request.session['cart_items'] = saved_list
+		return request
+		
 
 	def is_in_cart(self,request):
-		s_id = str(self.id)
 		saved_list = request.session.get('cart_items')
-		if s_id in saved_list:
+		if self.id in saved_list or str(self.id) in saved_list:
 			return True
 		return False
 

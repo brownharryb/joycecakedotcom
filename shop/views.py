@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
 from . import models
 from mainsite.misc_functions import confirm_sessions_and_cookies
-import random
+import random,json
 
 
 #********************************Gallery*****************
@@ -64,28 +64,38 @@ def randomize_list(list_obj):
 # ***************************************************************************
 # *******************************CART DETAIL *******************************
 # TODO MODIFY TO RETURN JSON
-def add_to_cart_view(requests,item_id):
-	try:
-		item_id = int(item_id)
-		item = models.Item.objects.get(pk=item_id)
-		if item.is_in_cart(requests):
-			return HttpResponse('available')
-		item.add_to_cart(requests)
-		all_items = requests.session['cart_items']
-		return HttpResponse('added')
-	except:
-		return render(requests,'page404.html')
-		
-def remove_from_cart_view(requests,item_id):
-	try:
-		item_id = int(item_id)
-		item = models.Item.objects.get(pk=item_id)
-		if item.is_in_cart(requests):
-			item.remove_from_cart(requests)
-			return HttpResponse('removed')
-		return HttpResponse('notavailable')
-	except:
-		return render(requests,'page404.html')
+# @confirm_sessions_and_cookies
+def toggle_cart_view(requests,item_id):
+	response_items = {}
+
+	# TODO FIX THIS
+	
+	# try:
+	item_id = int(item_id)
+	item = models.Item.objects.get(pk=item_id)
+	response_items['item_id'] = item_id
+
+	if item.is_in_cart(requests):
+		response_items['available'] = True
+		requests = item.remove_from_cart(requests)
+
+		response_items['button_text'] = 'Add To Cart'
+	else:
+		response_items['available'] = False
+		requests = item.add_to_cart(requests)
+		response_items['button_text'] = 'Added'
+
+	response_items['all_items'] = requests.session['cart_items']
+	response_items['items_length'] = len(response_items['all_items'])
+
+	j = json.dumps(response_items)
+	return HttpResponse(j)
+	# except:
+		# return render(requests,'page404.html')
+
+
+
+
 
 class CartView(View):
 	template_name = 'cart.html'

@@ -15,6 +15,7 @@ class IndexView(View):
 
 	@confirm_sessions_and_cookies
 	def dispatch(self,requests,*args,**kwargs):
+		print 'cart_items from index = '+str(requests.session.get('cart_items'))
 		self.wedding_category = shopmodels.ItemCategory.objects.get(name='Wedding cakes')
 		self.birthday_category = shopmodels.ItemCategory.objects.get(name='Birthday cakes')
 		return super(IndexView, self).dispatch(requests,*args,**kwargs)

@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 import os, datetime
+from mainsite import misc_functions
+from django.conf import settings
 
 
 def get_image_upload_path(instance, filename):
@@ -70,6 +73,28 @@ class Item(models.Model):
 		return u"<img src='/media/%s' width=70>" %self.image_file
 	admin_display_image.allow_tags = True
 
+	def add_to_cart(self,request):
+		s_id = str(self.id)
+		saved_list = request.session.get('cart_items')
+		if not s_id in saved_list:
+			saved_list.append(s_id)
+			request.session['cart_items'] = saved_list
+
+	def remove_from_cart(self,request):
+		s_id = str(self.id)
+		saved_list = request.session.get('cart_items')
+		if s_id in saved_list:
+			saved_list.remove(s_id)
+			request.session['cart_items'] = saved_list
+
+	def is_in_cart(self,request):
+		s_id = str(self.id)
+		saved_list = request.session.get('cart_items')
+		if s_id in saved_list:
+			return True
+		return False
+
+
 
 
 class GiftItems(models.Model):
@@ -79,3 +104,20 @@ class GiftItems(models.Model):
 		return self.name
 
 
+# class CartInstance(models.Model):
+# 	items = models.ManyToManyField(Item)
+# 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+# 	expiry = models.DateTimeField()
+
+
+
+# 	def get_total_price_of_items(self):
+# 		pass
+
+# 	def save(self,*args,**kwargs):
+# 		# TODO ADD THREAD TO CHECK AND DELETE EXPIRED CACHE
+# 		if not self.id:
+# 			t = settings.CART_EXPIRY
+# 			seconds = misc_functions.get_seconds_time_value(t['time_type'],t['time_value'])
+# 			self.expiry = misc_functions.get_end_date_from_today(seconds)
+# 		super(CartInstance, self).save(*args,**kwargs)

@@ -25,7 +25,11 @@
 		{% if item.show_as_new %}
 		<p id="newbanner">Newly Added</p>
 		{% endif %}
-		<p id="addtocartbtn">Add To Cart</p>
+		{% if item.id in cart_items %}
+			<p id="addtocartbtn">Added To Cart</p>
+		{% else %}
+			<p id="addtocartbtn">Add To Cart</p>
+		{% endif %}
 
 	</ul>
 	{% include 'gift_items_container.html' with gifts=gifts %}

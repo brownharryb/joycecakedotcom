@@ -30,7 +30,7 @@ AWS_SECRET_ACCESS_KEY = 'YXklluKsSBBafnRC20H9IXXPO46lg6gp5K4M228L'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
-# STATICFILES_LOCATION = 'static'
+STATICFILES_LOCATION = 'static'
 # STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "joycecakes","static")
@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'shop',
     'accounts',
     'storages',
+    'django.contrib.humanize',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,6 +87,7 @@ TEMPLATES = (
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'mainsite.custom_processor.default_vals',
+                'mainsite.custom_processor.cart_items_function',
             ],
             'debug': DEBUG,
         },
@@ -161,6 +163,7 @@ STATICFILES_DIRS = [
 # ***********************************CUSTOM SETTINGS************************
 SITE_TITLE = 'Joyce Cakes'
 MOBILE_CONTACT = ['+23480386550030']
+CART_EXPIRY = {'time_type':'days','time_value':3}
 
 # AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
 #         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',

@@ -4,13 +4,15 @@
 		<ul id="mainnav">
 		{% if request.user.is_authenticated %}
 			<li><a href="{% url 'user_profile_page'%}">{{user.username}}</a></li>
-			<li><a href="#">Logout</a></li>
-		{% else %}
-			<li><a href="{% url 'user_login'%}">Login</a></li>
+			<li><a href="{% url 'user_logout'%}">Logout</a></li>
+		{% else %}		
+			<li><a href="{% url 'user_login'%}?next={{request.path}}">Login</a></li>
 			<li><a href="{% url 'user_register' %}">Register</a></li>
 		{% endif %}			
-			<li><a href="{% url 'shop-cart-view' %}">My Cart(5)</a></li>			
+			<li><a id="id_mycart" data-cartlength="{{cart_items|length}}"href="{% url 'shop-cart-view' %}">My Cart({{cart_items}})</a>
+			</li>			
 		</ul>
+		<p id="allcartitems" style="display:none;">{{cart_items}}</p>
 		<div class="clearfix"></div>
 	</div>		
 </div>

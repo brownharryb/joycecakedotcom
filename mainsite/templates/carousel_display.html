@@ -1,10 +1,10 @@
-{% for each_row in carousel_rows %}
-<div id="carousel{{each_row.idnum}}" class="carouselitems">
+{%for key,value in carousel_items.items %}
+<div id="carousel{{key}}" class="carouselitems">
 		<div>
 			<div class="midpagecontainer striptitle">
-				<h4>{{each_row.name}}</h4>
-				{% if each_row.show_view_all_link%}
-				<a class="viewallbtn" href="{% url 'shop-gallery-view-category' each_row.content.0.category.slug%}">View All</a>
+				<h4>{{value.0}}</h4>
+				{% if value.2 %}
+				<a class="viewallbtn" href="{% url 'shop-gallery-view-category' value.1.0.category.slug%}">View All</a>
 				{% endif %}
 			</div>
 			
@@ -13,14 +13,16 @@
 			<p class="nextarrow">&#8250;</p>			
 				
 				<ul>
-					{% include 'items_in_carousel.html' with current_row=each_row.content %}
-				</ul>
-							
-			
+					{% include 'items_in_carousel.html' with current_row=value.1 %}
+					
+				</ul>		
 
 			</div>
 
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	{% endfor %}	
+{% endfor %}
+
+
+

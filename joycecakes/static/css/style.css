@@ -124,6 +124,7 @@ nav a{
 }
 .carouselitems p{	
 	font-size: 12px;
+	text-align: center;
 }
 .striptitle{
 	text-transform: uppercase;
@@ -180,7 +181,7 @@ nav a{
 .itemscontainer ul li{
 	display: inline-block;
 	width: 150px;
-	height: 200px;
+	height: 230px;
 	padding: 20px;
 	margin:0px 5px;
 	vertical-align: top;
@@ -202,6 +203,16 @@ nav a{
 .itemscontainer ul li img{	
 	border-radius: 50%;
 	height: 150px;
+}
+.itemaddtocart{
+	padding:5px;
+	text-align:center;
+	text-transform:uppercase;
+	border:1px solid #eeeeee;
+	margin:10px;font-size:11px;
+	border-radius:5px;
+	cursor:pointer;
+	font-weight: bold;
 }
 footer{
 	height: 200px;
@@ -311,9 +322,11 @@ footer{
 }
 #registercontainer .errorlist.nonfield{
 	font-size:12px;
-	text-decoration: none;
 	color: rgba(255,0,0,0.6);
 	margin: 10px;
+}
+#registercontainer .errorlist.nonfield li{
+	list-style-type: none;
 }
 /*********************************************************/
 /****************DELIVERY*********************************/
@@ -390,6 +403,10 @@ footer{
 	font-weight: bold;
 	color: rgba(0,0,0,0.4);
 	max-width: 150px;
+}
+.eachitem li p a{
+	text-decoration: none;
+	color: rgba(0,0,0,0.4);
 }
 .eachitem li input[type="text"]{
 	width: 30px;
@@ -575,6 +592,29 @@ footer{
 
 /****************************************************************/
 /**************************Checkout******************************/
+#checkoutdiag{
+	text-align: center;
+	width:100px;
+	height:50px;
+	background:rgba(0,0,0,0.3);
+	position:fixed;
+	bottom: 10px;
+	right:10px;
+	padding:10px;
+	z-index: 99;
+}
+#checkoutdiagbtn{
+	border:1px solid #eeeeee;
+	padding:5px;
+	text-transform:uppercase;
+	font-size:11px;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+}
+#checkoutdiagbtn:hover{
+	box-shadow: 1px 1px 3px 1px #eeeeee;
+}
 #checkoutcontainer{
 
 }
@@ -711,6 +751,30 @@ footer{
 	text-transform: uppercase;
 	font-size: 11px;
 	color: rgba(0,0,0,0.3);
+}
+#userprofilecontainer .errorlist.nonfield{
+	margin:10px 15px;
+}
+#userprofilecontainer .errorlist.nonfield li{
+	color:red;
+	list-style-type: none;
+	font-size: 12px;
+}
+#updatebtn,#editbtn,#transactbtn{
+	list-style-type: none;
+	
+}
+#profilemanagebtn{
+	position: fixed;
+	z-index: 99;
+	bottom: 20px;
+	right: 20px;
+}
+
+
+#transactbtn input, #updatebtn,#editbtn,#transactbtn{
+	width: 200px !important;
+	opacity: 0.5;
 }
 
 /*******************************************************************/

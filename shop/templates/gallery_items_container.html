@@ -1,4 +1,4 @@
-
+{% load humanize %}
 <div id="galleryconytainer" class="midpagecontainer">
 		<ul class="galleryitem">
 		{% for i in cakes%}
@@ -9,9 +9,9 @@
 					<img src="{{i.image_file.url}}">
 					<p>{{i.name}}</p>
 					{% if i.old_price > 0%}
-					<strike>&#8358;4000</strike><span>
+					<strike>&#8358;{{i.old_price|intcomma}}</strike><span>
 					{% endif %}
-					<b> &#8358;{{i.sale_price}}</b></span>
+					<b> &#8358;{{i.sale_price|intcomma}}</b></span>
 					</a>				
 			</li>
 			{% endfor %}

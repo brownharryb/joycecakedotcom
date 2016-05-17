@@ -1,10 +1,11 @@
 from django.shortcuts import render , redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from . import forms,models
+from mainsite.misc_functions import confirm_sessions_and_cookies
 
 
 
@@ -15,6 +16,12 @@ class UserRegister(FormView):
 	template_name = 'register.html'
 	form_class = forms.RegisterForm
 	initial = {'key':'value'}
+
+	@confirm_sessions_and_cookies
+	def dispatch(self,request,*args,**kwargs):
+		if request.user.is_authenticated():
+			return redirect(reverse('user_profile_page'))
+		return super(UserRegister,self).dispatch(request,*args,**kwargs)
 
 	def get(self, request, *args, **kwargs):
 		form = self.form_class(initial=self.initial)
@@ -47,8 +54,8 @@ class UserDeliveryView(View):
 
 
 	def dispatch(self, request, *args, **kwargs):
-		if not request.user.is_authenticated:
-			return redirect(reverse('user_register'))
+		if not request.user.is_authenticated():
+			return redirect(reverse('user_login'))
 		return super(UserDeliveryView, self).dispatch(request, *args, **kwargs)
 
 
@@ -77,33 +84,41 @@ class UserDeliveryView(View):
 		else:
 			return render(request, self.template_name,{'form':form})	
 
+def logout_view(request):
+	logout(request)
+	return redirect(reverse('home_url'))
+
 
 class UserLogin(View):
 	template_name = 'login.html'
 	form_class = forms.LoginForm
 	initial = {'key':'value'}
 
-	# def dispatch(self,request,*args,**kwargs):
-	# 	print "user = "+str(request.user.is_authenticated())
-	# 	if request.user.is_authenticated():
-	# 		return redirect(reverse('home_url'))		
-	# 	return super(UserLogin, self).dispatch(request,*args,**kwargs)
+	@confirm_sessions_and_cookies
+	def dispatch(self,request,*args,**kwargs):		
+		if request.user.is_authenticated():
+			return redirect(reverse('home_url'))		
+		return super(UserLogin, self).dispatch(request,*args,**kwargs)
 
 	def get(self,request,*args,**kwargs):
-		form = self.form_class(initial=self.initial)
-		return render(request, self.template_name, {'form':form})
+		next_url = request.GET.get('next')
+		form = self.form_class(initial=self.initial)		
+		return render(request, self.template_name, {'form':form,'next_url':next_url})
 
 	def post(self,request,*args,**kwargs):
 		form = self.form_class(request.POST)
+		next_url = request.POST.get('next_url')
 
-		if form.is_valid():			
+		if form.is_valid():
 			username = form.cleaned_data['username'].lower()
 			password = form.cleaned_data['password'].lower()
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				if user.is_active:
 					login(request, user)
-					return render(request,'success.html', {'form':form})
+					if next_url== '' or next_url == 'None' or next_url == None or next_url == reverse('user_login'):
+						return redirect(reverse('home_url'))
+					return redirect(next_url)
 				# else:
 				# 	return render(request, 'fail.html', {'form':form})
 			else:
@@ -140,6 +155,7 @@ class UserProfileView(View):
 	user_info = ''
 	username = ''
 
+	@confirm_sessions_and_cookies
 	def dispatch(self,request,*args,**kwargs):
 		if not request.user.is_authenticated():
 			return redirect(reverse('home_url'))
@@ -211,9 +227,7 @@ class UserProfileView(View):
 
 				self.user.save()
 				self.user_info.save()
-			return render(request, 'success.html')
-		else:
-			return render(request, self.template_name, {'form':form})
+		return render(request, self.template_name, {'form':form})
 
 	def check_duplicate_username_available(self,username):
 		if self.username == username:
@@ -224,3 +238,10 @@ class UserProfileView(View):
 				return True
 		except:
 			return False
+
+class UserTransactionView(View):
+	template_name = 'user_transaction.html'
+
+
+	def get(self,request):
+		return render(request,self.template_name)

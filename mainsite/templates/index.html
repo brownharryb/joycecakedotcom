@@ -9,5 +9,6 @@
 
 {% block bodycontent %}
 {% include 'front_banner.html'%}
-{%include 'carousel_display.html' with carousel_rows=index_object.carousel_items %}
+{%include 'carousel_display.html' with carousel_items=carousel_items %}
+
 {% endblock %}

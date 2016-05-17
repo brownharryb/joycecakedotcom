@@ -1,4 +1,7 @@
 import random
+from datetime import datetime, timedelta
+from django.http import  HttpRequest
+from django.conf import settings
 
 
 
@@ -42,5 +45,48 @@ def mobile_number_is_ok(mobile_number):
 			return False
 	return True
 
+def get_seconds_time_value(time_type='seconds',number=None):
+	if time_type == 'years':
+		return number * 365 * 86400
+	elif time_type == 'months':
+		# average month days is 30
+		return number * 30 * 86400
+	elif time_type == 'days':
+		return number * 86400
+	elif time_type == 'hours':
+		return number * 3600
+	elif time_type == 'minutes':
+		return number * 60		
+	else:
+		return number
+
+def get_end_date_from_today(seconds):
+	today = datetime.datetime.now()
+	end_date = today + timedelta(seconds=seconds)
+	return end_date
 
 
+# TODO ADD THIS TO ALL VIEWS
+def confirm_sessions(request):
+	cart_items = ''
+	try:
+		cart_items = request.session['cart_items']
+	except KeyError:
+		request.session['cart_items'] = []
+	
+
+
+def confirm_cookies(request):
+	pass
+
+
+def confirm_sessions_and_cookies(func):
+	def inner(*args,**kwargs):
+		request = ''
+		for i in args:
+			if isinstance(i,HttpRequest):
+				request = i
+		confirm_sessions(request)
+		confirm_cookies(request)
+		return func(*args,**kwargs)
+	return inner

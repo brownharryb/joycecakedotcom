@@ -26,9 +26,10 @@
 			{{form.country}}
 			
 		</fieldset>
-		<ul id="profileupdatebtn">
-		<li><input type="submit" value="Update"></li>
-		<li><input type="button" value="Edit"></li>
+		<ul id="profilemanagebtn">
+		<li id="updatebtn"><input type="submit" value="Update"></li>
+		<li id="editbtn"><input type="button" value="Edit"></li>
+		<li id="transactbtn"><a href="{% url 'user_transaction_page'%}"><input type="button" value="Transaction History"></a></li>
 		</ul>
 	
 	</form>

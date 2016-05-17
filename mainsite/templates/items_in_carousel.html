@@ -1,17 +1,18 @@
-
+{% load humanize %}
 {% for each_item in current_row %}
 <li>
-	<a href="{{each_item.item_link_slug}}">
-		{% if each_item.is_new%}
+	<a href="{% url 'shop-item-detail-view' item_category=each_item.category.slug item_slug=each_item.slug %}">
+		{% if each_item.show_as_new%}
 		<span class="newtag">New</span>
 		{% endif %}
-		<img src="{{each_item.image_link}}">
+		<img src="{{each_item.image_file.url}}">
 		<p>{{each_item.item_name}}</p>
 		{% if each_item.old_price > 0 %}
-		<strike>&#8358;{{each_item.old_price}}</strike><span>
+		<strike>&#8358;{{each_item.old_price|intcomma}}</strike><span>
 		{% endif %}
-		<b> &#8358;{{each_item.sale_price}}</b></span>
-		<p style="opacity:0.3">Category:{{each_item.category}}</p>
-	</a>
+		<b> &#8358;{{each_item.sale_price|intcomma}}</b></span>
+		<p style="opacity:0.3">Category:{{each_item.category}}</p>		
+	</a>	
+	<p><button type="submit" class="itemaddtocart" data-urlsubmit="{% url 'shop-addtocart-view' item_id=each_item.id %}">Add To Cart</button></p>
 </li>
 {% endfor %}

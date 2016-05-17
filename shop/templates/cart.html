@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-
+{% load humanize %}
 {% block title %}
-Gallery - Joyce Cakes
+Cart - Joyce Cakes
 {% endblock %}
 
 
@@ -12,30 +12,30 @@ Gallery - Joyce Cakes
 	<div id="cartcontainer" class="midpagecontainer">
 	<h4>Cart Items</h4>
 	<hr style="border-color:rgba(0,0,0,0.1);">
+	{# TODO FIX THIS #}
+	{% if all_cart_items > 0 %}
+	{% for i in all_cart_items%}
 		<ul class="eachitem">
-			<li><img src="static/media/images/cakes/2.jpg"></li>
-			<li><p>Birthday cake</p></li>
-			<li><p>N3000</p></li>
-			<li><p>Qty: <input type="text" maxlength="2"></p></li>
-			<li><p>N3000</p></li>
-			
+			<li><img src="{{i.image_file.url}}"></li>
+			<li><p><a href="#">{{i.name}}</a></p></li>
+			<li><p>&#8358;{{i.sale_price|intcomma}}</p></li>
+			<li><p>Qty: <input type="text" maxlength="2" value="1"></p></li>
+			<li><p>&#8358;{{i.sale_price|intcomma}}</p></li>
+			<li><a href="#" style="color:red;text-decoration:none;">x</a></li>			
 		</ul>
+	{% endfor %}
 		<hr style="border-color:rgba(0,0,0,0.1);">
-		<ul class="eachitem">
-			<li><img src="static/media/images/cakes/2.jpg"></li>
-			<li><p>Birthday cake</p></li>
-			<li><p>N3000</p></li>
-			<li><p>Qty: <input type="text" maxlength="2"></p></li>
-			<li><p>N3000</p></li>
-			
-		</ul>
+		
 		<hr style="border-color:rgba(0,0,0,0.1);">
-		<strong>Total N3000</strong>
-		<p class="clearfix"></p>		
-		<button>Checkout</button>
-		<button>Continue Shopping</button>
+		<strong>Total &#8358;{{totalprice|intcomma}}</strong>
+		<p class="clearfix"></p>	
+		<button onclick="checkoutoncartpageclicked()">Checkout</button>
+		<button onclick="continueshoppingcartpageclicked()">Continue Shopping</button>
 		<p class="clearfix"></p>		
 	</div>
+	{% else %}
+	<h1>Your Cart is empty!!</h1>
+	{% endif %}
 	<div id="giftitemscontainer" class="midpagecontainer">
 	<hr style="border-color:rgba(0,0,0,0.1);">
 	<div id="carouselgift" class="carouselitems">
@@ -53,60 +53,6 @@ Gallery - Joyce Cakes
 					<strike>N4000</strike><span><b> N5000</b></span>
 					<p style="opacity:0.3">Category: Birthday Cakes</p>
 					</a>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/6.jpg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/2.jpg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/3.jpg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/4.jpg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/5.jpg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/1.jpeg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/1.jpeg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/1.jpeg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N6000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-				</li>
-				<li>
-					<img src="static/media/images/cakes/1.jpeg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N7000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
 				</li>
 				
 			</ul>

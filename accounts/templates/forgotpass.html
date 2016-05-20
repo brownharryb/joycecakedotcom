@@ -4,12 +4,21 @@
 {{'Forgot Password - Joyce Cakes'}}
 {% endblock %}
 {% block bodycontent %}	
+
 	<hr style="border-color:rgba(0,0,0,0.1);">
-		<form id="logincontainer" class="midpagecontainer">
+	
+		<form id="logincontainer" class="midpagecontainer" method="post" action="{% url 'forgot_password'%}">
+		{% if email_sent_status == 'fail' %}
 			{% csrf_token %}
+
 			<h4>Recover Password</h4>
 			{{form.email}}
 			{{form.non_field_errors}}
 			<input type="submit" value="Recover" />
+			
+			{% elif email_sent_status == 'ok' %}
+			<h4>Recovery email has been sent to {{email}} !!<h4>
+			{% endif %}
 		</form>
+	
 {% endblock %}

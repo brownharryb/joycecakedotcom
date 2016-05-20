@@ -131,7 +131,7 @@ class DeliveryForm(forms.Form):
 
 class LoginForm(forms.Form):	
 	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
-	password = forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
+	password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 
 	def get_title(self):
 		return 'Login'
@@ -151,14 +151,14 @@ class LoginForm(forms.Form):
 
 
 class ForgotPassword(forms.Form):
-	email = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Email'}))
+	email = forms.EmailField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Email'}))
 
 	def clean(self):
 		super(ForgotPassword, self).clean()
 		email = self.cleaned_data.get('email')
 
 		if not email:
-			raise ValidationError('Empty Email')
+			raise ValidationError('Inavlid Email!!')
 		else:
 			allowed = 'abcdefghijklmnopqrstuvwxyz0123456789_@.'
 			for i in email:
@@ -236,4 +236,22 @@ class MyProfileForm(forms.Form):
 		# ******************************************************
 		return self.cleaned_data
 
-	# def show_full_name_field(self):
+
+class ChangePasswordForm(forms.Form):
+	first_password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'New Password'}))
+	second_password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'Confirm Password'}))
+
+	def clean(self):
+		super(ChangePasswordForm, self).clean()
+		p1 = self.cleaned_data.get('first_password')
+		p2 = self.cleaned_data.get('second_password')
+
+		if any([p1=='',p2=='',p1==None,p2==None]):
+			raise ValidationError('Invalid Password Input!!')
+		if not misc_functions.input_is_alpha_numerals({'Password':p1,'Password2':p2})==1:
+			raise ValidationError('Invalid Characters in Password!!')
+		if not p1 == p2:
+			raise ValidationError('Passwords don\'t match!!')
+
+		return self.cleaned_data
+

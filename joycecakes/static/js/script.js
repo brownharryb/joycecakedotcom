@@ -212,22 +212,13 @@ function showcheckoutdialogue(){
 
 }
 
-function checkoutoncartpageclicked(el){
-	// confirmAllItemPrices(function(value){
-	// 	var checkouturl = $(el).data('checkouturl');
-	// 	window.location.href= checkouturl;
-	// })
-
-}
-function continueshoppingcartpageclicked(){
-
-}
-
-
-
-
 function numberWithCommas(x) {
     var parts = x.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".")+'.0';
+}
+
+function visitmyurl(el){
+	url = $(el).data('myurl');
+	location.href = url;
 }

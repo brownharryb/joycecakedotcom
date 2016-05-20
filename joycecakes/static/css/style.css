@@ -426,7 +426,9 @@ footer{
 	border-bottom: 1px solid #eeeeee;
 	padding: 20px;
 }
-#cartcontainer button{
+#cartcontainer button,
+#cartcontainer input[type="submit"],
+#cartcontainer input[type="button"]{
 	cursor: pointer;
 	padding: 10px;
 	border:1px solid #eeeeee;
@@ -679,6 +681,7 @@ footer{
 #summarycontainer h2{
 	text-align: right;
 	color: rgba(0,0,0,0.4);
+	padding:20px 0px;
 }
 #summarycontainer textarea{
 	border:1px solid #eeeeee;

@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from . import forms,models
 from mainsite.misc_functions import confirm_sessions_and_cookies
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
@@ -133,19 +134,83 @@ class ForgotPassword(View):
 	template_name = 'forgotpass.html'
 	form_class = forms.ForgotPassword
 	initial = {'key':'value'}
+	status_email_sent = 'fail'
 
 	def get(self,request,*args, **kwargs):
 		form = self.form_class(initial=self.initial)
-		return render(request, self.template_name, {'form':form})
+		return render(request, self.template_name, {'form':form,'email_sent_status':self.status_email_sent})
 
 	def post(self, request, *args, **kwargs):
 		form = self.form_class(request.POST)
+		self.status_email_sent = 'fail'
+
 
 		if form.is_valid():
 			email = form.cleaned_data['email']
-			
+			try:
+				user = User.objects.get(email=email)
+				user_info = models.UserInfo.objects.get(user=user)
+				user_info.save_recovery_key()
+				recovery_link = user_info.get_recovery_link(request)
+
+				if self.send_recovery_email(email):
+					self.status_email_sent = 'ok'
+					return render(request, self.template_name,{'email_sent_status':self.status_email_sent,'email':email})
+				else:
+					form.add_error(None,'There was a problem sending... please try again later!!')
+					return render(request, self.template_name, {'form':form,'email_sent_status':self.status_email_sent})
+			except ObjectDoesNotExist as e:
+				form.add_error(None,'This Email is not registered!!')
+				return render(request, self.template_name, {'form':form,'email_sent_status':self.status_email_sent})
 		else:
-			return render(request, self.template_name, {'form':form})
+			return render(request, self.template_name, {'form':form,'email_sent_status':self.status_email_sent})
+
+
+	def send_recovery_email(self,email):
+		msg = ''
+		#TODO SEND MESSAGE AND RETURN TRUE
+		return True
+ 
+
+class RecoverPasswordView(View):
+	template_name = 'change_password.html'
+	form_class = forms.ChangePasswordForm
+	initial = {'key':'value'}
+	recovery_key = ''
+	username = ''
+	user = ''
+	user_info = ''
+	show_success = 'no'
+
+	def dispatch(self,request,*args,**kwargs):
+		self.username = kwargs['username']
+		self.recovery_key = kwargs['recovery_key']
+		self.confirm_details(self.username,self.recovery_key)
+		if self.user == None:
+			return redirect(reverse('home_url'))
+				
+		return super(RecoverPasswordView, self).dispatch(request,*args,**kwargs)
+
+	def get(self,request,*args,**kwargs):
+		form = self.form_class(initial=self.initial)
+		return render(request,self.template_name,{'form':form,'show_success':self.show_success})
+
+	def post(self,request,*args,**kwargs):
+		form = self.form_class(request.POST)
+		if form.is_valid():
+			self.user.set_password(form.cleaned_data['first_password'])
+			self.user_info.save_recovery_key()
+			self.show_success = 'yes'
+		return render(request,self.template_name,{'form':form,'show_success':self.show_success})
+
+	def confirm_details(self,username,recovery_key):
+		try:
+			user = User.objects.get(username=username)
+			user_info = models.UserInfo.objects.get(user=user,recovery_key=recovery_key)
+			self.user = user
+			self.user_info = user_info
+		except ObjectDoesNotExist as e:
+			self.user = None
 
 class UserProfileView(View):
 	template_name = 'user_profile.html'

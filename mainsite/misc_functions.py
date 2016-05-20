@@ -95,3 +95,7 @@ def confirm_sessions_and_cookies(func):
 # TODO FIX THIS TO GET PROPER FULLNAME
 def get_proper_fullname(fullname):
 	return fullname
+
+# TODO CREATE EMAIL BACKEND TO SEND EMAIL
+def send_email(email,msg):
+	return True

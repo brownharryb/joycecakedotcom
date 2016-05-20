@@ -26,17 +26,14 @@ Cart - Joyce Cakes
 			<li><p data-removecarturl="{% url 'shop-togglecart-view' item_id=i.id %}" onclick="removeFromCartInCartHtml(this)" style="cursor:pointer;color:red;text-decoration:none;text-transform:lowercase;">x</p></li>			
 		</ul>
 	{% endfor %}
-		<button id="cartupdateallprices" data-urlprice="{% url 'shop-getitemprices' item_ids_string=cart_items_string %}" onclick="confirmAllItemPrices()">
+		<button type="button" id="cartupdateallprices" data-urlprice="{% url 'shop-getitemprices' item_ids_string=cart_items_string %}" onclick="confirmAllItemPrices()">
 		Update Prices</button>
 		<hr style="border-color:rgba(0,0,0,0.1);">
 		<strong>Total &#8358;<span id="cartallitemstotalsaleprice">{{totalprice|intcomma}}</span></strong>
 		<p class="clearfix"></p>
 		
 			<input type="submit" value="Checkout">
-			<input type="button" value="Continue Shopping">	
-		
-		<button data-checkouturl="{% url 'shop-cart-view'%}" onclick="checkoutoncartpageclicked(this)">Checkout</button>
-		<button onclick="continueshoppingcartpageclicked()">Continue Shopping</button>
+			<input type="button" data-myurl="{% url 'shop-gallery-view' %}" onclick="visitmyurl(this)" value="Continue Shopping">
 		<p class="clearfix"></p>		
 	</div>
 	{% else %}

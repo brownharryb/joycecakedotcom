@@ -16,6 +16,9 @@ class UserInfo(models.Model):
 	country=models.CharField(max_length=30,null=True, default='Nigeria')
 	activation_key = models.CharField(max_length=30, editable=False, null=True)
 
+	def __unicode__(self):
+		return self.mobile_phone
+
 	def save(self, *args, **kwargs):
 		if not self.id:
 			self.activation_key = misc_functions.generate_key(30)

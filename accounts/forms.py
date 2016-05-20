@@ -168,6 +168,7 @@ class ForgotPassword(forms.Form):
 
 
 class MyProfileForm(forms.Form):
+	full_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Name'}),required=False)
 	first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
 	last_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
 	email = forms.CharField(max_length=20,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
@@ -178,6 +179,7 @@ class MyProfileForm(forms.Form):
 	city = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'City'}))
 	state = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'State'}))
 	country= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Country'}))
+	extra_details = forms.CharField(max_length=100,widget=forms.Textarea(attrs={'placeholder':'Extra Details','rows':1}), required=False)
 
 	def clean(self):
 		super(MyProfileForm, self).clean()
@@ -233,3 +235,5 @@ class MyProfileForm(forms.Form):
 			raise ValidationError('Invalid Mobile Number')
 		# ******************************************************
 		return self.cleaned_data
+
+	# def show_full_name_field(self):

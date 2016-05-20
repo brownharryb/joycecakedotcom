@@ -90,3 +90,8 @@ def confirm_sessions_and_cookies(func):
 		confirm_cookies(request)
 		return func(*args,**kwargs)
 	return inner
+
+
+# TODO FIX THIS TO GET PROPER FULLNAME
+def get_proper_fullname(fullname):
+	return fullname

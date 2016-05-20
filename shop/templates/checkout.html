@@ -16,26 +16,28 @@ Checkout - Joyce Cakes
 		<li>
 			<form>
 				<fieldset>
-					<legend>Delivery Information</legend>
-					<input type="text" placeholder="Address1">
-					<input type="text" placeholder="Address2">
-					<input type="text" placeholder="Town">
-					<input type="text" placeholder="City">
+				<legend>Delivery Information</legend>
+					{{profile_form.address1}}
+					{{profile_form.address2}}
+					{{profile_form.city}}
+					{{profile_form.state}}
+					{{profile_form.non_field_errors}}
 				</fieldset>
 				<fieldset>
 					<legend>Contact Information</legend>
-					<input type="text" placeholder="Name">
-					<input type="tel" placeholder="Mobile">
+					{{profile_form.full_name}}
+					{{profile_form.mobile_number}}
 				</fieldset>				
 			</form>
 		</li>
 		<li>
 			<div id="summarycontainer">
 				<h5>Your Order</h5>
-				<p>Total: N12,000</p>
+				<p>Total: &#8358;{{totalprice|intcomma}}</p>
 				<p>Tax: N1,200</p>
 				<p>Delivery: N0</p>
-				<textarea maxlength="100" placeholder="Extra Details"></textarea>
+				<!-- <textarea maxlength="100" placeholder="Extra Details"></textarea> -->
+				{{profile_form.extra_details}}
 				<hr>
 				<h2>N13,200</h2>
 				<hr>

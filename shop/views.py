@@ -3,7 +3,9 @@ from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
 from . import models
-from mainsite.misc_functions import confirm_sessions_and_cookies
+from accounts import models as accountsmodels
+from accounts import forms as accountsforms
+from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname
 import random,json
 
 
@@ -93,12 +95,31 @@ def toggle_cart_view(requests,item_id):
 	# except:
 		# return render(requests,'page404.html')
 
+def confirm_item_price(requests, item_id):
+	item_id = int(item_id)
+	item = models.Item.objects.get(pk=item_id)
+	return HttpResponse(item.sale_price)
 
+
+def confirm_selected_item_prices(requests,item_ids_string):
+	sale_prices = {}
+
+
+
+	item_id_list = item_ids_string
+	item_id_list = [int(i) for i in item_id_list if not i == 'a']
+	print 'item_id_list = '+str(item_id_list)
+	all_items = models.Item.objects.filter(id__in=item_id_list)
+	for j in all_items:
+		sale_prices[j.id] = j.sale_price
+	return HttpResponse(json.dumps(sale_prices))
 
 
 
 class CartView(View):
 	template_name = 'cart.html'
+	initial = {}
+	profile_form_class = accountsforms.MyProfileForm
 
 	@confirm_sessions_and_cookies
 	def dispatch(self,requests,*args,**kwargs):
@@ -112,18 +133,98 @@ class CartView(View):
 			totalprice+=j.sale_price
 
 		return render(requests,'cart.html',{'all_cart_items':all_cart_items,'totalprice':totalprice})
-# **************************************************************************
-class CheckoutView(View):
-	template_name = 'checkout.html'
-
-	@confirm_sessions_and_cookies
-	def dispatch(self,requests,*args,**kwargs):
+	def post(self,requests,*args,**kwargs):
 		if not requests.user.is_authenticated():
 			url = reverse('user_login')
-			checkout_url = reverse('shop-checkout-view')
-			url+='?next=%s'%(checkout_url)
+			cart_url = reverse('shop-cart-view')
+			url+='?next=%s'%(cart_url)
 			return redirect(url)
-		return super(CheckoutView,self).dispatch(requests,*args,**kwargs)
+		totalprice = 0			
+		returndict = {}
+		post_data = requests.POST
+		all_data_keys = requests.POST.keys()
+		all_data_ids = requests.session.get('cart_items')
+		for i in all_data_keys:
+			j = i.split('_')
+			if 'id' in j:
+				id_num = int(j[1])
+				item = models.Item.objects.get(pk=id_num)
+				price = item.sale_price * int(post_data[i])
+				returndict[id_num] = price
+				totalprice+=price
+				
+		
 
-	def get(self,requests,*args,**kwargs):
-		return render(requests,self.template_name)
+		form = self.prepareform(requests)
+		return render(requests,'checkout.html',{'datadict':returndict,'totalprice':totalprice,'profile_form':form})
+	
+
+	def prepareform(self,requests):		
+		cart_items = requests.session.get('cart_items')
+		cart_items = [models.Item.objects.get(pk=int(i)) for i in cart_items]
+		user = requests.user
+		user_info = accountsmodels.UserInfo.objects.get(user=user)
+
+		self.initial['first_name'] = user.first_name
+		self.initial['last_name'] = user.last_name
+		self.initial['username'] = user.username
+		self.initial['email'] = user.email
+		self.initial['full_name'] = get_proper_fullname(user.get_full_name())
+		self.initial['mobile_number'] = user_info.mobile_phone
+		self.initial['address1'] = user_info.delivery_address1
+		self.initial['address2'] = user_info.delivery_address2
+		self.initial['city'] = user_info.city
+		self.initial['state'] = user_info.state
+		self.initial['country'] = user_info.country
+
+		profile_form = self.profile_form_class(self.initial)
+		return profile_form
+
+
+
+
+
+
+
+
+# **************************************************************************
+# class CheckoutView(View):
+# 	template_name = 'checkout.html'
+# 	profile_form_class = accountsforms.MyProfileForm
+# 	initial = {}
+
+# 	@confirm_sessions_and_cookies
+# 	def dispatch(self,requests,*args,**kwargs):
+# 		if not requests.user.is_authenticated():
+# 			url = reverse('user_login')
+# 			checkout_url = reverse('shop-checkout-view')
+# 			url+='?next=%s'%(checkout_url)
+# 			return redirect(url)
+# 		return super(CheckoutView,self).dispatch(requests,*args,**kwargs)
+
+# 	def get(self,requests,*args,**kwargs):		
+# 		cart_items = requests.session.get('cart_items')
+# 		cart_items = [models.Item.objects.get(pk=int(i)) for i in cart_items]
+# 		user = requests.user
+# 		user_info = accountsmodels.UserInfo.objects.get(user=user)
+
+# 		self.initial['first_name'] = user.first_name
+# 		self.initial['last_name'] = user.last_name
+# 		self.initial['username'] = user.username
+# 		self.initial['email'] = user.email
+# 		self.initial['full_name'] = get_proper_fullname(user.get_full_name())
+# 		self.initial['mobile_number'] = user_info.mobile_phone
+# 		self.initial['address1'] = user_info.delivery_address1
+# 		self.initial['address2'] = user_info.delivery_address2
+# 		self.initial['city'] = user_info.city
+# 		self.initial['state'] = user_info.state
+# 		self.initial['country'] = user_info.country
+
+# 		profile_form = self.profile_form_class(self.initial)
+
+# 		return render(requests,self.template_name,{'profile_form':profile_form,'user_info':user_info})
+
+# 	def post(self,requests,*args,**kwargs):
+# 		profile_form = self.profile_form_class(requests.POST)
+# 		if profile_form.is_valid():
+# 			pass

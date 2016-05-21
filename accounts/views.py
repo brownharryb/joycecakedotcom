@@ -307,6 +307,19 @@ class UserProfileView(View):
 class UserTransactionView(View):
 	template_name = 'user_transaction.html'
 
+	def dispatch(self,request,*args,**kwargs):
+		if not request.user.is_authenticated():
+			url = reverse('user_login')
+			transaction_url = reverse('user_transaction_page')
+			url +='?next=%s' %transaction_url
+			return redirect(url)
+		return super(UserTransactionView, self).dispatch(request,*args,**kwargs)
 
-	def get(self,request):
-		return render(request,self.template_name)
+
+	def get(self,request,*args,**kwargs):
+		try:
+			user_info = models.UserInfo.objects.get(user=request.user)
+			user_transactions = models.UserTransaction.objects.filter(user=user_info)
+		except ObjectDoesNotExist as e:
+			return redirect(reverse('home_url'))
+		return render(request,self.template_name,{'user_transactions':user_transactions})

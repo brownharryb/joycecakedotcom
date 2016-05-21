@@ -27,6 +27,7 @@ class IndexView(View):
 		return render(requests,self.template_name,{'carousel_items':self.carousel_items})
 
 
-
+def contact_us_view(requests):
+	return render(requests,'contact_us.html')
 
 			

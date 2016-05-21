@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Contact Us - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}
+<hr style="border-color:rgba(0,0,0,0.1);">
+<div id="gmapscontainer"></div>
+<script>
+      function initMap() {
+        var mapDiv = document.getElementById('gmapscontainer');
+        var myLatLng = {lat:4.832837, lng:7.0990294};
+
+        var map = new google.maps.Map(mapDiv, {
+          center: myLatLng,
+          zoom: 15
+        });
+        var marker = new google.maps.Marker({
+		    position: myLatLng,
+		    map: map,
+		    title: 'JoyceCakes'
+  });
+
+      }
+    </script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
+
+
+
+
+{% endblock %}

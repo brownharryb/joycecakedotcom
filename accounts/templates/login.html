@@ -5,7 +5,7 @@
 {% endblock %}
 {% block bodycontent %}	
 	<hr style="border-color:rgba(0,0,0,0.1);">
-	<form action="{% url 'user_login' %}" id="logincontainer" class="midpagecontainer" method="post">
+	<form action="{{request.path}}" id="logincontainer" class="midpagecontainer" method="post">
 			{% csrf_token %}	
 			<h4>{{form.get_title}}</h4>
 			{{form.username}}

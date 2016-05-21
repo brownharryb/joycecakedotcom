@@ -107,6 +107,7 @@ class GiftItems(models.Model):
 		return self.name
 
 
+
 # class CartInstance(models.Model):
 # 	items = models.ManyToManyField(Item)
 # 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)

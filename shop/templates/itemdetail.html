@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block title %}
 {{item.name}}{{default_vals.main_title_extra}}
@@ -15,9 +16,9 @@
 			<div id="iteminfo">
 				<h1>{{item.name}}</h1>
 				{% if item.old_price > 0 %}
-				<strike>&#8358;{{item.old_price}}</strike>
+				<strike>&#8358;{{item.old_price|intcomma}}</strike>
 				{% endif %}
-				<h3>&#8358;{{item.sale_price}}</h3>					
+				<h3>&#8358;{{item.sale_price|intcomma}}</h3>					
 				<p style="color:#999999;">{{item.brief_detail}}
 				</p>						
 			</div>

@@ -120,9 +120,11 @@ class CartView(View):
 	template_name = 'cart.html'
 	initial = {}
 	profile_form_class = accountsforms.MyProfileForm
+	gifts = ''
 
 	@confirm_sessions_and_cookies
 	def dispatch(self,requests,*args,**kwargs):
+		self.gifts = get_random_gift_items()
 		return super(CartView,self).dispatch(requests,*args,**kwargs)
 
 	def get(self,requests,*args,**kwargs):
@@ -132,7 +134,7 @@ class CartView(View):
 		for j in all_cart_items:
 			totalprice+=j.sale_price
 
-		return render(requests,'cart.html',{'all_cart_items':all_cart_items,'totalprice':totalprice})
+		return render(requests,'cart.html',{'gifts':self.gifts,'all_cart_items':all_cart_items,'totalprice':totalprice})
 	def post(self,requests,*args,**kwargs):
 		if not requests.user.is_authenticated():
 			url = reverse('user_login')
@@ -156,7 +158,7 @@ class CartView(View):
 		
 
 		form = self.prepareform(requests)
-		return render(requests,'checkout.html',{'datadict':returndict,'totalprice':totalprice,'profile_form':form})
+		return render(requests,'checkout.html',{'gifts':self.gifts,'datadict':returndict,'totalprice':totalprice,'profile_form':form})
 	
 
 	def prepareform(self,requests):		

@@ -26,7 +26,7 @@ class IndexView(View):
 		self.carousel_items[3] = ['Birthday Cakes',shopmodels.Item.objects.filter(category=self.birthday_category)[:self.carousel_length],True]
 		return render(requests,self.template_name,{'carousel_items':self.carousel_items})
 
-
+@confirm_sessions_and_cookies
 def contact_us_view(requests):
 	return render(requests,'contact_us.html')
 

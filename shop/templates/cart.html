@@ -13,7 +13,7 @@ Cart - Joyce Cakes
 	<h4>Cart Items</h4>
 	<hr style="border-color:rgba(0,0,0,0.1);">
 	{# TODO FIX THIS TO SHOW 'NO ITEMS IN CART TEXT'#}
-	{% if all_cart_items > 0 %}
+	{% if all_cart_items|length > 0 %}
 	<form action="{% url 'shop-cart-view' %}" method="post">
 	{% csrf_token %}
 	{% for i in all_cart_items%}
@@ -37,35 +37,8 @@ Cart - Joyce Cakes
 		<p class="clearfix"></p>		
 	</div>
 	{% else %}
-	<h1>Your Cart is empty!!</h1>
+	<h4>Your Cart is empty!!</h4>
 	{% endif %}
 	</form>	
-	<div id="giftitemscontainer" class="midpagecontainer">
-	<hr style="border-color:rgba(0,0,0,0.1);">
-	<div id="carouselgift" class="carouselitems">
-		<div>
-			<div class="midpagecontainer striptitle"><h4 style="color:#555555;">You might also like</h4>
-			<a class="viewallbtn" href="#">View All</a></div>
-			
-			<div class="itemscontainer midpagecontainer">
-			<p class="prevarrow">&#8249;</p>
-			<p class="nextarrow">&#8250;</p>
-			<ul>
-				<li><a href="#">
-					<img src="static/media/images/cakes/1.jpeg">
-					<p>Birthday Cake</p>
-					<strike>N4000</strike><span><b> N5000</b></span>
-					<p style="opacity:0.3">Category: Birthday Cakes</p>
-					</a>
-				</li>
-				
-			</ul>
-
-			</div>
-
-		</div>
-		<div class="clearfix"></div>
-	</div>	
-		
-	</div>
+	{% include 'gift_items_container.html' with gifts=gifts %}
 {% endblock %}

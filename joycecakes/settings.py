@@ -30,10 +30,10 @@ AWS_SECRET_ACCESS_KEY = 'YXklluKsSBBafnRC20H9IXXPO46lg6gp5K4M228L'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
-STATICFILES_LOCATION = 'static'
+# STATICFILES_LOCATION = 'static'
 # STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "joycecakes","static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "joycecakes","static")
 # STATICFILES_STORAGE = 'joycecakes.custom_storages.StaticStorage'
 
 MEDIAFILES_LOCATION = 'media'
@@ -44,7 +44,7 @@ DEFAULT_FILE_STORAGE = 'joycecakes.custom_storages.MediaStorage'
 
 # **************************************************************************************
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 

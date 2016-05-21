@@ -124,6 +124,7 @@ nav a{
 }
 .carouselitems p{	
 	font-size: 12px;
+	text-align: center;
 }
 .striptitle{
 	text-transform: uppercase;
@@ -180,7 +181,7 @@ nav a{
 .itemscontainer ul li{
 	display: inline-block;
 	width: 150px;
-	height: 200px;
+	height: 230px;
 	padding: 20px;
 	margin:0px 5px;
 	vertical-align: top;
@@ -202,6 +203,17 @@ nav a{
 .itemscontainer ul li img{	
 	border-radius: 50%;
 	height: 150px;
+}
+.itemaddtocart{
+	padding:5px;
+	text-align:center;
+	text-transform:uppercase;
+	border:1px solid #eeeeee;
+	margin:10px;font-size:11px;
+	border-radius:5px;
+	cursor:pointer;
+	font-weight: bold;
+	width:100%;
 }
 footer{
 	height: 200px;
@@ -311,9 +323,11 @@ footer{
 }
 #registercontainer .errorlist.nonfield{
 	font-size:12px;
-	text-decoration: none;
 	color: rgba(255,0,0,0.6);
 	margin: 10px;
+}
+#registercontainer .errorlist.nonfield li{
+	list-style-type: none;
 }
 /*********************************************************/
 /****************DELIVERY*********************************/
@@ -391,6 +405,10 @@ footer{
 	color: rgba(0,0,0,0.4);
 	max-width: 150px;
 }
+.eachitem li p a{
+	text-decoration: none;
+	color: rgba(0,0,0,0.4);
+}
 .eachitem li input[type="text"]{
 	width: 30px;
 	border: 1px solid rgba(0,0,0,0.3);
@@ -399,8 +417,8 @@ footer{
 	text-align: center;
 }
 .eachitem img{
-	width: 50px;
-	height: 50px;
+	width: 60px;
+	max-height: 50px;
 }
 #cartcontainer strong{
 	display: block;
@@ -408,7 +426,9 @@ footer{
 	border-bottom: 1px solid #eeeeee;
 	padding: 20px;
 }
-#cartcontainer button{
+#cartcontainer button,
+#cartcontainer input[type="submit"],
+#cartcontainer input[type="button"]{
 	cursor: pointer;
 	padding: 10px;
 	border:1px solid #eeeeee;
@@ -575,6 +595,29 @@ footer{
 
 /****************************************************************/
 /**************************Checkout******************************/
+#checkoutdiag{
+	text-align: center;
+	width:100px;
+	height:50px;
+	background:rgba(0,0,0,0.3);
+	position:fixed;
+	bottom: 10px;
+	right:10px;
+	padding:10px;
+	z-index: 99;
+}
+#checkoutdiagbtn{
+	border:1px solid #eeeeee;
+	padding:5px;
+	text-transform:uppercase;
+	font-size:11px;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+}
+#checkoutdiagbtn:hover{
+	box-shadow: 1px 1px 3px 1px #eeeeee;
+}
 #checkoutcontainer{
 
 }
@@ -638,6 +681,7 @@ footer{
 #summarycontainer h2{
 	text-align: right;
 	color: rgba(0,0,0,0.4);
+	padding:20px 0px;
 }
 #summarycontainer textarea{
 	border:1px solid #eeeeee;
@@ -712,9 +756,67 @@ footer{
 	font-size: 11px;
 	color: rgba(0,0,0,0.3);
 }
-#profileupdatebtn li{
-	display:inline;
+#userprofilecontainer .errorlist.nonfield{
+	margin:10px 15px;
+}
+#userprofilecontainer .errorlist.nonfield li{
+	color:red;
+	list-style-type: none;
+	font-size: 12px;
+}
+#updatebtn,#editbtn,#transactbtn{
+	list-style-type: none;
+	
+}
+#profilemanagebtn{
+	position: fixed;
+	z-index: 99;
+	bottom: 80px;
+	right: 20px;
+	text-align: right;
 }
 
 
+#transactbtn input, #updatebtn,#editbtn,#transactbtn{
+	width: 200px !important;
+	opacity: 0.5;
+}
+
 /*******************************************************************/
+
+/***************************TRANSACTION*******************************/
+#transactioncontainer{
+	overflow: auto;
+}
+#transactioncontainer h4{
+	color: #cccccc;
+    margin: 20px;
+}
+#transactioncontainer table{
+	width: 100%;
+	text-align: center;
+	table-layout: fixed;
+	border-collapse: collapse; 
+}
+#transactioncontainer table th{
+	background-color: rgba(51,81,138,0.6);
+	color:white;
+	font-size: 11px;
+	font-weight: normal;
+	padding:2px 10px;
+}
+#transactioncontainer table td{
+	color: rgba(0,0,0,0.6);
+	font-size: 11px;
+	padding:5px 0px;
+}
+#transactioncontainer table tbody tr{
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	
+}
+/**********************************************************************/
+#gmapscontainer{
+	width: 100%;
+	height:300px;
+	background-color: #eeeeee;
+}

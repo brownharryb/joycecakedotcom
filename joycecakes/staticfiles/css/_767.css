@@ -87,5 +87,8 @@ nav {
 	box-shadow: 1px 1px 5px 1px #000000;
 
 }
+.eachitem li {
+    margin-left: 30px;
+}
 
 

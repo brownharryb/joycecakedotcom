@@ -19,12 +19,13 @@ Cart - Joyce Cakes
 	{% for i in all_cart_items%}
 		<ul class="eachitem" data-itemid="{{i.id}}">
 			<li><img src="{{i.image_file.url}}"></li>
-			<li><p><a href="#">{{i.name}}</a></p></li>
+			<li><p><a href="{% url 'shop-item-detail-view' item_category=i.category.slug item_slug=i.slug %}">{{i.name}}</a></p></li>
 			<li><p>&#8358;<span class="cartitemsingleprice">{{i.sale_price|intcomma}}</span></p></li>
 			<li><p>Qty: <input class="cartitemqty"type="text" maxlength="2" value="1" name="id_{{i.id}}_qty"></p></li>
 			<li><p>&#8358;<span class="cartitemtotalprice">{{i.sale_price|intcomma}}</span></p></li>
 			<li><p data-removecarturl="{% url 'shop-togglecart-view' item_id=i.id %}" onclick="removeFromCartInCartHtml(this)" style="cursor:pointer;color:red;text-decoration:none;text-transform:lowercase;">x</p></li>			
 		</ul>
+		<hr style="border-color:rgba(0,0,0,0.1);">
 	{% endfor %}
 		<button type="button" id="cartupdateallprices" data-urlprice="{% url 'shop-getitemprices' item_ids_string=cart_items_string %}" onclick="confirmAllItemPrices()">
 		Update Prices</button>

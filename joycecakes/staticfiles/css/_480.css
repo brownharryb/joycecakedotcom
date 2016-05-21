@@ -1,0 +1,9 @@
+.eachitem li {
+	display: block;
+}
+.eachitem li p {
+    max-width: none;
+}
+.eachitem{
+	text-align: center;
+}

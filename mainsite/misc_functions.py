@@ -99,3 +99,22 @@ def get_proper_fullname(fullname):
 # TODO CREATE EMAIL BACKEND TO SEND EMAIL
 def send_email(email,msg):
 	return True
+
+def decode_session_string(session_str):
+	returnlist = []
+	"item_session_string = _i3|q1|p5000.0_i2|q1|p4000.0_i5|q1|p4000.0_i4|q1|p5000.0"
+	s = session_str.split('_')
+	for i in s:
+		if not i == '':
+			e = i.split('|')
+			tempdict={}
+			for j in e:
+				if j[0]=='i':
+					tempdict['item_id'] = j[1:]
+				if j[0]=='q':
+					tempdict['item_qty'] = j[1:]
+				if j[0]=='p':
+					tempdict['item_full_price'] = j[1:]
+			returnlist.append(tempdict)
+	return returnlist
+

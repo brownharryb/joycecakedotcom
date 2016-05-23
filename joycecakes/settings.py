@@ -44,7 +44,7 @@ DEFAULT_FILE_STORAGE = 'joycecakes.custom_storages.MediaStorage'
 
 # **************************************************************************************
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
 
@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'accounts',
     'storages',
     'django.contrib.humanize',
+    'imagekit',
 )
 
 MIDDLEWARE_CLASSES = (

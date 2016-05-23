@@ -28,7 +28,7 @@
 		{% endif %}
 
 
-		<p><button class="itemaddtocart item_id_{{item.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=item.id %}">
+		<p><button class="theme-color itemaddtocart item_id_{{item.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=item.id %}">
 						{% if item.id|stringformat:"i" in request.session.cart_items %}
 							Added
 							{% else %}
@@ -37,18 +37,9 @@
 
 					</button></p>
 
-
-
-
-
-
-		<!-- {% if item.id in cart_items %}
-			<p id="addtocartbtn">Added To Cart</p>
-		{% else %}
-			<p id="addtocartbtn">Add To Cart</p>
-		{% endif %} -->
-
 	</ul>
+	<hr style="border-color:rgba(0,0,0,0.1);margin-top:100px;">
 	{% include 'gift_items_container.html' with gifts=gifts %}
+
 
 {% endblock %}

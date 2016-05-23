@@ -18,7 +18,7 @@ Cart - Joyce Cakes
 	{% csrf_token %}
 	{% for i in all_cart_items%}
 		<ul class="eachitem" data-itemid="{{i.id}}">
-			<li><img src="{{i.image_file.url}}"></li>
+			<li><img src="{{i.get_cart_image_url}}"></li>
 			<li><p><a href="{% url 'shop-item-detail-view' item_category=i.category.slug item_slug=i.slug %}">{{i.name}}</a></p></li>
 			<li><p>&#8358;<span class="cartitemsingleprice">{{i.sale_price|intcomma}}</span></p></li>
 			<li><p>Qty: <input class="cartitemqty"type="text" maxlength="2" value="1" name="id_{{i.id}}_qty"></p></li>
@@ -27,7 +27,7 @@ Cart - Joyce Cakes
 		</ul>
 		<hr style="border-color:rgba(0,0,0,0.1);">
 	{% endfor %}
-		<button type="button" id="cartupdateallprices" data-urlprice="{% url 'shop-getitemprices' item_ids_string=cart_items_string %}" onclick="confirmAllItemPrices()">
+		<button type="button" class="font-theme-color-hover" id="cartupdateallprices" data-urlprice="{% url 'shop-getitemprices' item_ids_string=cart_items_string %}" onclick="confirmAllItemPrices()">
 		Update Prices</button>
 		<hr style="border-color:rgba(0,0,0,0.1);">
 		<strong>Total &#8358;<span id="cartallitemstotalsaleprice">{{totalprice|intcomma}}</span></strong>
@@ -35,6 +35,7 @@ Cart - Joyce Cakes
 		
 			<input type="submit" value="Checkout">
 			<input type="button" data-myurl="{% url 'shop-gallery-view' %}" onclick="visitmyurl(this)" value="Continue Shopping">
+			
 		<p class="clearfix"></p>		
 	</div>
 	{% else %}

@@ -1,10 +1,9 @@
 {% load humanize %}
 <div id="giftitemscontainer" class="midpagecontainer">
-	<hr style="border-color:rgba(0,0,0,0.1);">
 	<div id="carouselgift" class="carouselitems">
 		<div>
 			<div class="midpagecontainer striptitle"><h4 style="color:#555555;">gift items</h4>
-			<a class="viewallbtn" href="#">View All</a></div>
+			<a class="viewallbtn" href="{% url 'shop-gallery-view-category' gifts.0.category.slug%}">View All</a></div>
 			
 			<div class="itemscontainer midpagecontainer">
 			<p class="prevarrow">&#8249;</p>
@@ -12,14 +11,14 @@
 			<ul>
 			{% for i in gifts %}
 				<li><a href="{%url 'shop-item-detail-view' i.category.slug i.slug %}">
-					<img src="{{i.image_file.url}}">
+					<img src="{{i.get_gallery_carousel_image_url}}">
 					<p>{{i.name}}</p>
 					{% if i.old_price > 0%}
 					<strike>&#8358;{{i.old_price|intcomma}}</strike>
 					{% endif %}
 					<span style="display:block;text-align:center;"><b>&#8358;{{i.sale_price|intcomma}}</b></span>
 					<p style="opacity:0.3">Category:{{i.category}}</p></a>
-					<p><button class="itemaddtocart item_id_{{i.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=i.id %}">
+					<p><button class="theme-color itemaddtocart item_id_{{i.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=i.id %}">
 						{% if i.id|stringformat:"i" in request.session.cart_items %}
 							Added
 							{% else %}

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% block title %}
 {{'My Transaction - Joyce Cakes'}}
 {% endblock %}
@@ -11,12 +12,11 @@
 	<h4>My Transaction History</h4>
 	<hr style="border-color:rgba(0,0,0,0.1);margin-bottom:10px;">
 	{% if user_transactions|length > 0%}
-	{% for i in user_transactions %}
+	
 		<table>
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Time</th>
+				<th>Date/Time</th>
 				<th>Items</th>
 				<th>Total Price</th>
 				<th>Payment Medium</th>
@@ -25,37 +25,29 @@
 				<th>Transaction Id</th>
 			</tr>
 		</thead>
-		{{user_transactions}}
 		<tbody>
+		{% for i in user_transactions %}
 			<tr>
 		
-				<td>12th June 2016</td>
-				<td>11:30pm</td>
+				<td>{{i.transaction_date}}</td>
 				<td>
-					<a href="#">Birthday cake 1(4)</a>
-					<a href="#">Birthday cake 2(1)</a>
-					<a href="#">Birthday cake 3(4)</a>
-					<a href="#">Birthday cake 4(1)</a>
-
+				{% for j in i.get_total_item_details %}
+					<a href="{% url 'shop-item-detail-view' item_category=j.item_id.category.slug item_slug=j.item_id.slug %}">{{j.item_id}}({{j.item_qty}})</a>
+				{% endfor %}
 				</td>
-				<td>&#8358;12,000</td>
-				<td>Cash On Delivery</td>
-				<td>Delivered</td>
+				<td>&#8358;{{i.get_total_price|intcomma}}</td>
+				<td>{{i.get_payment_medium_display|upper}}</td>
+				<td>{{i.get_transaction_status_display|upper}}</td>
+				<td></td>
+				<td>{{i.transaction_id_string}}</td>
 			</tr>
-			<tr>
-				<td>12th June 2016</td>
-				<td>11:30pm</td>
-				<td>Birthday cake 1, Birthday cake 2,Birthday cake 3,Birthday cake 4</td>
-				<td>&#8358;12,000</td>
-				<td>Cash On Delivery</td>
-				<td>Delivered</td>
-			</tr>
+			{% endfor %}
 
 		</tbody>
 	</table>
 
 
-	{% endfor %}
+	
 
 	{% else %}
 		<h4>No Transaction!!</h4>

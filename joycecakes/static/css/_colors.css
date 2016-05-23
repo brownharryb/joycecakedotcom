@@ -1,0 +1,9 @@
+.theme-color{
+	background-color:rgb(128,100,77) !important;
+}
+.font-theme-color{
+	color:rgb(128,100,77) !important;;
+}
+.font-theme-color-hover:hover{
+	color:rgb(128,100,77) !important;;
+}

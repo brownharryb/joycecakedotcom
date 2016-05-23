@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{{'Order Success - Joyce Cakes'}}
+{% endblock %}
+{% block bodycontent %}	
+	<hr style="border-color:rgba(0,0,0,0.1);">
+	<div id="orderconfirmcontainer" class="midpagecontainer">
+		<h3>Your Order has been received, You will be contacted within 48hrs.</h3>
+		<h3>Thank You for your Purchase!!</h3>
+		<h3>Please check your <a href="{% url 'user_transaction_page'%}">transaction history</a> for more information.</h3>
+		<h3 style="padding:20px 0px;"><button class="font-theme-color-hover" data-myurl="{% url 'shop-gallery-view'%}" onclick="visitmyurl(this)">Continue Shopping</button></h3>
+	</div>
+{% endblock %}

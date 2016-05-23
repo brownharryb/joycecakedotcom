@@ -5,15 +5,15 @@
 		{% if each_item.show_as_new%}
 		<span class="newtag">New</span>
 		{% endif %}
-		<img src="{{each_item.image_file.url}}">
-		<p>{{each_item.item_name}}</p>
-		{% if each_item.old_price > 0 %}
-		<strike>&#8358;{{each_item.old_price|intcomma}}</strike><span>
+		<img src="{{each_item.get_gallery_carousel_image_url}}">
+		<p>{{each_item.name}}</p>
+		<p>{% if each_item.old_price > 0 %}
+		<strike>&#8358;{{each_item.old_price|intcomma}}</strike>
 		{% endif %}
-		<b> &#8358;{{each_item.sale_price|intcomma}}</b></span>
+		<span><b> &#8358;{{each_item.sale_price|intcomma}}</b></span></p>
 		<p style="opacity:0.3">Category:{{each_item.category}}</p>		
 	</a>
-	<p><button type="submit" class="itemaddtocart item_id_{{each_item.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=each_item.id %}">
+	<p><button type="submit" class="theme-color itemaddtocart item_id_{{each_item.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=each_item.id %}">
 	{% if each_item.id|stringformat:"i" in request.session.cart_items %}
 	Added
 	{% else %}

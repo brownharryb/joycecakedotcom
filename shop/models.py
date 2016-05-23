@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 import os, datetime
 from mainsite import misc_functions
 from django.conf import settings
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 def get_image_upload_path(instance, filename):
@@ -39,7 +41,8 @@ class ItemCategory(models.Model):
 
 	#TODO fix this
 	def get_total_cakes(self):
-		return 20
+		all_cakes = Item.objects.filter(category=self)
+		return len(all_cakes)
 
 	def save(self, *args, **kwargs):
 		if not self.id:
@@ -53,6 +56,10 @@ class Item(models.Model):
 	category = models.ForeignKey(ItemCategory, on_delete=models.CASCADE)
 	brief_detail = models.TextField()
 	image_file = models.ImageField(upload_to=get_image_upload_path, null=True)
+	image_file_for_cart = ImageSpecField(source='image_file',processors=[ResizeToFill(100, 50)],
+											format='JPEG',options={'quality': 60})
+	image_file_for_carousel_and_gallery = ImageSpecField(source='image_file',processors=[ResizeToFill(200, 200)],
+											format='JPEG',options={'quality': 60})
 	in_stock = models.IntegerField(default=0)
 	featured = models.BooleanField(default=False)
 	show_as_new = models.BooleanField(default=False)
@@ -96,6 +103,19 @@ class Item(models.Model):
 		if self.id in saved_list or str(self.id) in saved_list:
 			return True
 		return False
+
+	def get_cart_image_url(self):
+		try:
+			return self.image_file_for_cart.url				
+		except IOError as e:
+			pass
+		return self.image_file.url
+
+	def get_gallery_carousel_image_url(self):
+		try:
+			return self.image_file_for_carousel_and_gallery.url
+		except IOError as e:
+			return self.image_file.url
 
 
 

@@ -103,12 +103,16 @@ class UserLogin(View):
 
 	def get(self,request,*args,**kwargs):
 		next_url = request.GET.get('next')
+		if not self.next_url_is_ok(next_url):
+			return redirect(reverse('home_url'))
 		form = self.form_class(initial=self.initial)		
 		return render(request, self.template_name, {'form':form,'next_url':next_url})
 
 	def post(self,request,*args,**kwargs):
 		form = self.form_class(request.POST)
 		next_url = request.POST.get('next_url')
+		if not self.next_url_is_ok(next_url):
+			return redirect(reverse('home_url'))
 
 		if form.is_valid():
 			username = form.cleaned_data['username'].lower()
@@ -129,6 +133,13 @@ class UserLogin(View):
 
 		else:
 			return render(request, self.template_name, {'form':form})
+
+	def next_url_is_ok(self,next_url):
+		allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/'
+		for i in next_url:
+			if not i in allowedchars:
+				return False
+		return True
 
 class ForgotPassword(View):
 	template_name = 'forgotpass.html'
@@ -322,4 +333,6 @@ class UserTransactionView(View):
 			user_transactions = models.UserTransaction.objects.filter(user=user_info)
 		except ObjectDoesNotExist as e:
 			return redirect(reverse('home_url'))
+		for i in user_transactions:
+			print 'bomsy '+str(i.get_total_item_details)
 		return render(request,self.template_name,{'user_transactions':user_transactions})

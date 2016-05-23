@@ -7,3 +7,7 @@
 .eachitem{
 	text-align: center;
 }
+
+#logincontainer p a {
+    margin:none;
+}

@@ -1,19 +1,19 @@
 {% load humanize %}
-<div id="galleryconytainer" class="midpagecontainer">
+<div id="gallerycontainer" class="midpagecontainer">
 		<ul class="galleryitem">
 		{% for i in cakes%}
 			<li><a href="{%url 'shop-item-detail-view' i.category.slug i.slug %}">
 				{% if i.show_as_new %}
 				<span class="gallerynewtag">New</span>
 				{% endif %}
-					<img src="{{i.image_file.url}}">
+					<img src="{{i.get_gallery_carousel_image_url}}">
 					<p>{{i.name}}</p>
-					{% if i.old_price > 0%}
+					<p style="font-size:14px;">{% if i.old_price > 0%}
 					<strike>&#8358;{{i.old_price|intcomma}}</strike><span>
 					{% endif %}
-					<b> &#8358;{{i.sale_price|intcomma}}</b></span>
+					<b> &#8358;{{i.sale_price|intcomma}}</b></span></p>
 					</a>
-					<p><button class="itemaddtocart item_id_{{i.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=i.id %}">
+					<p><button class="theme-color itemaddtocart item_id_{{i.id|stringformat:'i'}}" data-urlsubmit="{% url 'shop-togglecart-view' item_id=i.id %}">
 						{% if i.id|stringformat:"i" in request.session.cart_items %}
 							Added
 							{% else %}

@@ -46,20 +46,19 @@ class UserTransaction(models.Model):
 			('2','others')
 		)
 	PAYMENT_MEDIUM_CHOICES = (
-			('0','cash_on_delivery'),
+			('0','cash on delivery'),
 			('1','interswitch'),
 			('2','paypal')
 		)
-	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, null=True)
-	mobile_phone = models.CharField(max_length=20)
-	full_name = models.CharField(max_length=100,editable=False)
+	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
 	transaction_id_string = models.CharField(max_length=20,editable=False,unique=True)
 	transaction_date = models.DateTimeField(editable=False)
-	transaction_complete_date = models.DateTimeField(null=True,editable=False)
+	transaction_complete_date = models.DateTimeField(null=True,blank=True)
 	items = models.ManyToManyField(shopmodels.Item)
-	payment_medium = models.CharField(max_length=1,default=0)
+	payment_medium = models.CharField(max_length=1,default='0',choices=PAYMENT_MEDIUM_CHOICES)
 	payment_confirmed = models.BooleanField(default=False)
 	transaction_status = models.CharField(max_length=1, choices=TRANSACTION_STATUS_CHOICES, default='0')
+	session_string = models.TextField(blank=True,editable=False)
 
 
 
@@ -67,5 +66,21 @@ class UserTransaction(models.Model):
 		if not self.id:
 			self.transaction_date = datetime.datetime.now()
 			self.transaction_id_string = misc_functions.generate_key(30)
-			self.full_name = misc_functions.get_proper_fullname(self.user.get_full_name())
 		super(UserTransaction, self).save(*args,**kwargs)
+
+
+	def get_total_item_details(self):
+		data_list = misc_functions.decode_session_string(self.session_string)
+
+		for i in data_list:
+			i['item_id'] = shopmodels.Item.objects.get(pk=int(i['item_id']))
+		return data_list
+
+	def get_total_price(self):
+		totalprice = 0
+		data = self.get_total_item_details()
+		for i in data:
+			totalprice +=float(i['item_full_price'])
+		return totalprice
+
+

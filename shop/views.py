@@ -5,21 +5,21 @@ from django.views.generic import View, FormView
 from . import models
 from accounts import models as accountsmodels
 from accounts import forms as accountsforms
-from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname
+from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname,decode_session_string
 import random,json
 
 
 #********************************Gallery*****************
 @confirm_sessions_and_cookies
 def gallery_view(requests):
-	try:
-		cat = models.ItemCategory.objects.get(pk=1)
-		cakes = models.Item.objects.filter(category=cat)
-		cakes = list(cakes)
-		cakes = randomize_list(cakes)
-		return render(requests,'gallery.html',{'cakes':cakes})
-	except:
-		return render(requests,'page404.html')
+	# try:
+	cat = models.ItemCategory.objects.get(pk=1)
+	cakes = models.Item.objects.filter(category=cat)
+	cakes = list(cakes)
+	cakes = randomize_list(cakes)
+	return render(requests,'gallery.html',{'cakes':cakes})
+	# except:
+		# return render(requests,'page404.html')
 
 @confirm_sessions_and_cookies
 def gallery_view_with_category(requests,category_slug):
@@ -108,7 +108,6 @@ def confirm_selected_item_prices(requests,item_ids_string):
 
 	item_id_list = item_ids_string
 	item_id_list = [int(i) for i in item_id_list if not i == 'a']
-	print 'item_id_list = '+str(item_id_list)
 	all_items = models.Item.objects.filter(id__in=item_id_list)
 	for j in all_items:
 		sale_prices[j.id] = j.sale_price
@@ -136,6 +135,7 @@ class CartView(View):
 
 		return render(requests,'cart.html',{'gifts':self.gifts,'all_cart_items':all_cart_items,'totalprice':totalprice})
 	def post(self,requests,*args,**kwargs):
+		item_session_string = ''
 		if not requests.user.is_authenticated():
 			url = reverse('user_login')
 			cart_url = reverse('shop-cart-view')
@@ -146,19 +146,30 @@ class CartView(View):
 		post_data = requests.POST
 		all_data_keys = requests.POST.keys()
 		all_data_ids = requests.session.get('cart_items')
+		if all_data_ids == []:
+			return render(requests,'cart.html',{'gifts':self.gifts,'all_cart_items':all_cart_items,'totalprice':totalprice})
+		
 		for i in all_data_keys:
 			j = i.split('_')
 			if 'id' in j:
 				id_num = int(j[1])
 				item = models.Item.objects.get(pk=id_num)
+				# TODO MAKE A SESSION STRING TO STORE ALL QTY, ID,SINGLE PRICE AND TOTAL PRICE					
 				price = item.sale_price * int(post_data[i])
+				item_session_string += '_i{0}|q{1}|p{2}'.format(id_num, post_data[i], price)
 				returndict[id_num] = price
 				totalprice+=price
-				
-		
-
+		requests.session['totalprice_in_cart'] = totalprice
+		requests.session['order_string'] = item_session_string		
 		form = self.prepareform(requests)
 		return render(requests,'checkout.html',{'gifts':self.gifts,'datadict':returndict,'totalprice':totalprice,'profile_form':form})
+
+	# def flag_is_ok(self,flag):
+	# 	allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/'
+	# 	for i in flag:
+	# 		if not i in allowedchars:
+	# 			return False
+	# 	return True
 	
 
 	def prepareform(self,requests):		
@@ -186,47 +197,30 @@ class CartView(View):
 
 
 
+class CheckoutView(View):
+	success_template = 'success_order.html'
+	fail_template = 'fail_order.html'
 
+	def post(self,requests,*args,**kwargs):
+		item_ids = []
+		order_string = requests.session.get('order_string')
+		items_list =  decode_session_string(order_string)
+		totalprice = requests.session.get('totalprice_in_cart')
+		for i in items_list:
+			item_ids.append(int(i['item_id']))
+		all_items = models.Item.objects.filter(id__in=item_ids)
+		user_transaction = accountsmodels.UserTransaction()
+		user_transaction.user= accountsmodels.UserInfo.objects.get(user=requests.user)
+		user_transaction.session_string = order_string
+		user_transaction.save()
+		for i in all_items:
+			user_transaction.items.add(i)
+		user_transaction.save()
+		self.send_mail_to_alert_webmaster(user_transaction)		
+		return render(requests,self.success_template)
+		
+	# TODO SEND MAIL
+	def send_mail_to_alert_webmaster(self,user_transaction):
+		pass
 
-
-# **************************************************************************
-# class CheckoutView(View):
-# 	template_name = 'checkout.html'
-# 	profile_form_class = accountsforms.MyProfileForm
-# 	initial = {}
-
-# 	@confirm_sessions_and_cookies
-# 	def dispatch(self,requests,*args,**kwargs):
-# 		if not requests.user.is_authenticated():
-# 			url = reverse('user_login')
-# 			checkout_url = reverse('shop-checkout-view')
-# 			url+='?next=%s'%(checkout_url)
-# 			return redirect(url)
-# 		return super(CheckoutView,self).dispatch(requests,*args,**kwargs)
-
-# 	def get(self,requests,*args,**kwargs):		
-# 		cart_items = requests.session.get('cart_items')
-# 		cart_items = [models.Item.objects.get(pk=int(i)) for i in cart_items]
-# 		user = requests.user
-# 		user_info = accountsmodels.UserInfo.objects.get(user=user)
-
-# 		self.initial['first_name'] = user.first_name
-# 		self.initial['last_name'] = user.last_name
-# 		self.initial['username'] = user.username
-# 		self.initial['email'] = user.email
-# 		self.initial['full_name'] = get_proper_fullname(user.get_full_name())
-# 		self.initial['mobile_number'] = user_info.mobile_phone
-# 		self.initial['address1'] = user_info.delivery_address1
-# 		self.initial['address2'] = user_info.delivery_address2
-# 		self.initial['city'] = user_info.city
-# 		self.initial['state'] = user_info.state
-# 		self.initial['country'] = user_info.country
-
-# 		profile_form = self.profile_form_class(self.initial)
-
-# 		return render(requests,self.template_name,{'profile_form':profile_form,'user_info':user_info})
-
-# 	def post(self,requests,*args,**kwargs):
-# 		profile_form = self.profile_form_class(requests.POST)
-# 		if profile_form.is_valid():
-# 			pass
+	

@@ -215,13 +215,20 @@ nav a{
 	font-weight: bold;
 	width:100%;
 }
+/***********************************************************/
+/********************************FOOTER********************/
 footer{
 	height: 200px;
 	background: #222222;
 	z-index: 9999;
-
 }
-
+#copyrighttext{
+	text-align: center;
+	color:white;
+	font-size:12px;
+	padding: 15px;
+}
+/**************************************************************/
 /**************LOGIN***************************/
 #logincontainer{
 	max-width: 350px;
@@ -259,7 +266,6 @@ footer{
 	font-size:12px;
 	text-decoration: none;
 	color: rgba(0,0,0,0.5);
-	margin: 10px 36%;
 }
 #logincontainer .errorlist.nonfield{
 	margin-left:20%;
@@ -437,6 +443,7 @@ footer{
 	background: #33518A;
 	color: white;
 	font-weight: bold;
+	border-radius: 11px;
 
 }
 #cartcontainer button:hover{	
@@ -472,6 +479,7 @@ footer{
 }
 #iteminfo{
 	max-width: 300px;
+	text-align: center;
 }
 #iteminfo p{
 	font-style: italic;

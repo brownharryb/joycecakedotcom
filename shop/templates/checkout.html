@@ -32,7 +32,7 @@ Checkout - Joyce Cakes
 		</li>
 		<li>
 			<div id="summarycontainer">
-				<h5>Your Order</h5>
+				<h5 class="theme-color">Your Order</h5>
 				<p>Total: &#8358;{{totalprice|intcomma}}</p>
 				<p>Tax: N1,200</p>
 				<p>Delivery: N0</p>
@@ -40,8 +40,15 @@ Checkout - Joyce Cakes
 				<hr>
 				<h2>&#8358;{{totalprice|intcomma}}</h2>
 				<hr>
-				<span id="paybtn"><a href="#">Vougue Pay</a></span>
-				<span id="paybtn"><a href="#">Cash On Delivery</a></span>
+
+				<form method="post" action="{% url 'shop-checkout-view'%}">
+				{% csrf_token %}
+				<fieldset>
+				<legend>Place Order</legend>
+				<input type="submit" class="paybtn" value="Vougue Pay">
+				<input type="submit" class="paybtn" value="Cash On Delivery">
+				</fieldset>
+				</form>
 
 			</div>
 		</li>

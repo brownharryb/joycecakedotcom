@@ -13,8 +13,8 @@ urlpatterns = [
     url(r'^toggle_cart/(?P<item_id>[0-9]+)/$', views.toggle_cart_view, name='shop-togglecart-view'),
     url(r'^confirm_item_prices/(?P<item_ids_string>[\w-]*)/$', views.confirm_selected_item_prices, name='shop-getitemprices'),    
     url(r'^detail/(?P<item_category>[\w-]+)/(?P<item_slug>[\w-]+)', views.item_detail_view, name='shop-item-detail-view'),
-    url(r'^cart/$', views.CartView.as_view(), name='shop-cart-view'),
-    # url(r'^checkout/$', views.CheckoutView.as_view(), name='shop-checkout-view'),
+    url(r'^order/$', views.CartView.as_view(), name='shop-cart-view'),
+    url(r'^checkout/$', views.CheckoutView.as_view(), name='shop-checkout-view'),
 ]
 
 

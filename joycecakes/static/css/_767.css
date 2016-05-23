@@ -65,7 +65,7 @@ nav {
 	position: relative;
 	cursor: pointer;
 	border:1px solid #eeeeee;
-	background: #33518A;
+	background: rgb(128, 128, 77);
 	color: white;
 	font-weight: bold;
 	text-align: center;

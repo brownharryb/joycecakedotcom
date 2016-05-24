@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.conf import settings
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
@@ -6,6 +7,7 @@ from . import models
 from accounts import models as accountsmodels
 from accounts import forms as accountsforms
 from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname,decode_session_string
+from mainsite import misc_functions
 import random,json
 
 
@@ -216,11 +218,46 @@ class CheckoutView(View):
 		for i in all_items:
 			user_transaction.items.add(i)
 		user_transaction.save()
-		self.send_mail_to_alert_webmaster(user_transaction)		
+		requests.session['cart_items'] = []
+		self.send_mail_to_alert_webmaster(requests,user_transaction,items_list)
+		self.send_confirm_mail_to_customer()	
 		return render(requests,self.success_template)
 		
 	# TODO SEND MAIL
-	def send_mail_to_alert_webmaster(self,user_transaction):
+	def send_mail_to_alert_webmaster(self,request,user_transaction,items_list):
+		user_info =  user_transaction.user
+		user = user_info.user
+		items = user_transaction.items.all()
+		contact_str = 'Name: {0}\nMobile:{1} \nEmail:{2}'.format(misc_functions.get_proper_fullname(user.get_full_name()),
+												user_info.mobile_phone,user.email)
+		add_str = 'Address:  {0}\n{1}\n{2}\n{3}'.format(user_info.delivery_address1,
+								user_info.delivery_address2,user_info.city, user_info.state)
+		msg = 'Transaction Notification:\n\n'
+		for i in items_list:
+			each_item = models.Item.objects.get(pk=int(i['item_id']))
+			item_name = each_item.name
+			item_link = each_item.get_full_item_detail_link(request)
+			msg+='\nName:'+str(item_name)+'  Qty:'+str(i['item_qty'])+'  Link:'+str(item_link)
+
+		msg +='\n\n\n\n{0}'.format(contact_str)
+		msg += ' \n\n{0}'.format(add_str)
+
+		msg +=' \n\n\nRegards \nJoycecakes.'
+
+
+		subject='Transaction Notification on Joycecakes website'
+		my_email=settings.MY_EMAIL_ADDRESS
+		recipients=[settings.MY_EMAIL_ADDRESS]
+		print 'itemstr = '+str(msg)
+
+
+
+
+		# TODO SEND MAIL
+
+		# print 'Sending email....'+str(misc_functions.send_email('Just a test mail from boma',['brownharryb@gmail.com'],'Hello from Boma'))
+
+	def send_confirm_mail_to_customer():
 		pass
 
 	

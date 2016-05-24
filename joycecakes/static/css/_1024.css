@@ -10,3 +10,6 @@
 #prevtitlearrow, #nexttitlearrow{
 	display: none;
 }
+#itemdetailcontainer img{
+	max-width: 400px;
+}

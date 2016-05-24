@@ -165,9 +165,19 @@ STATICFILES_DIRS = [
 SITE_TITLE = 'Joyce Cakes'
 MOBILE_CONTACT = ['+23480386550030']
 CART_EXPIRY = {'time_type':'days','time_value':3}
+MY_EMAIL_ADDRESS = 'brownharryb@gmail.com'
 
 # AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
 #         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
 #         'Cache-Control': 'max-age=94608',
 #     }
 #***************************************************************************
+# *************************EMAIL BACKEND************************************
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'bomsy1@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+
+# *****************************************************************************

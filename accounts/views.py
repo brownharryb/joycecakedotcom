@@ -17,6 +17,8 @@ class UserRegister(FormView):
 	template_name = 'register.html'
 	form_class = forms.RegisterForm
 	initial = {'key':'value'}
+	# user =''
+	# user_info =''
 
 	@confirm_sessions_and_cookies
 	def dispatch(self,request,*args,**kwargs):
@@ -29,24 +31,47 @@ class UserRegister(FormView):
 		return render(request,self.template_name, {'form':form})
 
 	def post(self,request, *args, **kwargs):
-		form = self.form_class(request.POST)
+		if request.POST.get('formkind') == 'delform':
+			form = forms.DeliveryForm(request.POST)
+			kwargs['form'] = form
+			return self.delivery_form_post(request, *args, **kwargs)
+		elif request.POST.get('formkind') == 'regform':
+			form = forms.RegisterForm(request.POST)
+			kwargs['form'] = form
+			return self.register_form_post(request, *args, **kwargs)
+		else:
+			return redirect(reverse('home_url'))
+		
+
+	def delivery_form_post(self,request, *args, **kwargs):
+		form = kwargs['form']
 		if form.is_valid():
+			return render(request,'success_register.html')
+		else:
+			return render(request,'delivery_form.html',{'form':form})
+
+	def register_form_post(self,request, *args, **kwargs):
+		form = kwargs['form']
+		if form.is_valid():
+			
 			first_name = form.cleaned_data['first_name'].lower()
 			last_name = form.cleaned_data['last_name'].lower()
 			email = form.cleaned_data['email'].lower()
 			mobile_number = form.cleaned_data['mobile_number'].lower()
 			username = form.cleaned_data['username'].lower()
 			password = form.cleaned_data['password']
-
 			user = User(first_name=first_name, last_name =last_name, email=email,
 						username=username)
 			user.set_password(password)
 			user.save()
 			user_info = models.UserInfo(user=user,mobile_phone=mobile_number)
 			user_info.save()
-			return redirect(reverse('user_delivery'))
+
+			delivery_initial={'city':'Port Harcourt','state':'Rivers','country':'Nigeria'}
+			delivery_form = forms.DeliveryForm(initial=delivery_initial)
+			return render(request,'delivery_form.html',{'form':delivery_form})
 		else:
-			return render(request,self.template_name, {'form':form})
+			return render(request,'register.html', {'form':form})
 
 class UserDeliveryView(View):
 	template_name = 'delivery_form.html'
@@ -54,9 +79,10 @@ class UserDeliveryView(View):
 	initial={'city':'Port Harcourt','state':'Rivers','country':'Nigeria'}
 
 
+
 	def dispatch(self, request, *args, **kwargs):
-		if not request.user.is_authenticated():
-			return redirect(reverse('user_login'))
+		if request.user.is_authenticated():
+			return redirect(reverse('user_profile_page'))
 		return super(UserDeliveryView, self).dispatch(request, *args, **kwargs)
 
 
@@ -103,16 +129,18 @@ class UserLogin(View):
 
 	def get(self,request,*args,**kwargs):
 		next_url = request.GET.get('next')
-		if not self.next_url_is_ok(next_url):
-			return redirect(reverse('home_url'))
+		if not next_url==None:
+			if not self.next_url_is_ok(next_url):
+				return redirect(reverse('home_url'))
 		form = self.form_class(initial=self.initial)		
 		return render(request, self.template_name, {'form':form,'next_url':next_url})
 
 	def post(self,request,*args,**kwargs):
 		form = self.form_class(request.POST)
 		next_url = request.POST.get('next_url')
-		if not self.next_url_is_ok(next_url):
-			return redirect(reverse('home_url'))
+		if not next_url==None:
+			if not self.next_url_is_ok(next_url):
+				return redirect(reverse('home_url'))
 
 		if form.is_valid():
 			username = form.cleaned_data['username'].lower()
@@ -134,7 +162,7 @@ class UserLogin(View):
 		else:
 			return render(request, self.template_name, {'form':form})
 
-	def next_url_is_ok(self,next_url):
+	def next_url_is_ok(self,next_url):		
 		allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/'
 		for i in next_url:
 			if not i in allowedchars:

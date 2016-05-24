@@ -1,0 +1,8 @@
+#itemdetailcontainer img{
+	max-width: 300px;
+}
+@media (max-width: 850px) {
+	#itemdetailcontainer img{
+	max-width: 250px;
+}
+}

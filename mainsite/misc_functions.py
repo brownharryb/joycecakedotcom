@@ -2,6 +2,7 @@ import random
 from datetime import datetime, timedelta
 from django.http import  HttpRequest
 from django.conf import settings
+from django.core.mail import send_mail
 
 
 
@@ -14,7 +15,7 @@ def generate_key(length):
 	return return_data
 
 def input_is_alpha_numerals(input_dict, space_allowed=False):
-	allowed = 'abcdefghijklmnopqrstuvwxyz0123456789_-'
+	allowed = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-'
 	if space_allowed:
 		allowed +=' '
 	for key in input_dict.keys():
@@ -97,7 +98,12 @@ def get_proper_fullname(fullname):
 	return fullname
 
 # TODO CREATE EMAIL BACKEND TO SEND EMAIL
-def send_email(email,msg):
+def send_email(subject,emails_as_list,msg):
+	try:
+		send_mail(subject, msg, 'bomsy1@gmail.com',emails_as_list, 
+			fail_silently=False)
+	except:
+		return False
 	return True
 
 def decode_session_string(session_str):

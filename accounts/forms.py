@@ -63,6 +63,8 @@ class RegisterForm(forms.Form):
 		all_usernames = [x.user.username for x in all_users_info]
 		if username in all_usernames:
 			raise ValidationError('Username already exists!!')
+		if len(username) < 5:
+			raise ValidationError('Username must be at least five(5) letters!')
 
 		# ************************************************
 
@@ -81,6 +83,13 @@ class RegisterForm(forms.Form):
 		all_numbers = [x.mobile_phone for x in all_users_info]
 		if mobile_number in all_numbers:
 			raise ValidationError('Mobile Number already exists!!')
+
+		if len(mobile_number) < 6:
+			raise ValidationError('Mobile Number seems to be invalid!!')
+
+
+		if len(password) < 7:
+			raise ValidationError('Passwords must be at least seven(7) characters!')
 
 		
 		if not password == verify_password:
@@ -117,13 +126,16 @@ class DeliveryForm(forms.Form):
 		emptychar = misc_functions.input_is_not_empty(temp_data)
 		if not emptychar==1:
 			raise ValidationError('%s is required!!' %emptychar)
+		for i in temp_data.keys():
+			if len(temp_data[i])<4:
+				raise ValidationError('Some or more entries are invalid!!')
 
 		temp_data['Address 2 input'] = address2
 
 		invalidchar = misc_functions.input_is_alpha_numerals(temp_data, space_allowed=True)
 		if not invalidchar == 1:
 			raise ValidationError('%s is invalid!!' %invalidchar)
-
+		
 		return self.cleaned_data
 
 		

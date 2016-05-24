@@ -8,7 +8,7 @@
 
 
 
-		<form action="{% url 'user_delivery'%}" method="post" id="shippingcontainer" class="midpagecontainer">
+		<form action="{% url 'user_register'%}" method="post" id="shippingcontainer" class="midpagecontainer">
 		{% csrf_token %}
 			<h4 style="color:#cccccc;margin:auto;padding-left:20px;">{{form.get_title}}</h4>
 			{{form.address1}}
@@ -17,6 +17,7 @@
 			{{form.state}}
 			{{form.country}}
 			{{form.non_field_errors}}
+			<input type="hidden" value="delform" name="formkind">
 			<input type="submit" value="Submit" />
 		</form>	
 {% endblock %}

@@ -1,11 +1,12 @@
 {% load humanize %}
+{% load staticfiles %}
 {% for each_item in current_row %}
 <li>
 	<a href="{% url 'shop-item-detail-view' item_category=each_item.category.slug item_slug=each_item.slug %}">
 		{% if each_item.show_as_new%}
 		<span class="newtag">New</span>
 		{% endif %}
-		<img src="{{each_item.get_gallery_carousel_image_url}}">
+		<img data-src="{{each_item.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
 		<p>{{each_item.name}}</p>
 		<p>{% if each_item.old_price > 0 %}
 		<strike>&#8358;{{each_item.old_price|intcomma}}</strike>

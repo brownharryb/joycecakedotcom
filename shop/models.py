@@ -7,6 +7,7 @@ from mainsite import misc_functions
 from django.conf import settings
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from django.core.urlresolvers import reverse
 
 
 def get_image_upload_path(instance, filename):
@@ -116,6 +117,14 @@ class Item(models.Model):
 			return self.image_file_for_carousel_and_gallery.url
 		except IOError as e:
 			return self.image_file.url
+
+	def get_full_item_detail_link(self,request):
+		url = reverse('shop-item-detail-view', kwargs={'item_category':self.category.slug,'item_slug':self.slug})
+		return request.build_absolute_uri(url)
+
+	def get_relative_item_detail_link(self):
+		return reverse('shop-item-detail-view', kwargs={'item_category':self.category.slug,'item_slug':self.slug})
+
 
 
 

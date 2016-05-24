@@ -481,6 +481,7 @@ footer{
 	position: relative;
 	margin-top: 50px;
 	box-shadow: 1px 1px 4px 2px #eeeeee;
+	padding:20px 50px;
 }
 #itemdetailcontainer li{
 	text-decoration: none;
@@ -490,6 +491,7 @@ footer{
 #itemdetailcontainer img{
 	max-height: 400px;
 	border-radius: 25px;
+	max-width: 500px;
 }
 #iteminfo{
 	max-width: 300px;
@@ -526,6 +528,18 @@ footer{
 	top: 20px;
 	right: 0px;
 	color: white;
+}
+#extraimagesdetail{
+	margin-top:10px;
+	max-height:250px;
+	padding:10px;
+	box-shadow: 1px 1px 4px 1px #eeeeee;
+	overflow: auto;
+
+
+}
+#extraimagesdetail ul li{
+	display: inline;
 }
 /***************************************************************/
 /*********************Gallery************************************/

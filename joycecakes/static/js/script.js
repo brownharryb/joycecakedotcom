@@ -13,6 +13,7 @@ $(document).ready(function(){
 	enableGalleryTitle();
 	disableUserProfileForm();
 	setupAddToCartForm();
+	enableimageloadonscroll();
 });
 
 function getviewportwidth(){
@@ -222,3 +223,20 @@ function visitmyurl(el){
 	url = $(el).data('myurl');
 	location.href = url;
 }
+function enableimageloadonscroll(){
+
+}
+
+
+$(document).scroll(function (){
+	var allimages = $('img');
+	allimages.each(function(){
+		if ($(this).visible()){
+			var datasrc = $(this).data('src');
+			if(datasrc){
+				$(this).attr('src',datasrc);
+			}
+		}
+	});		
+		// console.log($(this));
+});

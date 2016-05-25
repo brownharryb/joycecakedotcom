@@ -49,10 +49,14 @@ function enablecarousel(num){
 
 
 	prevarrow.click(function(){
-		prevClicked(container);		
+		prevClicked(container);	
 	});
 	nextarrow.click(function(){
 		nextClicked(container);
+	});
+
+	carouseldiv.scroll(function(){
+		enableimageloadonscroll();
 	});
 
 	
@@ -224,19 +228,21 @@ function visitmyurl(el){
 	location.href = url;
 }
 function enableimageloadonscroll(){
-
-}
-
-
-$(document).scroll(function (){
 	var allimages = $('img');
 	allimages.each(function(){
 		if ($(this).visible()){
 			var datasrc = $(this).data('src');
 			if(datasrc){
 				$(this).attr('src',datasrc);
+				$(this).attr('data-src','');
+				console.log($(this).data('src'));
+
 			}
 		}
-	});		
-		// console.log($(this));
+	});	
+}
+
+
+$(document).scroll(function (){
+	enableimageloadonscroll();
 });

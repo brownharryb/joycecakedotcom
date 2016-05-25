@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load staticfiles %}
 <div id="giftitemscontainer" class="midpagecontainer">
 	<div id="carouselgift" class="carouselitems">
 		<div>
@@ -11,7 +12,7 @@
 			<ul>
 			{% for i in gifts %}
 				<li><a href="{%url 'shop-item-detail-view' i.category.slug i.slug %}">
-					<img src="{{i.get_gallery_carousel_image_url}}">
+					<img data-src="{{i.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
 					<p>{{i.name}}</p>
 					{% if i.old_price > 0%}
 					<strike>&#8358;{{i.old_price|intcomma}}</strike>

@@ -257,7 +257,7 @@ class CheckoutView(View):
 
 		# print 'Sending email....'+str(misc_functions.send_email('Just a test mail from boma',['brownharryb@gmail.com'],'Hello from Boma'))
 
-	def send_confirm_mail_to_customer():
+	def send_confirm_mail_to_customer(self):
 		pass
 
 	

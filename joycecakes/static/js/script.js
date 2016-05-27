@@ -255,9 +255,12 @@ function enableextraimagesclicked(){
 		wholebody.css('display','block');
 
 		var srcval = $(this).find('img').data('src');
-		console.log('srcval '+srcval);
-		itemdetailimageprev.css('display','block');
 		itemdetailimageprevimg.attr('src',srcval);
+		itemdetailimageprev.css('display','block');
+		itemdetailimageprev.animate({
+			opacity:1
+		},2000);
+		
 
 	});
 }
@@ -268,6 +271,7 @@ function removeextraimagepopup(){
 
 	wholebody.css('display','none');
 	itemdetailimageprev.css('display','none');
+	itemdetailimageprev.css('opacity',0);
 
 
 }

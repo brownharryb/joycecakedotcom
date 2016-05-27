@@ -539,7 +539,28 @@ footer{
 
 }
 #extraimagesdetail ul li{
-	display: inline;
+	
+}
+.itemdetailextraimages{
+	display: inline-block;
+	cursor: pointer;
+}
+#itemdetailimageprev{
+	position:fixed;
+	margin: auto;
+	top: 0px;
+	bottom: 0px;
+	left:0px;
+	right:0px;
+	height:400px;
+	width:400px;
+	background: #eeeeee;
+	z-index: 1000;
+	display: none;
+}
+#itemdetailimageprev img{
+	height:100%;
+	width: 100%;
 }
 /***************************************************************/
 /*********************Gallery************************************/

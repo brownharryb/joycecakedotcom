@@ -41,8 +41,9 @@ def item_detail_view(requests,item_category,item_slug):
 	try:
 		category = models.ItemCategory.objects.get(slug=item_category)
 		item = models.Item.objects.get(slug=item_slug, category=category)
+		extra_images = item.get_extra_images()
 		gifts = get_random_gift_items()
-		return render(requests,'itemdetail.html',{'item':item,'gifts':gifts})
+		return render(requests,'itemdetail.html',{'item':item,'gifts':gifts,'extra_images':extra_images})
 	except:
 		return render(requests,'page404.html')
 
@@ -248,7 +249,6 @@ class CheckoutView(View):
 		subject='Transaction Notification on Joycecakes website'
 		my_email=settings.MY_EMAIL_ADDRESS
 		recipients=[settings.MY_EMAIL_ADDRESS]
-		print 'itemstr = '+str(msg)
 
 
 

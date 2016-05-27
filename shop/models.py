@@ -15,6 +15,9 @@ def get_image_upload_path(instance, filename):
 	cat = cat.replace(' ','_').lower()
 	return os.path.join('photos', cat, filename)
 
+def get_extra_images_upload_path(instance, filename):
+	return os.path.join('photos', 'extras', filename)
+
 
 def get_slug_name(obj_name):
 	obj_name = str(obj_name).lower()
@@ -125,7 +128,20 @@ class Item(models.Model):
 	def get_relative_item_detail_link(self):
 		return reverse('shop-item-detail-view', kwargs={'item_category':self.category.slug,'item_slug':self.slug})
 
+	def get_extra_images(self):
+		return ExtraImages.objects.filter(related_item=self)
 
+
+
+class ExtraImages(models.Model):
+	name = models.ImageField(upload_to=get_extra_images_upload_path, null=True)
+
+	image_in_list = ImageSpecField(source='name',processors=[ResizeToFill(200,200)],
+											format='JPEG',options={'quality': 60})
+	related_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+
+	def get_image_url(self):
+		pass
 
 
 
@@ -135,22 +151,3 @@ class GiftItems(models.Model):
 	def __unicode__(self):
 		return self.name
 
-
-
-# class CartInstance(models.Model):
-# 	items = models.ManyToManyField(Item)
-# 	user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-# 	expiry = models.DateTimeField()
-
-
-
-# 	def get_total_price_of_items(self):
-# 		pass
-
-# 	def save(self,*args,**kwargs):
-# 		# TODO ADD THREAD TO CHECK AND DELETE EXPIRED CACHE
-# 		if not self.id:
-# 			t = settings.CART_EXPIRY
-# 			seconds = misc_functions.get_seconds_time_value(t['time_type'],t['time_value'])
-# 			self.expiry = misc_functions.get_end_date_from_today(seconds)
-# 		super(CartInstance, self).save(*args,**kwargs)

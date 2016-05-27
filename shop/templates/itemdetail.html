@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load humanize %}
@@ -8,7 +9,13 @@
 
 
 
+
 {% block bodycontent %}
+
+<div id="itemdetailimageprev">
+<img src="{% static 'images/loader.gif' %}" >
+<span onclick="removeextraimagepopup()" style="position:absolute;top:1px;right:5px;color:red;cursor:pointer;">x</span></div>
+
 <hr style="border-color:rgba(0,0,0,0.1);">
 <ul id="itemdetailcontainer" class="midpagecontainer">
 <h3 style="color:#cccccc;padding:10px;">{{item.name}}</h3>
@@ -41,17 +48,17 @@
 					</button></p>
 
 	</ul>
+	{% if extra_images %}
 	<div class="midpagecontainer" id="extraimagesdetail">
 	<ul>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
-		<li><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}" height="100"></li>
+	{% for extra_img in extra_images %}
+
+		<li class="itemdetailextraimages">
+		<img data-src="{{extra_img.name.url}}" src="{% static 'images/loader.gif' %}" height="100">
+		</li>
+	{% endfor %}
 	</ul>
+	{% endif %}
 
 		
 	</div>

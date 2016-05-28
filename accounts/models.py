@@ -7,15 +7,21 @@ from django.core.urlresolvers import reverse
 import datetime
 from mainsite import misc_functions
 
+NAME_LENGTH = 30
+PASSWORD_LENGTH = 20
+EMAIL_LENGTH = 20
+MOBILE_NUMBER_LENGTH = 20
+DELIVERY_FORM_INPUT_LENGTH = 100
+TRANSACTION_ID_STRING_LENGTH = 30
 
 class UserInfo(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
-	mobile_phone = models.CharField(max_length=20)
-	delivery_address1 = models.CharField(max_length=100,null=True)
-	delivery_address2 = models.CharField(max_length=100,null=True,blank=True)
-	city = models.CharField(max_length=20,null=True)
-	state = models.CharField(max_length=30,null=True, default='Rivers')
-	country=models.CharField(max_length=30,null=True, default='Nigeria')
+	mobile_phone = models.CharField(max_length=MOBILE_NUMBER_LENGTH)
+	delivery_address1 = models.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,null=True)
+	delivery_address2 = models.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,null=True,blank=True)
+	city = models.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,null=True)
+	state = models.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,null=True, default='Rivers')
+	country=models.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,null=True, default='Nigeria')
 	activation_key = models.CharField(max_length=30, editable=False, null=True)
 	recovery_key = models.CharField(max_length=40, editable=False, null=True)
 
@@ -51,7 +57,7 @@ class UserTransaction(models.Model):
 			('2','paypal')
 		)
 	user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
-	transaction_id_string = models.CharField(max_length=20,editable=False,unique=True)
+	transaction_id_string = models.CharField(max_length=TRANSACTION_ID_STRING_LENGTH,editable=False,unique=True)
 	transaction_date = models.DateTimeField(editable=False)
 	transaction_complete_date = models.DateTimeField(null=True,blank=True)
 	items = models.ManyToManyField(shopmodels.Item)
@@ -65,7 +71,7 @@ class UserTransaction(models.Model):
 	def save(self, *args, **kwargs):
 		if not self.id:
 			self.transaction_date = datetime.datetime.now()
-			self.transaction_id_string = misc_functions.generate_key(30)
+			self.transaction_id_string = misc_functions.generate_key(TRANSACTION_ID_STRING_LENGTH)
 		super(UserTransaction, self).save(*args,**kwargs)
 
 

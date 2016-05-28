@@ -4,16 +4,20 @@ from mainsite import misc_functions
 from django.contrib.auth.models import User
 from . import models
 
-
+NAME_LENGTH = 30
+PASSWORD_LENGTH = 20
+EMAIL_LENGTH = 20
+MOBILE_NUMBER_LENGTH = 20
+DELIVERY_FORM_INPUT_LENGTH = 100
 
 class RegisterForm(forms.Form):
-	first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
-	last_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
-	email = forms.CharField(max_length=20,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
-	mobile_number = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
-	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
-	password = forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
-	verify_password= forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'placeholder':'Verify Password'}))
+	first_name = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
+	last_name = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
+	email = forms.CharField(max_length=EMAIL_LENGTH,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
+	mobile_number = forms.CharField(max_length=MOBILE_NUMBER_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
+	username = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Username'}))
+	password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
+	verify_password= forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Verify Password'}))
 	
 
 	def get_title(self):
@@ -100,11 +104,11 @@ class RegisterForm(forms.Form):
 		return self.cleaned_data
 
 class DeliveryForm(forms.Form):
-	address1 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
-	address2 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
-	city = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'City'}))
-	state = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'State'}))
-	country= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Country'}))
+	address1 = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
+	address2 = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
+	city = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'City'}))
+	state = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'State'}))
+	country= forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Country'}))
 
 	def get_title(self):
 		return 'Delivery Information'
@@ -142,8 +146,8 @@ class DeliveryForm(forms.Form):
 
 
 class LoginForm(forms.Form):	
-	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
-	password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
+	username = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Username'}))
+	password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Password'}))
 
 	def get_title(self):
 		return 'Login'
@@ -163,7 +167,7 @@ class LoginForm(forms.Form):
 
 
 class ForgotPassword(forms.Form):
-	email = forms.EmailField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Email'}))
+	email = forms.EmailField(max_length=EMAIL_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Email'}))
 
 	def clean(self):
 		super(ForgotPassword, self).clean()
@@ -181,17 +185,17 @@ class ForgotPassword(forms.Form):
 
 class MyProfileForm(forms.Form):
 	full_name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Name'}),required=False)
-	first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
-	last_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
-	email = forms.CharField(max_length=20,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
-	mobile_number = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
-	username = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Username'}))
-	address1 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
-	address2 = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
-	city = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'City'}))
-	state = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'State'}))
-	country= forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Country'}))
-	extra_details = forms.CharField(max_length=100,widget=forms.Textarea(attrs={'placeholder':'Extra Details','rows':1}), required=False)
+	first_name = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
+	last_name = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Lastname'}))
+	email = forms.CharField(max_length=EMAIL_LENGTH,widget=forms.EmailInput(attrs={'placeholder':'Email'}))
+	mobile_number = forms.CharField(max_length=MOBILE_NUMBER_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
+	username = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Username'}))
+	address1 = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Address 1'}))
+	address2 = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Address 2'}), required=False)
+	city = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'City'}))
+	state = forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'State'}))
+	country= forms.CharField(max_length=DELIVERY_FORM_INPUT_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Country'}))
+	extra_details = forms.CharField(max_length=250,widget=forms.Textarea(attrs={'placeholder':'Extra Details','rows':1}), required=False)
 
 	def clean(self):
 		super(MyProfileForm, self).clean()
@@ -250,8 +254,8 @@ class MyProfileForm(forms.Form):
 
 
 class ChangePasswordForm(forms.Form):
-	first_password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'New Password'}))
-	second_password = forms.CharField(max_length=30,widget=forms.PasswordInput(attrs={'placeholder':'Confirm Password'}))
+	first_password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'New Password'}))
+	second_password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Confirm Password'}))
 
 	def clean(self):
 		super(ChangePasswordForm, self).clean()

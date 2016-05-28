@@ -151,6 +151,7 @@ function disableUserProfileForm(){
 function setupAddToCartForm(){
 	var addToCartBtn = $('.itemaddtocart');
 	addToCartBtn.click(function(){
+		$(this).html('...');
 		getCartValsFromAjax($(this).data('urlsubmit')).done(function(value){
 			var responsevals = JSON.parse(value);
 			num = responsevals.items_length;

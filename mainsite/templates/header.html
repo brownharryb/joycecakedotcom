@@ -2,9 +2,9 @@
 <div class="midpagecontainer">
 		<a href="/"><img id="mainlogo" src="{% static 'images/logo.png' %}"></a>	
 		<nav>
-			<a class="font-theme-color" href="/">Home</a>
-			<a class="font-theme-color" href="{%url 'shop-gallery-view' %}">Gallery</a>
-			<a class="font-theme-color" href="{% url 'contact_us_url'%}">Contact Us</a>
+		{%for k,v in nav_links.iteritems %}
+			<a class="font-theme-color" href="{{v}}">{{k}}</a>
+			{% endfor %}			
 		</nav>
 		<div class="clearfix"></div>
 	</div>

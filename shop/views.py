@@ -197,6 +197,8 @@ class CartView(View):
 		return profile_form
 
 
+def success_order_view(request):
+	return render(request, 'success_order.html')
 
 
 
@@ -243,19 +245,13 @@ class CheckoutView(View):
 		msg +='\n\n\n\n{0}'.format(contact_str)
 		msg += ' \n\n{0}'.format(add_str)
 
-		msg +=' \n\n\nRegards \nJoycecakes.'
+		msg +=' \n\n\nRegards \nJoycecake.com.'
 
 
-		subject='Transaction Notification on Joycecakes website'
+		subject_text='Transaction Notification on Joycecake.com'
 		my_email=settings.MY_EMAIL_ADDRESS
 		recipients=[settings.MY_EMAIL_ADDRESS]
-
-
-
-
-		# TODO SEND MAIL
-
-		# print 'Sending email....'+str(misc_functions.send_email('Just a test mail from boma',['brownharryb@gmail.com'],'Hello from Boma'))
+		misc_functions.send_email(subject_text,recipients,msg)
 
 	def send_confirm_mail_to_customer(self):
 		pass

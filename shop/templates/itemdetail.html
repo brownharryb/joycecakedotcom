@@ -14,7 +14,8 @@
 
 <div id="itemdetailimageprev">
 <img src="{% static 'images/loader.gif' %}" >
-<span onclick="removeextraimagepopup()" style="position:absolute;top:1px;right:5px;color:red;cursor:pointer;">x</span></div>
+<span onclick="removeextraimagepopup()" style="font-weight:bold;position:absolute;top:1px;right:5px;color:red;cursor:pointer;">
+&times;</span></div>
 
 <hr style="border-color:rgba(0,0,0,0.1);">
 <ul id="itemdetailcontainer" class="midpagecontainer">
@@ -62,7 +63,7 @@
 
 		
 	</div>
-	<hr style="border-color:rgba(0,0,0,0.1);margin-top:100px;">
+	<hr style="border-color:rgba(0,0,0,0.1);margin-top:30px;">
 	{% include 'gift_items_container.html' with gifts=gifts %}
 
 

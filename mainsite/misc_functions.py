@@ -98,12 +98,12 @@ def get_proper_fullname(fullname):
 	return fullname
 
 # TODO CREATE EMAIL BACKEND TO SEND EMAIL
-def send_email(subject,emails_as_list,msg):
-	try:
-		send_mail(subject, msg, 'bomsy1@gmail.com',emails_as_list, 
+def send_email(subject,recipients_list,msg):
+	# try:
+	send_mail(subject, msg, 'bomsy1@gmail.com',recipients_list, 
 			fail_silently=False)
-	except:
-		return False
+	# except:
+	# 	return False
 	return True
 
 def decode_session_string(session_str):

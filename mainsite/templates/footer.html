@@ -1,6 +1,26 @@
 <footer>
+<div id="footerwrapper">
+<div id="socialbarlinks">
+	<ul class="soc">
+    <li><a class="soc-twitter" href="#"></a></li>
+    <li><a class="soc-facebook" href="#"></a></li>
+    <li><a class="soc-google" href="#"></a></li>
+    <li><a class="soc-pinterest" href="#"></a></li>
+    <!-- <li><a class="soc-linkedin" href="#"></a></li> -->
+    <!-- <li><a class="soc-rss soc-icon-last" href="#"></a></li> -->
+</ul>
+</div>
+<div id="footernavlinks">
+	<ul>
+	{% for k,v in nav_links.iteritems %}
+		<li><a href="{{v}}">{{k}}</a></li>
+	{% endfor %}
+	</ul>
+</div>
 <div id="footercontainer">
-	<p id="copyrighttext">Copyright &copy; JoyceCakes.com 2016</p>
+	<p id="copyrighttext">&copy; 2016 JoyceCake.com</p>
+	<p style="text-align:center;color:#555555;font-size:10px;">Designed Using <a style="color:rgba(81,190,149,0.4);" href="https://www.djangoproject.com/" target="_blank">The Django Framework</a></p>
+</div>
 </div>
 	
 </footer>

@@ -41,14 +41,24 @@ Checkout - Joyce Cakes
 				<h2>&#8358;{{totalprice|intcomma}}</h2>
 				<hr>
 
-				<form method="post" action="{% url 'shop-checkout-view'%}">
-				{% csrf_token %}
+				<!-- <form method="post" action="{% url 'shop-checkout-view'%}"> -->
+				<!-- {% csrf_token %} -->
 				<fieldset>
 				<legend>Place Order</legend>
+				<form method="post" action="https://voguepay.com/pay/">
+				{% csrf_token %}
+				<input type='hidden' name='v_merchant_id' value='1879-0039489' />
+				<input type='hidden' name='total' value='{{totalprice}}' />
+				<input type='hidden' name='success_url' value="{% url 'shop-order-success-view'%}"/>
 				<input type="submit" class="paybtn" value="Vougue Pay">
-				<input type="submit" class="paybtn" value="Cash On Delivery">
-				</fieldset>
 				</form>
+
+				<form method="post" action="{% url 'shop-checkout-view'%}">
+				{% csrf_token %}
+				<input type="submit" class="paybtn" value="Cash On Delivery">
+				</form>
+				</fieldset>
+				<!-- </form> -->
 
 			</div>
 		</li>

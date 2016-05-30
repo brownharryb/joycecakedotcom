@@ -89,6 +89,7 @@ TEMPLATES = (
                 'django.contrib.messages.context_processors.messages',
                 'mainsite.custom_processor.default_vals',
                 'mainsite.custom_processor.cart_items_function',
+                'mainsite.custom_processor.get_navlinks',
             ],
             'debug': DEBUG,
         },
@@ -162,7 +163,7 @@ STATICFILES_DIRS = [
 
 
 # ***********************************CUSTOM SETTINGS************************
-SITE_TITLE = 'Joyce Cakes'
+SITE_TITLE = 'Joyce Cake'
 MOBILE_CONTACT = ['+23480386550030']
 CART_EXPIRY = {'time_type':'days','time_value':3}
 MY_EMAIL_ADDRESS = 'brownharryb@gmail.com'
@@ -173,11 +174,20 @@ MY_EMAIL_ADDRESS = 'brownharryb@gmail.com'
 #     }
 #***************************************************************************
 # *************************EMAIL BACKEND************************************
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'bomsy1@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+# EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'bomsy1@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 587
+
+
+# -------------------- MAILGUN EMAIL BACKEND
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_HOST_USER = 'postmaster@app8ad4e3a416c44cb89bc7f219a4331060.mailgun.org'
+EMAIL_HOST_PASSWORD = 'f18b5202e2856fe8b9a44a118bf471c5'
 EMAIL_PORT = 587
 
 # *****************************************************************************

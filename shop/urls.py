@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'^detail/(?P<item_category>[\w-]+)/(?P<item_slug>[\w-]+)', views.item_detail_view, name='shop-item-detail-view'),
     url(r'^order/$', views.CartView.as_view(), name='shop-cart-view'),
     url(r'^checkout/$', views.CheckoutView.as_view(), name='shop-checkout-view'),
+    url(r'^order/success/$', views.success_order_view, name='shop-order-success-view'),
+
 ]
 
 

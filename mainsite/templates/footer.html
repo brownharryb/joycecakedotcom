@@ -13,7 +13,7 @@
 <div id="footernavlinks">
 	<ul>
 	{% for k,v in nav_links.iteritems %}
-		<li><a href="{{v}}">{{k}}</a></li>
+		<li><a href="{{v.1}}">{{v.0}}</a></li>
 	{% endfor %}
 	</ul>
 </div>

@@ -228,6 +228,7 @@ class CheckoutView(View):
 		
 	# TODO SEND MAIL
 	def send_mail_to_alert_webmaster(self,request,user_transaction,items_list):
+		totalprice = 0
 		user_info =  user_transaction.user
 		user = user_info.user
 		items = user_transaction.items.all()
@@ -240,8 +241,11 @@ class CheckoutView(View):
 			each_item = models.Item.objects.get(pk=int(i['item_id']))
 			item_name = each_item.name
 			item_link = each_item.get_full_item_detail_link(request)
-			msg+='\nName:'+str(item_name)+'  Qty:'+str(i['item_qty'])+'  Link:'+str(item_link)
+			sale_price = each_item.get_sale_price(i['item_qty'])
+			totalprice +=sale_price
+			msg+='\nName:'+str(item_name)+'  Qty:'+str(i['item_qty'])+'  Link:'+str(item_link)+' Price:'+str(sale_price)
 
+		msg+='\n\nTotal Price:{0}'.format(totalprice)
 		msg +='\n\n\n\n{0}'.format(contact_str)
 		msg += ' \n\n{0}'.format(add_str)
 
@@ -251,7 +255,8 @@ class CheckoutView(View):
 		subject_text='Transaction Notification on Joycecake.com'
 		my_email=settings.MY_EMAIL_ADDRESS
 		recipients=[settings.MY_EMAIL_ADDRESS]
-		misc_functions.send_email(subject_text,recipients,msg)
+		# misc_functions.send_email(subject_text,recipients,msg)
+		print 'Msg = {0}'.format(msg)
 
 	def send_confirm_mail_to_customer(self):
 		pass

@@ -220,6 +220,41 @@ nav a{
 	background: rgb(128,128,77);
 	color: white;
 }
+#customdesignnotifycontainer{
+	margin-bottom: 50px;
+	min-height: 100px;
+	box-shadow: 1px 1px 4px 1px #eeeeee;
+	position: relative;
+	overflow: hidden;
+}
+#customdesignnotifycontainer h2{
+	color: rgb(44,0,0);
+	text-align: center;
+	letter-spacing: -2px;
+	margin-top: 20px;
+
+}
+#customdesignnotifycontainer h4,#customdesignnotifycontainer h3{
+	color: rgba(0,0,0,0.4);
+	text-align: center;
+}
+#customdesignnotifycontainer p{
+	text-align: center;
+	margin:10px auto;
+	padding:5px 20px;
+	border: 1px solid rgba(0,0,0,0.4);	
+	max-width: 250px;
+	border-radius: 10px;
+}
+#customdesignnotifycontainer p:hover{
+	box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.7);
+}
+#customdesignnotifycontainer a{
+	color: rgba(0,0,0,0.4);
+	font-size: 14px;
+	font-weight: bold;
+
+}
 /***********************************************************/
 /********************************FOOTER********************/
 footer{
@@ -259,16 +294,6 @@ footer{
 #socialbarlinks{
 	text-align: center;
 }
-/*#socialbarlinks ul li{
-	display: inline-block;
-	border-radius: 50%;
-	background:white;
-	width: 30px;
-	height:30px;
-}
-#socialbarlinks ul li::before{
-	content: "g";
-}*/
 /**************************************************************/
 /**************LOGIN***************************/
 #logincontainer{
@@ -602,9 +627,9 @@ footer{
 #stripcontainer{
 	position: relative;
 	overflow: hidden;
-}
-#gallerytitlestrip{
 	border-bottom: 1px solid rgba(128,128,77,0.3);
+}
+#gallerytitlestrip{	
 	border-radius: 10px;
 	padding:10px;
 	text-align: center;	
@@ -792,6 +817,8 @@ footer{
 	display: inline-block;
 	border-radius: 10px;
 	background: rgb(51,81,138);
+	color: white;
+	font-weight: bold;
 	
 }
 .paybtn a{
@@ -934,3 +961,17 @@ footer{
 }
 
 /*****************************************************************************/
+/*********************************CONTACT US*********************************/
+#contactaddresscontainer{
+	padding: 20px;
+}
+#contactaddresscontainer h3{
+	text-transform: uppercase;
+	color: #999999;
+	padding: 5px 0px;
+}
+#contactaddresscontainer p{
+	color:#555555;
+	/*font-size: 14px;*/
+}
+/****************************************************************************/

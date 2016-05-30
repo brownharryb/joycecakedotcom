@@ -19,13 +19,13 @@
 
 <hr style="border-color:rgba(0,0,0,0.1);">
 <ul id="itemdetailcontainer" class="midpagecontainer">
-<h3 style="color:#cccccc;padding:10px;">{{item.name}}</h3>
+
 		<li>
 			<div><img data-src="{{item.image_file.url}}" src="{% static 'images/loader.gif' %}"></div>
 		</li>
 		<li>
 			<div id="iteminfo">
-				
+				<h3 style="color:#555555;padding:10px 0px;">{{item.name}}</h3>				
 				{% if item.old_price > 0 %}
 				<strike>&#8358;{{item.old_price|intcomma}}</strike>
 				{% endif %}

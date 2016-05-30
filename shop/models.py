@@ -131,6 +131,9 @@ class Item(models.Model):
 	def get_extra_images(self):
 		return ExtraImages.objects.filter(related_item=self)
 
+	def get_sale_price(self,qty=1):
+		return float(self.sale_price) * float(qty)
+
 
 
 class ExtraImages(models.Model):

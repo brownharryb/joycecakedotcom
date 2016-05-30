@@ -19,7 +19,7 @@ def cart_items_function(requests):
 
 def get_navlinks(requests):
 	nav_links = {}
-	nav_links['home'] = reverse('home_url')
-	nav_links['gallery'] = reverse('shop-gallery-view')
-	nav_links['contact us'] = reverse('contact_us_url')
+	nav_links[1] = ['home',reverse('home_url')]
+	nav_links[2] = ['gallery',reverse('shop-gallery-view')]
+	nav_links[3] = ['contact us',reverse('contact_us_url')]
 	return {'nav_links':nav_links}

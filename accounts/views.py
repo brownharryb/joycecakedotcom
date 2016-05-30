@@ -192,7 +192,7 @@ class ForgotPassword(View):
 				user_info.save_recovery_key()
 				recovery_link = user_info.get_recovery_link(request)
 
-				if self.send_recovery_email(email):
+				if self.send_recovery_email(email,recovery_link):
 					self.status_email_sent = 'ok'
 					return render(request, self.template_name,{'email_sent_status':self.status_email_sent,'email':email})
 				else:
@@ -205,8 +205,9 @@ class ForgotPassword(View):
 			return render(request, self.template_name, {'form':form,'email_sent_status':self.status_email_sent})
 
 
-	def send_recovery_email(self,email):
+	def send_recovery_email(self,email,recovery_link):
 		msg = ''
+		print 'Recovery link = '+str(recovery_link)
 		#TODO SEND MESSAGE AND RETURN TRUE
 		return True
  
@@ -239,6 +240,7 @@ class RecoverPasswordView(View):
 		if form.is_valid():
 			self.user.set_password(form.cleaned_data['first_password'])
 			self.user_info.save_recovery_key()
+			self.user.save()
 			self.show_success = 'yes'
 		return render(request,self.template_name,{'form':form,'show_success':self.show_success})
 
@@ -361,6 +363,6 @@ class UserTransactionView(View):
 			user_transactions = models.UserTransaction.objects.filter(user=user_info)
 		except ObjectDoesNotExist as e:
 			return redirect(reverse('home_url'))
-		for i in user_transactions:
-			print 'bomsy '+str(i.get_total_item_details)
+		# for i in user_transactions:
+		# 	print 'bomsy '+str(i.get_total_item_details)
 		return render(request,self.template_name,{'user_transactions':user_transactions})

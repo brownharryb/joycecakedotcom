@@ -9,6 +9,7 @@ PASSWORD_LENGTH = 20
 EMAIL_LENGTH = 20
 MOBILE_NUMBER_LENGTH = 20
 DELIVERY_FORM_INPUT_LENGTH = 100
+MIN_PASSWORD_LENGTH = 6
 
 class RegisterForm(forms.Form):
 	first_name = forms.CharField(max_length=NAME_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Firstname'}))
@@ -92,8 +93,8 @@ class RegisterForm(forms.Form):
 			raise ValidationError('Mobile Number seems to be invalid!!')
 
 
-		if len(password) < 7:
-			raise ValidationError('Passwords must be at least seven(7) characters!')
+		if len(password) < MIN_PASSWORD_LENGTH:
+			raise ValidationError('Passwords must be at least {0} characters!'.format(MIN_PASSWORD_LENGTH))
 
 		
 		if not password == verify_password:
@@ -262,12 +263,14 @@ class ChangePasswordForm(forms.Form):
 		p1 = self.cleaned_data.get('first_password')
 		p2 = self.cleaned_data.get('second_password')
 
+		if any([len(p1)<MIN_PASSWORD_LENGTH, len(p2)<MIN_PASSWORD_LENGTH]):
+			raise ValidationError('Password should be at least {0} characters!'.format(MIN_PASSWORD_LENGTH))
 		if any([p1=='',p2=='',p1==None,p2==None]):
 			raise ValidationError('Invalid Password Input!!')
 		if not misc_functions.input_is_alpha_numerals({'Password':p1,'Password2':p2})==1:
 			raise ValidationError('Invalid Characters in Password!!')
 		if not p1 == p2:
-			raise ValidationError('Passwords don\'t match!!')
+			raise ValidationError('Passwords don\'t match!!')		
 
 		return self.cleaned_data
 

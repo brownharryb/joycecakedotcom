@@ -58,23 +58,24 @@
     display:block;
     position: relative;
     z-index: 1;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    font-size: 13px;
-    -webkit-border-radius: 72px;
-    -moz-border-radius: 72px;
-    border-radius: 72px;
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    font-size: 12px;
+    -webkit-border-radius: 53px;
+    -moz-border-radius: 53px;
+    border-radius: 53px;
     margin-right: 4px;
-    color: #ffffff;
-    background-color: #b9b3b3;
+    color: #2c0000;
+    background-color: #ffffff;
 }
 
 .soc a:hover {
     z-index: 2;
-    -webkit-transform: translateY(-5px);
-    transform: translateY(-5px);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
+
 .soc-icon-last{
     margin:0 !important;
 }

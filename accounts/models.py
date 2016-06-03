@@ -116,7 +116,7 @@ class BankAccount(models.Model):
 	account_number = models.CharField(max_length=20)
 	account_type = models.CharField(max_length=1,choices=TYPE_CHOICES, default='s')
 	name_on_account = models.CharField(max_length=250,blank=True,null=True)
-	objects = BankAccountManager()
+	# objects = BankAccountManager()
 
 
 	def __unicode__(self):

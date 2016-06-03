@@ -10,9 +10,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-
-
-
 class UserRegister(FormView):
 	template_name = 'register.html'
 	form_class = forms.RegisterForm
@@ -163,7 +160,7 @@ class UserLogin(View):
 			return render(request, self.template_name, {'form':form})
 
 	def next_url_is_ok(self,next_url):		
-		allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/'
+		allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/_'
 		for i in next_url:
 			if not i in allowedchars:
 				return False

@@ -1,0 +1,33 @@
+<fieldset id="bankinfo">
+	<select onchange="bank_account_changed(this)">
+	<option>--Select Bank--</option>
+	{% for i in bank_accounts %}		
+		<option data-accid="{{i.id}}">{{i.bank_name}}</option>
+	{% endfor %}
+	</select>
+	<ul id="bankdetails" style="border-radius:10px;margin:5px;border:1px solid #eeeeee;padding:5px 0px;">
+		<li id="bankaccountnumber"></li>
+		<li id="bankaccounttype"></li>
+		<li id="bankaccountowner"></li>
+	</ul>
+	<form method="post" action="https://www.quickteller.com/qttransfer">
+		{% csrf_token %}
+	<input type="submit" id="paymentbtn" value="Make Quickteller Transfer">
+	</form>
+	
+</fieldset>
+<hr style="border-color:rgba(0,0,0,0.1);">
+<div id="alreadypaid" style="text-align:center;padding-top:20px;">
+		<a href="{%url 'shop-already-paid'%}">Already Paid!</a>
+</div>
+<div id="hiddenbanks" style="display:none;">
+	{%for j in bank_accounts%}
+	<ul data-bankname="{{j.bank_name}}">
+		<li class="hiddenaccnum">{{j.account_number}}</li>
+		<li class="hiddenacctype">{{j.get_account_type_display}} Account</li>
+		{%if j.name_on_account%}
+		<li class="hiddenaccowner">{{j.name_on_account}}</li>
+		{%endif%}
+	</ul>
+	{% endfor %}
+</div>

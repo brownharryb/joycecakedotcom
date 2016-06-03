@@ -46,6 +46,13 @@ def mobile_number_is_ok(mobile_number):
 			return False
 	return True
 
+def input_is_only_numbers(input_txt):
+	allowed = '0123456789'
+	for i in input_txt:
+		if not i in allowed:
+			return False
+	return True
+
 def get_seconds_time_value(time_type='seconds',number=None):
 	if time_type == 'years':
 		return number * 365 * 86400

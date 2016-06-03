@@ -1,5 +1,6 @@
 from django.conf import settings
 from shop import models as shopmodels
+from accounts import models as accountsmodels
 from django.core.urlresolvers import reverse
 
 def default_vals(requests):
@@ -23,3 +24,7 @@ def get_navlinks(requests):
 	nav_links[2] = ['gallery',reverse('shop-gallery-view')]
 	nav_links[3] = ['contact us',reverse('contact_us_url')]
 	return {'nav_links':nav_links}
+
+def get_bank_details(requests):
+	bank_accounts = accountsmodels.BankAccount.objects.all()
+	return {'bank_accounts':bank_accounts}

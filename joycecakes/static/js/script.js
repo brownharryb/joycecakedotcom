@@ -273,6 +273,31 @@ function removeextraimagepopup(){
 	wholebody.css('display','none');
 	itemdetailimageprev.css('display','none');
 	itemdetailimageprev.css('opacity',0);
+}
 
 
+function bank_account_changed(el){
+	var selectedAcc = $('#bankinfo select').val();
+	var mainbankaccnumber = $('#bankaccountnumber');
+	var mainbankacctype = $('#bankaccounttype');
+	var mainaccname = $('#bankaccountowner');
+
+	var hiddenbanks = $("#hiddenbanks").find('ul');
+	hiddenbanks.each(function(){
+		var accnumber = $(this).find('.hiddenaccnum').html();
+		var acctype = $(this).find('.hiddenacctype').html();
+		var accowner = $(this).find('.hiddenaccowner').html();
+		var bankname = $(this).data('bankname');
+
+		if(bankname==selectedAcc){
+			mainbankaccnumber.html(accnumber);
+			mainbankacctype.html(acctype);
+			if(accowner){
+				mainaccname.html(accowner);
+			}
+			else{
+				mainaccname.html('');
+			}
+		}
+	});
 }

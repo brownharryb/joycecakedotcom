@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import View, FormView
-from . import models
+from . import models,forms
 from accounts import models as accountsmodels
 from accounts import forms as accountsforms
 from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname,decode_session_string
@@ -156,25 +156,18 @@ class CartView(View):
 			j = i.split('_')
 			if 'id' in j:
 				id_num = int(j[1])
-				item = models.Item.objects.get(pk=id_num)
-				# TODO MAKE A SESSION STRING TO STORE ALL QTY, ID,SINGLE PRICE AND TOTAL PRICE					
+				item = models.Item.objects.get(pk=id_num)					
 				price = item.sale_price * int(post_data[i])
 				item_session_string += '_i{0}|q{1}|p{2}'.format(id_num, post_data[i], price)
 				returndict[id_num] = price
 				totalprice+=price
 		requests.session['totalprice_in_cart'] = totalprice
-		requests.session['order_string'] = item_session_string		
+		requests.session['order_string'] = item_session_string
+		self.save_transaction_history(requests)		
 		form = self.prepareform(requests)
 		return render(requests,'checkout.html',{'gifts':self.gifts,'datadict':returndict,'totalprice':totalprice,'profile_form':form})
 
-	# def flag_is_ok(self,flag):
-	# 	allowedchars = 'abcdefghijklmnopqrstuvwxyz0123456789/'
-	# 	for i in flag:
-	# 		if not i in allowedchars:
-	# 			return False
-	# 	return True
 	
-
 	def prepareform(self,requests):		
 		cart_items = requests.session.get('cart_items')
 		cart_items = [models.Item.objects.get(pk=int(i)) for i in cart_items]
@@ -195,6 +188,22 @@ class CartView(View):
 
 		profile_form = self.profile_form_class(self.initial)
 		return profile_form
+
+	def save_transaction_history(self,requests):
+		item_ids = []
+		order_string = requests.session.get('order_string')
+		items_list =  decode_session_string(order_string)
+		totalprice = requests.session.get('totalprice_in_cart')
+		for i in items_list:
+			item_ids.append(int(i['item_id']))
+		all_items = models.Item.objects.filter(id__in=item_ids)
+		user_transaction = accountsmodels.UserTransaction()
+		user_transaction.user= accountsmodels.UserInfo.objects.get(user=requests.user)
+		user_transaction.session_string = order_string
+		user_transaction.save()
+		for i in all_items:
+			user_transaction.items.add(i)
+		user_transaction.save()
 
 
 def success_order_view(request):
@@ -256,9 +265,32 @@ class CheckoutView(View):
 		my_email=settings.MY_EMAIL_ADDRESS
 		recipients=[settings.MY_EMAIL_ADDRESS]
 		# misc_functions.send_email(subject_text,recipients,msg)
-		print 'Msg = {0}'.format(msg)
 
 	def send_confirm_mail_to_customer(self):
 		pass
 
-	
+
+class AlreadyPaid(View):
+	template_name='alreadypaid.html'
+	form_class = forms.AlreadyPaidForm
+	initial = {'key':'value'}
+
+	@confirm_sessions_and_cookies
+	def dispatch(self,requests,*args,**kwargs):
+		if not requests.user.is_authenticated():
+			url = reverse('user_login')
+			paid_url = reverse('shop-already-paid')
+			url+='?next=%s'%(paid_url)
+			return redirect(reverse('user_login'))
+		return super(AlreadyPaid, self).dispatch(requests,*args,**kwargs)
+
+	def get(self,requests,*args,**kwargs):
+		form = self.form_class(initial=self.initial)
+		return render(requests,self.template_name,{'form':form})
+
+	def post(self,requests,*args,**kwargs):
+		form = self.form_class(requests.POST)
+		if form.is_valid():
+			# TODO SEND MAIL TO WEBMASTER AND CUSTOMER TO CONFIRM RECEIPT
+			return redirect(reverse('shop-order-success-view'))
+		return render(requests,self.template_name,{'form':form})

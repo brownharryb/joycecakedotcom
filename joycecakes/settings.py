@@ -90,6 +90,7 @@ TEMPLATES = (
                 'mainsite.custom_processor.default_vals',
                 'mainsite.custom_processor.cart_items_function',
                 'mainsite.custom_processor.get_navlinks',
+                'mainsite.custom_processor.get_bank_details',
             ],
             'debug': DEBUG,
         },

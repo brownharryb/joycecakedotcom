@@ -19,9 +19,8 @@
 				<th>Date/Time</th>
 				<th>Items</th>
 				<th>Total Price</th>
-				<th>Payment Medium</th>
 				<th>Delivery Status</th>
-				<th>Delivery Date</th>
+				<th>Payment Confirmed</th>
 				<th>Transaction Id</th>
 			</tr>
 		</thead>
@@ -36,9 +35,8 @@
 				{% endfor %}
 				</td>
 				<td>&#8358;{{i.get_total_price|intcomma}}</td>
-				<td>{{i.get_payment_medium_display|upper}}</td>
 				<td>{{i.get_transaction_status_display|upper}}</td>
-				<td></td>
+				<td>{{i.payment_confirmed}}</td>
 				<td>{{i.transaction_id_string}}</td>
 			</tr>
 			{% endfor %}

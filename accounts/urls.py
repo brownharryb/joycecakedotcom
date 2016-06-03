@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'forgot/$', views.ForgotPassword.as_view(), name="forgot_password"),
     url(r'recover_password/(?P<username>[\w-]+)/(?P<recovery_key>[\w-]+)/$', views.RecoverPasswordView.as_view(), name="recover_password"),
     url(r'^myprofile/$', views.UserProfileView.as_view(), name='user_profile_page'),
-    url(r'^mytransaction/$', views.UserTransactionView.as_view(), name='user_transaction_page'),    
+    url(r'^mytransaction/$', views.UserTransactionView.as_view(), name='user_transaction_page'),
 ]

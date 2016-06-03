@@ -205,7 +205,7 @@ nav a{
 }
 .itemscontainer ul li img{	
 	border-radius: 50%;
-	height: 150px;
+	max-height: 150px;
 }
 .itemaddtocart{
 	padding:5px;
@@ -829,7 +829,86 @@ footer{
 	box-shadow: 1px 1px 4px 1px #555555;
 	border:1px solid #555555;
 }
+#bankinfo{
+	text-align: center;
+}
+#bankinfo select{
+	padding:10px 20px;
+	min-width: 200px;
+	text-align: center;
+	font-size: 12px;
+	color:rgba(0,0,0,0.6);
+	text-transform: uppercase;
+}
+#bankdetails{
+
+}
+#bankdetails li{
+	display: block;
+	max-width: 100%;
+	color:#999999;
+	text-transform: uppercase;
+}
+#bankaccountnumber{
+	color: rgba(0,0,0,0.8);
+	font-size: 20px;
+}
+#bankinfo input[type="submit"],
+#bankinfo input[type="button"],
+#alreadypaid a,
+#alreadypaidcontainer input[type="submit"]{
+	border: 1px solid rgba(0,0,0,0.4);
+	padding:10px;
+	font-size: 12px;
+	text-transform: uppercase;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	background: rgba(58,83,132,1);
+	text-decoration: none;
+}
 /*****************************************************************/
+/*****************************ALREADY PAID***********************/
+#alreadypaidcontainer fieldset{
+	padding:15px;
+	border-radius: 10px;
+}
+#alreadypaidcontainer h4{
+	color: #cccccc;
+	margin: 20px;
+}
+#alreadypaidcontainer input[type="text"],
+#alreadypaidcontainer select{
+	padding:10px;
+	border: 1px #eeeeee solid;
+	border-radius: 10px;
+	margin: 5px;
+	width: 200px;
+}
+#alreadypaidcontainer select{
+	width: 300px;
+}
+#alreadypaidcontainer p{
+	font-size: 14px;
+	color:#888888;
+}
+#alreadypaidcontainer legend{
+	font-size: 10px;
+	text-transform: uppercase;
+}
+#alreadypaidcontainer fieldset{
+	margin: 10px 0px;
+}
+#alreadypaidcontainer .errorlist.nonfield{
+	color:red;
+	list-style-type: none;
+	font-size: 14px;
+}
+textarea{
+	resize:none;
+}
+/*******************************************************************/
+
 /*******************USER PROFILE**********************************/
 #userprofilecontainer {
     border: 1px solid rgba(0, 0, 0, 0.2);

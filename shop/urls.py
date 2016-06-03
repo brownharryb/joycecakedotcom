@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^order/$', views.CartView.as_view(), name='shop-cart-view'),
     url(r'^checkout/$', views.CheckoutView.as_view(), name='shop-checkout-view'),
     url(r'^order/success/$', views.success_order_view, name='shop-order-success-view'),
+    url(r'^order/paid/$',views.AlreadyPaid.as_view(), name='shop-already-paid'),
 
 ]
 

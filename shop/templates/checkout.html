@@ -34,16 +34,12 @@ Checkout - Joyce Cakes
 			<div id="summarycontainer">
 				<h5 class="theme-color">Your Order</h5>
 				<p>Total: &#8358;{{totalprice|intcomma}}</p>
-				<p>Tax: N1,200</p>
-				<p>Delivery: N0</p>
 				{{profile_form.extra_details}}
 				<hr>
 				<h2>&#8358;{{totalprice|intcomma}}</h2>
 				<hr>
-
-				<!-- <form method="post" action="{% url 'shop-checkout-view'%}"> -->
-				<!-- {% csrf_token %} -->
-				<fieldset>
+				
+				<!-- <fieldset>
 				<legend>Place Order</legend>
 				<form method="post" action="https://voguepay.com/pay/">
 				{% csrf_token %}
@@ -57,10 +53,11 @@ Checkout - Joyce Cakes
 				{% csrf_token %}
 				<input type="submit" class="paybtn" value="Cash On Delivery">
 				</form>
-				</fieldset>
+				</fieldset> -->
 				<!-- </form> -->
 
 			</div>
+			{%include 'bank_info.html'%}
 		</li>
 	</ul>
 	</div>	

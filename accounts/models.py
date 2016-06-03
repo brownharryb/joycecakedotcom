@@ -89,4 +89,53 @@ class UserTransaction(models.Model):
 			totalprice +=float(i['item_full_price'])
 		return totalprice
 
+class BankAccountManager(models.Manager):
+
+	def names_choices_tuple(self):
+		cnt = 1
+		
+		returnVal = []
+		all_objs = self.all()
+		for i in all_objs:
+			temp = []
+			temp.append(cnt)
+			extra_txt = i.account_number
+			if i.name_on_account:
+				extra_txt = '{0} -- {1}'.format(i.account_number,i.name_on_account)
+			temp.append('{0} -- {1}'.format(i.bank_name,extra_txt))
+			returnVal.append(tuple(temp))
+			cnt+=1
+		return tuple(returnVal)
+
+class BankAccount(models.Model):
+	TYPE_CHOICES = (
+		('s','savings'),
+		('c','current'),
+		)
+	bank_name = models.CharField(max_length=250)
+	account_number = models.CharField(max_length=20)
+	account_type = models.CharField(max_length=1,choices=TYPE_CHOICES, default='s')
+	name_on_account = models.CharField(max_length=250,blank=True,null=True)
+	objects = BankAccountManager()
+
+
+	def __unicode__(self):
+		return self.bank_name
+
+	def get_all(self):
+		return self.objects.all()
+
+	def get_all_names_as_choice_tuple(self):
+		cnt = 1
+		temp = []
+		returnVal = []
+		all_objs = self.objects.all()
+		for i in all_objs:
+			temp.append(cnt)
+			temp.append(i.bank_name)
+			returnVal.append(tuple(temp))
+			cnt+=1
+		return tuple(returnVal)
+	NAME_CHOICES = get_all_names_as_choice_tuple
+
 

@@ -12,8 +12,8 @@ class CheckoutContactForm(forms.Form):
 
 
 class AlreadyPaidForm(forms.Form):
-	# NAME_CHOICES = BankAccount.objects.names_choices_tuple()
-	bank_name = forms.ChoiceField(widget=forms.Select)
+	NAME_CHOICES = BankAccount.objects.names_choices_tuple()
+	bank_name = forms.ChoiceField(widget=forms.Select, choices=NAME_CHOICES)
 	amount_paid = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'Amount Paid'}))
 	transaction_id = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Transaction ID'}))
 	customer_name = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Name'}))

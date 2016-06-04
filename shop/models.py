@@ -82,7 +82,7 @@ class Item(models.Model):
 		super(Item, self).save(*args,**kwargs)
 
 	def admin_display_image(self):
-		return u"<img src='{0}' width=70>".format(self.image_file_for_cart.url)
+		return u"<img src='{0}' width=70>".format(self.image_file.url)
 	admin_display_image.allow_tags = True
 
 	def add_to_cart(self,request):

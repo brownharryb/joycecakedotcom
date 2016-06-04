@@ -152,7 +152,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 MEDIA_ROOT = os.path.join(PROJECT_ROOT,"media")
 
 # STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [

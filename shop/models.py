@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from django.conf import settings
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -81,7 +82,7 @@ class Item(models.Model):
 		super(Item, self).save(*args,**kwargs)
 
 	def admin_display_image(self):
-		return u"<img src='/media/%s' width=70>" %self.image_file
+		return u"<img src='{0}' width=70>".format(self.image_file_for_cart.url)
 	admin_display_image.allow_tags = True
 
 	def add_to_cart(self,request):

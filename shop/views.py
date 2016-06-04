@@ -6,7 +6,7 @@ from django.views.generic import View, FormView
 from . import models,forms
 from accounts import models as accountsmodels
 from accounts import forms as accountsforms
-from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname,decode_session_string
+from mainsite.misc_functions import confirm_sessions_and_cookies,get_proper_fullname,decode_session_string,randomize_list
 from mainsite import misc_functions
 import random,json
 
@@ -56,15 +56,6 @@ def get_random_gift_items():
 			gifts.append(j)
 	gifts = randomize_list(gifts)
 	return gifts
-
-def randomize_list(list_obj):
-	new_list = []
-	while not list_obj == []:
-		rdm = random.choice(list_obj)
-		new_list.append(rdm)
-		list_obj.remove(rdm)
-	return new_list
-
 
 # ***************************************************************************
 # *******************************CART DETAIL *******************************
@@ -206,8 +197,9 @@ class CartView(View):
 		user_transaction.save()
 
 
-def success_order_view(request):
-	return render(request, 'success_order.html')
+def success_order_view(requests):
+	requests.session['cart_items'] = []
+	return render(requests, 'success_order.html')
 
 
 
@@ -230,9 +222,12 @@ class CheckoutView(View):
 		for i in all_items:
 			user_transaction.items.add(i)
 		user_transaction.save()
-		requests.session['cart_items'] = []
-		self.send_mail_to_alert_webmaster(requests,user_transaction,items_list)
-		self.send_confirm_mail_to_customer()	
+		requests.session['cart_items'] = []		
+		try:
+			self.send_mail_to_alert_webmaster(requests,user_transaction,items_list)
+			self.send_confirm_mail_to_customer(requests,user_transaction)
+		except:
+			pass
 		return render(requests,self.success_template)
 		
 	# TODO SEND MAIL
@@ -258,7 +253,7 @@ class CheckoutView(View):
 		msg +='\n\n\n\n{0}'.format(contact_str)
 		msg += ' \n\n{0}'.format(add_str)
 
-		msg +=' \n\n\nRegards \nJoycecake.com.'
+		msg +=' \n\n\nRegards \nJoycecake.com'
 
 
 		subject_text='Transaction Notification on Joycecake.com'
@@ -266,8 +261,15 @@ class CheckoutView(View):
 		recipients=[settings.MY_EMAIL_ADDRESS]
 		# misc_functions.send_email(subject_text,recipients,msg)
 
-	def send_confirm_mail_to_customer(self):
-		pass
+	def send_confirm_mail_to_customer(self,requests,user_transaction):
+		msg = 'Dear {0},\n\n Your order with has been received is being processed. \n\n\n'.format(requests.user.get_full_name())
+		msg+= 'Transaction ID:{0}.\n\n'.format(user_transaction.transaction_id_string)
+		msg+='We will contact within 48hrs\nThank you for your purchase!\nJoycecake.com.'
+		subject='Joycecake.com Order Confirmation.'
+		recipients = [requests.user.email]
+
+		print 'msg = {0}'.format(msg)
+		# misc_functions.send_email(subject,recipients,msg)
 
 
 class AlreadyPaid(View):
@@ -281,7 +283,7 @@ class AlreadyPaid(View):
 			url = reverse('user_login')
 			paid_url = reverse('shop-already-paid')
 			url+='?next=%s'%(paid_url)
-			return redirect(reverse('user_login'))
+			return redirect(url)
 		return super(AlreadyPaid, self).dispatch(requests,*args,**kwargs)
 
 	def get(self,requests,*args,**kwargs):
@@ -292,5 +294,57 @@ class AlreadyPaid(View):
 		form = self.form_class(requests.POST)
 		if form.is_valid():
 			# TODO SEND MAIL TO WEBMASTER AND CUSTOMER TO CONFIRM RECEIPT
+			user_transaction_string = form.cleaned_data['transaction_id']
+			user_transaction = accountsmodels.UserTransaction.objects.get(transaction_id_string=user_transaction_string)
+			extra_info = form.cleaned_data['extra_info']
+			self.send_mail_to_alert_webmaster(requests,user_transaction,extra_info)
+			self.send_confirm_mail_to_customer(requests,user_transaction)
+
 			return redirect(reverse('shop-order-success-view'))
 		return render(requests,self.template_name,{'form':form})
+
+	def send_mail_to_alert_webmaster(self,request,user_transaction,extra_info):
+		totalprice = 0
+		order_string = request.session.get('order_string')
+		items_list =  decode_session_string(order_string)		
+		user_info =  user_transaction.user
+		user = user_info.user
+		items = user_transaction.items.all()
+		contact_str = 'Name: {0}\nMobile:{1} \nEmail:{2}'.format(misc_functions.get_proper_fullname(user.get_full_name()),
+												user_info.mobile_phone,user.email)
+		add_str = 'Address:  {0}\n{1}\n{2}\n{3}'.format(user_info.delivery_address1,
+								user_info.delivery_address2,user_info.city, user_info.state)
+		msg = 'Transaction Notification:\n\n'
+		for i in items_list:
+			each_item = models.Item.objects.get(pk=int(i['item_id']))
+			item_name = each_item.name
+			item_link = each_item.get_full_item_detail_link(request)
+			sale_price = each_item.get_sale_price(i['item_qty'])
+			totalprice +=sale_price
+			msg+='\nName:'+str(item_name)+'  Qty:'+str(i['item_qty'])+'  Link:'+str(item_link)+' Price:'+str(sale_price)
+
+		msg+='\n\nTotal Price:{0}'.format(totalprice)
+		msg +='\n\n\n\n{0}'.format(contact_str)
+		msg += ' \n\n{0}'.format(add_str)
+		if extra_info:
+			msg+='\n\nExtra Information:{0}'.format(extra_info)
+
+
+		msg +=' \n\n\nRegards \nJoycecake.com'
+
+
+		subject_text='Transaction Notification on Joycecake.com'
+		my_email=settings.MY_EMAIL_ADDRESS
+		recipients=[settings.MY_EMAIL_ADDRESS]
+		print 'webmaster_msg = {0}'.format(msg)
+
+		# misc_functions.send_email(subject_text,recipients,msg)
+
+	def send_confirm_mail_to_customer(self,requests,user_transaction):
+		msg = 'Dear {0},\n\n Your order has been received is being processed. \n\n\n'.format(requests.user.get_full_name())
+		msg+= 'Transaction ID:{0}.\n\n'.format(user_transaction.transaction_id_string)
+		msg+='We will be contacted within 48hrs\nThank you for your purchase!\nJoycecake.com.'
+		subject='Joycecake.com Order Confirmation.'
+		recipients = [requests.user.email]
+		print 'customer_msg = {0}'.format(msg)
+		# misc_functions.send_email(subject,recipients,msg)

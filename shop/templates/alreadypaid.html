@@ -15,15 +15,14 @@ Confirm Payment - Joyce Cakes
 		<fieldset>
 		<legend>Bank Information</legend>
 		<p>{{form.bank_name}}</p>
-		<p>{{form.amount_paid}}Numbers only Ex:11000</p>
+		<p>{{form.amount_paid}}Ex:11000</p>
 		<p>{{form.transaction_id}}Get it <a href="{%url 'user_transaction_page'%}" target="_blank">here</a></p>
 		</fieldset>
 		<fieldset>
 			<legend>Personal Information</legend>
 			<p>{{form.customer_name}}</p>
 			<p>{{form.customer_mobile}}</p>
-			<textarea style="border:1px solid #eeeeee;border-radius:10px;padding:10px;width:250px;" placeholder="Extra Information">		
-			</textarea>
+			<p>{{form.extra_info}}</p>
 			{{form.non_field_errors}}
 		</fieldset>
 		<input type="submit" value="Submit">

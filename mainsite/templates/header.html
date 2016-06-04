@@ -3,7 +3,7 @@
 		<a href="/"><img id="mainlogo" src="{% static 'images/logo.png' %}"></a>	
 		<nav>
 		{%for k,v in nav_links.iteritems %}
-			<a class="font-theme-color" href="{{v.1}}">{{v.0}}</a>
+			<a class="font-theme-color" href="{{v.1}}" name="{{v.0}}">{{v.0}}</a>
 			{% endfor %}			
 		</nav>
 		<div class="clearfix"></div>

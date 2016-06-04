@@ -6,7 +6,9 @@
 		{% if each_item.show_as_new%}
 		<span class="newtag">New</span>
 		{% endif %}
-		<img data-src="{{each_item.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
+		<div class="imagedivcontainer">
+		<img class="centerimg" data-src="{{each_item.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
+		</div>
 		<p>{{each_item.name}}</p>
 		<p>{% if each_item.old_price > 0 %}
 		<strike>&#8358;{{each_item.old_price|intcomma}}</strike>

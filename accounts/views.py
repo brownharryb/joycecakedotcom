@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from . import forms,models
-from mainsite.misc_functions import confirm_sessions_and_cookies
+from mainsite.misc_functions import confirm_sessions_and_cookies,send_email
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -203,10 +203,13 @@ class ForgotPassword(View):
 
 
 	def send_recovery_email(self,email,recovery_link):
-		msg = ''
-		print 'Recovery link = '+str(recovery_link)
-		#TODO SEND MESSAGE AND RETURN TRUE
-		return True
+		msg = 'Hello from Joycecake.com, Please click the link below to recover your password \n '
+		msg+='\n\n {0}'.format(recovery_link)
+		msg+='\n\n\n Thanks and Regards.'
+		subject='Joycecake.com Password Recovery'
+		recipients_list = [email]
+		mail_response = send_email(subject,recipients_list,msg)
+		return mail_response
  
 
 class RecoverPasswordView(View):
@@ -219,13 +222,13 @@ class RecoverPasswordView(View):
 	user_info = ''
 	show_success = 'no'
 
+	@confirm_sessions_and_cookies
 	def dispatch(self,request,*args,**kwargs):
 		self.username = kwargs['username']
 		self.recovery_key = kwargs['recovery_key']
 		self.confirm_details(self.username,self.recovery_key)
 		if self.user == None:
-			return redirect(reverse('home_url'))
-				
+			return redirect(reverse('home_url'))				
 		return super(RecoverPasswordView, self).dispatch(request,*args,**kwargs)
 
 	def get(self,request,*args,**kwargs):

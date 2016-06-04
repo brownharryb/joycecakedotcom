@@ -10,14 +10,12 @@
 		<li id="bankaccounttype"></li>
 		<li id="bankaccountowner"></li>
 	</ul>
-	<form method="post" action="https://www.quickteller.com/qttransfer">
-		{% csrf_token %}
-	<input type="submit" id="paymentbtn" value="Make Quickteller Transfer">
-	</form>
+	<p style="margin-top:15px;">
+	<a id="qtlink" href="https://www.quickteller.com/qttransfer" target="_blank">Make Quickteller Transfer</a></p>
 	
 </fieldset>
 <hr style="border-color:rgba(0,0,0,0.1);">
-<div id="alreadypaid" style="text-align:center;padding-top:20px;">
+<div id="alreadypaid" style="text-align:center;padding:20px;">
 		<a href="{%url 'shop-already-paid'%}">Already Paid!</a>
 </div>
 <div id="hiddenbanks" style="display:none;">

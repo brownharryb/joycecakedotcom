@@ -55,7 +55,9 @@
 	{% for extra_img in extra_images %}
 
 		<li class="itemdetailextraimages">
-		<img data-src="{{extra_img.name.url}}" src="{% static 'images/loader.gif' %}" height="100">
+		<div class="imagedivcontainer">
+		<img class="centerimg" data-src="{{extra_img.name.url}}" src="{% static 'images/loader.gif' %}" height="100">
+		</div>
 		</li>
 	{% endfor %}
 	</ul>

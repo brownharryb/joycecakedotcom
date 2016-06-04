@@ -137,5 +137,4 @@ class BankAccount(models.Model):
 			cnt+=1
 		return tuple(returnVal)
 	NAME_CHOICES = get_all_names_as_choice_tuple
-
-
+		

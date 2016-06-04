@@ -2,10 +2,11 @@ from django import forms
 from django.contrib.auth.models import User
 from accounts.models import UserInfo, BankAccount
 from mainsite import misc_functions
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError,ObjectDoesNotExist
+from accounts import models as accountsmodels
 
 
-TRANSACTION_ID_LENGTH = 10
+TRANSACTION_ID_LENGTH = 30
 class CheckoutContactForm(forms.Form):
 	fullname = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder':'Name'}))
 	mobile = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
@@ -14,11 +15,11 @@ class CheckoutContactForm(forms.Form):
 class AlreadyPaidForm(forms.Form):
 	NAME_CHOICES = BankAccount.objects.names_choices_tuple()
 	bank_name = forms.ChoiceField(widget=forms.Select, choices=NAME_CHOICES)
-	amount_paid = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'Amount Paid'}))
-	transaction_id = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder':'Transaction ID'}))
+	amount_paid = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'placeholder':'Amount Paid(Numbers only)'}))
+	transaction_id = forms.CharField(max_length=TRANSACTION_ID_LENGTH,widget=forms.TextInput(attrs={'placeholder':'Transaction ID'}))
 	customer_name = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Name'}))
 	customer_mobile = forms.CharField(max_length=30,widget=forms.TextInput(attrs={'placeholder':'Mobile Number'}))
-	extra_info = forms.CharField(max_length=250,required=False,widget=forms.Textarea(attrs={'placeholder':'Extra Information'}))
+	extra_info = forms.CharField(max_length=250,required=False,widget=forms.Textarea(attrs={'placeholder':'Extra Information','rows':1}))
 
 
 	def clean(self):
@@ -27,8 +28,8 @@ class AlreadyPaidForm(forms.Form):
 		temp['Bank Information'] = bank_info_selected = self.cleaned_data.get('bank_name')
 		temp['Amount Paid'] = amount_paid = self.cleaned_data.get('amount_paid')
 		temp['Transaction Id'] = transaction_id = self.cleaned_data.get('transaction_id')
-		temp['Customer Name'] = customer_name = self.cleaned_data.get('customer_name')
-		temp['Customer Mobile Number'] = customer_mobile = self.cleaned_data.get('customer_mobile')
+		temp['Name'] = customer_name = self.cleaned_data.get('customer_name')
+		temp['Mobile Number'] = customer_mobile = self.cleaned_data.get('customer_mobile')
 		
 
 		emptychar = misc_functions.input_is_not_empty(temp)
@@ -53,6 +54,15 @@ class AlreadyPaidForm(forms.Form):
 
 		if not misc_functions.input_is_alpha_numerals({'Extra Info':extra_info}):
 			raise ValidationError('Please check your Extra Information input!!')
+		try:
+			user_transaction = accountsmodels.UserTransaction.objects.get(transaction_id_string=transaction_id)
+			total_price = user_transaction.get_total_price()
+			print 'inputed={0} transaction={1}'.format(amount_paid,total_price)
+			if not float(total_price)==float(amount_paid):
+				raise ValidationError('Inputed price and transaction price don\'t match!!')
+		except ObjectDoesNotExist as e:
+			raise ValidationError('Invalid Transaction Id')
+
 
 
 		return self.cleaned_data

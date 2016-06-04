@@ -12,7 +12,9 @@
 			<ul>
 			{% for i in gifts %}
 				<li><a href="{%url 'shop-item-detail-view' i.category.slug i.slug %}">
-					<img data-src="{{i.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
+					<div class="imagedivcontainer">
+					<img class="centerimg" data-src="{{i.get_gallery_carousel_image_url}}" src="{% static 'images/loader.gif' %}">
+					</div>
 					<p>{{i.name}}</p>
 					{% if i.old_price > 0%}
 					<strike>&#8358;{{i.old_price|intcomma}}</strike>

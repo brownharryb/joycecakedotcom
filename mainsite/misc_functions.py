@@ -72,7 +72,14 @@ def get_end_date_from_today(seconds):
 	today = datetime.datetime.now()
 	end_date = today + timedelta(seconds=seconds)
 	return end_date
-
+	
+def randomize_list(list_obj):
+	new_list = []
+	while not list_obj == []:
+		rdm = random.choice(list_obj)
+		new_list.append(rdm)
+		list_obj.remove(rdm)
+	return new_list
 
 # TODO ADD THIS TO ALL VIEWS
 def confirm_sessions(request):

@@ -22,9 +22,17 @@ def get_navlinks(requests):
 	nav_links = {}
 	nav_links[1] = ['home',reverse('home_url')]
 	nav_links[2] = ['gallery',reverse('shop-gallery-view')]
-	nav_links[3] = ['contact us',reverse('contact_us_url')]
+	nav_links[3] = ['confirm payment',reverse('shop-already-paid')]
+	nav_links[4] = ['contact us',reverse('contact_us_url')]
 	return {'nav_links':nav_links}
 
 def get_bank_details(requests):
 	bank_accounts = accountsmodels.BankAccount.objects.all()
 	return {'bank_accounts':bank_accounts}
+
+def get_social_networks(requests):
+	social_networks = {}
+	social_networks['facebook'] = 'http://www.facebook.com'
+	social_networks['twitter'] = 'http://www.twitter.com'
+	social_networks['google_plus'] = 'http://www.google.com'
+	return{'social_networks':social_networks}

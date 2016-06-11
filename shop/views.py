@@ -293,17 +293,17 @@ class AlreadyPaid(View):
 	def post(self,requests,*args,**kwargs):
 		form = self.form_class(requests.POST)
 		if form.is_valid():
-			# TODO SEND MAIL TO WEBMASTER AND CUSTOMER TO CONFIRM RECEIPT
+			bank_info = form.get_bank_details()
 			user_transaction_string = form.cleaned_data['transaction_id']
 			user_transaction = accountsmodels.UserTransaction.objects.get(transaction_id_string=user_transaction_string)
 			extra_info = form.cleaned_data['extra_info']
-			self.send_mail_to_alert_webmaster(requests,user_transaction,extra_info)
+			self.send_mail_to_alert_webmaster(requests,user_transaction,extra_info,bank_info)
 			self.send_confirm_mail_to_customer(requests,user_transaction)
 
 			return redirect(reverse('shop-order-success-view'))
 		return render(requests,self.template_name,{'form':form})
 
-	def send_mail_to_alert_webmaster(self,request,user_transaction,extra_info):
+	def send_mail_to_alert_webmaster(self,request,user_transaction,extra_info,bank_info):
 		totalprice = 0
 		order_string = request.session.get('order_string')
 		items_list =  decode_session_string(order_string)		
@@ -315,6 +315,7 @@ class AlreadyPaid(View):
 		add_str = 'Address:  {0}\n{1}\n{2}\n{3}'.format(user_info.delivery_address1,
 								user_info.delivery_address2,user_info.city, user_info.state)
 		msg = 'Transaction Notification:\n\n'
+		msg+= '\n Bank: {0}'.format(bank_info)
 		for i in items_list:
 			each_item = models.Item.objects.get(pk=int(i['item_id']))
 			item_name = each_item.name
@@ -341,9 +342,9 @@ class AlreadyPaid(View):
 		# misc_functions.send_email(subject_text,recipients,msg)
 
 	def send_confirm_mail_to_customer(self,requests,user_transaction):
-		msg = 'Dear {0},\n\n Your order has been received is being processed. \n\n\n'.format(requests.user.get_full_name())
+		msg = 'Dear {0},\n\n Your order has been received is being processed. \n\n\n'.format(mainsite.get_proper_fullname(requests.user.get_full_name()))
 		msg+= 'Transaction ID:{0}.\n\n'.format(user_transaction.transaction_id_string)
-		msg+='We will be contacted within 48hrs\nThank you for your purchase!\nJoycecake.com.'
+		msg+='We will contacted you within 48hrs\nThank you for your purchase!\nJoycecake.com.'
 		subject='Joycecake.com Order Confirmation.'
 		recipients = [requests.user.email]
 		print 'customer_msg = {0}'.format(msg)

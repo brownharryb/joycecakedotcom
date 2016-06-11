@@ -61,8 +61,10 @@ img{
 	background: #eeeeee;
 	position: relative;
 	overflow: hidden;
+	background-size: cover;
 }
 #bannerimg{
+	width: 100%;
 	-webkit-filter:brightness(20%);
 	filter:brightness(20%);
 }
@@ -169,7 +171,7 @@ nav a{
 	border-radius: 10px;
 	font-size: 10px;
 	top:5px;
-	background: #334D80;
+	background: #4169E1;
 	color:white;
 	padding:11px;
 	font-weight: bold;
@@ -237,7 +239,6 @@ nav a{
 	overflow: hidden;
 }
 #customdesignnotifycontainer h2{
-	color: rgb(44,0,0);
 	text-align: center;
 	letter-spacing: -2px;
 	margin-top: 20px;
@@ -272,7 +273,7 @@ nav a{
 /********************************FOOTER********************/
 footer{
 	height: 200px;
-	background: #222222;
+	background: rgba(65,105,225,0.7);
 	z-index: 9999;
 }
 #footerwrapper{
@@ -534,7 +535,6 @@ footer{
 	float: right;
 	background: none;
 	border-radius: 20px;
-	color: #cccccc;
 	font-weight: bold;
 }
 #cartcontainer button:hover{	
@@ -549,6 +549,10 @@ footer{
 #carouselgift .itemscontainer ul li img{
 	height: 100px;
 }
+#cartupdateallprices{
+	border: 1px solid #999 !important;
+}
+
 
 /*************************************************************/
 /****************************Item Detail***********************/
@@ -594,8 +598,8 @@ footer{
 
 }
 #newbanner{
-	box-shadow: 1px 1px 2px 1px black;
-	background: #334D80;
+	box-shadow: 0px 0px 4px 1px #999;
+	background: #4169E1;
 	position: absolute;
 	padding: 10px 20px;
 	font-size: 11px;

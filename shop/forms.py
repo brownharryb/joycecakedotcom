@@ -22,6 +22,14 @@ class AlreadyPaidForm(forms.Form):
 	extra_info = forms.CharField(max_length=250,required=False,widget=forms.Textarea(attrs={'placeholder':'Extra Information','rows':1}))
 
 
+	def get_bank_details(self):
+		returnData = 'Bank'
+		for i in self.NAME_CHOICES:
+			if str(i[0])== str(self.cleaned_data['bank_name']):
+				returnData = i[1]
+		return returnData
+
+
 	def clean(self):
 		super(AlreadyPaidForm,self).clean()
 		temp = {}

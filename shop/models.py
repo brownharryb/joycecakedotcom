@@ -135,6 +135,10 @@ class Item(models.Model):
 	def get_sale_price(self,qty=1):
 		return float(self.sale_price) * float(qty)
 
+	def get_tax_price(self):
+		# TODO CALCULATE TAX PRICE OF EACH ITEM
+		return 5000
+
 
 
 class ExtraImages(models.Model):

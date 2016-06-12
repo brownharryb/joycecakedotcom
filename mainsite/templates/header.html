@@ -1,5 +1,6 @@
 {%load staticfiles %}
-<div class="midpagecontainer">
+<div id="headercontainer">
+	<div class="midpagecontainer">
 		<a href="/"><img id="mainlogo" src="{% static 'images/logo.png' %}"></a>	
 		<nav>
 		{%for k,v in nav_links.iteritems %}
@@ -8,3 +9,4 @@
 		</nav>
 		<div class="clearfix"></div>
 	</div>
+</div>

@@ -7,3 +7,12 @@
 .font-theme-color-hover:hover{
 	color:rgb(65,105,225) !important;
 }
+.button-color{
+	background:rgba(128,22,45,0.5) !important;
+	color:white !important;
+	border-radius: 15px !important;
+}
+.button-color:hover{
+	background-color: rgb(128,22,45) !important;
+
+}

@@ -268,7 +268,7 @@ class CheckoutView(View):
 		subject='Joycecake.com Order Confirmation.'
 		recipients = [requests.user.email]
 
-		print 'msg = {0}'.format(msg)
+		# print 'msg = {0}'.format(msg)
 		# misc_functions.send_email(subject,recipients,msg)
 
 
@@ -337,7 +337,7 @@ class AlreadyPaid(View):
 		subject_text='Transaction Notification on Joycecake.com'
 		my_email=settings.MY_EMAIL_ADDRESS
 		recipients=[settings.MY_EMAIL_ADDRESS]
-		print 'webmaster_msg = {0}'.format(msg)
+		# print 'webmaster_msg = {0}'.format(msg)
 
 		# misc_functions.send_email(subject_text,recipients,msg)
 
@@ -347,5 +347,5 @@ class AlreadyPaid(View):
 		msg+='We will contacted you within 48hrs\nThank you for your purchase!\nJoycecake.com.'
 		subject='Joycecake.com Order Confirmation.'
 		recipients = [requests.user.email]
-		print 'customer_msg = {0}'.format(msg)
+		# print 'customer_msg = {0}'.format(msg)
 		# misc_functions.send_email(subject,recipients,msg)

@@ -274,3 +274,24 @@ class ChangePasswordForm(forms.Form):
 
 		return self.cleaned_data
 
+class ChangePasswordOnProfileForm(forms.Form):
+	old_password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Old Password'}))
+	first_password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'New Password'}))
+	second_password = forms.CharField(max_length=PASSWORD_LENGTH,widget=forms.PasswordInput(attrs={'placeholder':'Confirm Password'}))
+
+	def clean(self):
+		super(ChangePasswordOnProfileForm, self).clean()
+		p0 = self.cleaned_data.get('old_password')
+		p1 = self.cleaned_data.get('first_password')
+		p2 = self.cleaned_data.get('second_password')
+
+		if any([len(p1)<MIN_PASSWORD_LENGTH, len(p2)<MIN_PASSWORD_LENGTH]):
+			raise ValidationError('Password should be at least {0} characters!'.format(MIN_PASSWORD_LENGTH))
+		if any([p0=='',p1=='',p2=='',p0==None,p1==None,p2==None]):
+			raise ValidationError('Invalid Password Input!!')
+		if not misc_functions.input_is_alpha_numerals({'Password0':p0,'Password':p1,'Password2':p2})==1:
+			raise ValidationError('Invalid Characters in Password!!')
+		if not p1 == p2:
+			raise ValidationError('Passwords don\'t match!!')		
+
+		return self.cleaned_data

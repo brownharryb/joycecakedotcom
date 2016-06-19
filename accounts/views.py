@@ -345,6 +345,51 @@ class UserProfileView(View):
 		except:
 			return False
 
+
+class PasswordChangeOnProfile(View):
+	form_class = forms.ChangePasswordOnProfileForm
+	template_name = 'change_password_profile.html'
+	initial = {'key':'value'}
+	user = ''
+	show_success = 'no'
+
+	def dispatch(self,requests,*args,**kwargs):
+		if not requests.user.is_authenticated():
+			url = reverse('user_login')
+			change_password_url = reverse('change_my_password')
+			url +='?next=%s' %change_password_url
+			return redirect(url)
+		self.user = requests.user
+		return super(PasswordChangeOnProfile, self).dispatch(requests,*args,**kwargs)
+
+	def get(self,requests,*args,**kwargs):
+		form = self.form_class(initial=self.initial)
+		return render(requests,self.template_name,{'form':form,'show_success':self.show_success})
+		
+
+	def post(self,requests,*args,**kwargs):
+		form = self.form_class(requests.POST)
+		if form.is_valid():
+			old_password = form.cleaned_data['old_password']
+			first_password = form.cleaned_data['first_password']
+			second_password = form.cleaned_data['second_password']
+			if self.old_pass_confirmed(old_password):
+				self.user.set_password(first_password)
+				self.user.save()
+				self.show_success='yes'
+			else:
+				form.add_error(None,ValidationError('Invalid Old Password!!'))
+		return render(requests,self.template_name,{'form':form,'show_success':self.show_success})
+
+	def old_pass_confirmed(self,old_password):
+		u = authenticate(username=self.user.username,password=old_password)
+		if not u:
+			return False
+		return True
+
+
+
+
 class UserTransactionView(View):
 	template_name = 'user_transaction.html'
 

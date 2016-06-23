@@ -1,6 +1,20 @@
 <div id="topnav" class="theme-color">
 		<div class="midpagecontainer">
-		<p>Call us:{{default_vals.mobile_numbers.0}}</p>		
+		<p style="text-transform:none !important;">Call us:
+		{%for i in default_vals.personal_details %}
+			{% if i.name == 'mobile1' and i.should_display %}
+				{{i.option}}
+			{% endif %}
+			{% if i.name == 'mobile2' and i.should_display %}
+				{{i.option}}
+			{% endif %}
+		{% endfor %}
+		</p>
+		{%for i in default_vals.personal_details %}
+		{% if i.name == 'email' and i.should_display %}
+		<p style="text-transform:none !important;">Email:{{i.option}}</p>
+		{% endif %}
+		{% endfor %}
 		<ul id="mainnav">
 		{% if request.user.is_authenticated %}
 			<li><a href="{% url 'user_profile_page'%}">{{user.username}}</a></li>

@@ -1,4 +1,5 @@
 from django.conf import settings
+from . import models
 from shop import models as shopmodels
 from accounts import models as accountsmodels
 from django.core.urlresolvers import reverse
@@ -31,10 +32,5 @@ def get_bank_details(requests):
 	return {'bank_accounts':bank_accounts}
 
 def get_social_networks(requests):
-	social_networks = {}
-	social_networks['facebook'] = 'http://www.facebook.com'
-	social_networks['twitter'] = 'http://www.twitter.com'
-	social_networks['google_plus'] = 'http://www.google.com'
-	social_networks['youtube'] = 'http://www.youtube.com'
-	social_networks['instagram'] = 'http://www.instagram.com'
+	social_networks = models.SocialNetworks.objects.all()
 	return{'social_networks':social_networks}

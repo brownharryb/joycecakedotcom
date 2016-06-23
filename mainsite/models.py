@@ -10,3 +10,6 @@ class SocialNetworks(models.Model):
 	def __unicode__(self):
 		return self.social_name
 
+	def should_display(self):
+		return self.social_display
+

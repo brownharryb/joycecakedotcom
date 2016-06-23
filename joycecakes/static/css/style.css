@@ -1040,6 +1040,9 @@ footer{
 	table-layout: fixed;
 	border-collapse: collapse; 
 }
+#transactioncontainer table thead{
+	width: 100%;
+}
 #transactioncontainer table th{
 	background-color: rgba(51,81,138,0.6);
 	color:white;

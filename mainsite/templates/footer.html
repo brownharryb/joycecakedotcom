@@ -3,16 +3,9 @@
 <div id="socialbarlinks">
 	<ul class="soc">
 	{% for i in social_networks %}
+	{% if i.should_display %}
     <li><a class="soc-{{i.social_name|lower}}" target="_blank" href="{{i.social_link}}"></a></li>
-
-
-    <!-- <li><a class="soc-facebook" target="_blank" href="{{social_networks.facebook}}"></a></li>
-    <li><a class="soc-google" target="_blank" href="{{social_networks.google_plus}}"></a></li>
-    <li><a class="soc-youtube" target="_blank" href="{{social_networks.youtube}}"></a></li>
-    <li><a class="soc-instagram" target="_blank" href="{{social_networks.instagram}}"></a></li> -->
-    <!-- <li><a class="soc-pinterest" href="{{social_networks.twitter}}"></a></li> -->
-    <!-- <li><a class="soc-linkedin" href="#"></a></li> -->
-    <!-- <li><a class="soc-rss soc-icon-last" href="#"></a></li> -->
+    {% endif %}
     {% endfor %}
 </ul>
 </div>

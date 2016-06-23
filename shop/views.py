@@ -342,7 +342,7 @@ class AlreadyPaid(View):
 		# misc_functions.send_email(subject_text,recipients,msg)
 
 	def send_confirm_mail_to_customer(self,requests,user_transaction):
-		msg = 'Dear {0},\n\n Your order has been received is being processed. \n\n\n'.format(mainsite.get_proper_fullname(requests.user.get_full_name()))
+		msg = 'Dear {0},\n\n Your order has been received is being processed. \n\n\n'.format(misc_functions.get_proper_fullname(requests.user.get_full_name()))
 		msg+= 'Transaction ID:{0}.\n\n'.format(user_transaction.transaction_id_string)
 		msg+='We will contacted you within 48hrs\nThank you for your purchase!\nJoycecake.com.'
 		subject='Joycecake.com Order Confirmation.'

@@ -1,6 +1,6 @@
 <div id="topnav" class="theme-color">
 		<div class="midpagecontainer">
-		<p style="pointer-events:none;">Call us:{{default_vals.mobile_numbers.0}}</p>		
+		<p>Call us:{{default_vals.mobile_numbers.0}}</p>		
 		<ul id="mainnav">
 		{% if request.user.is_authenticated %}
 			<li><a href="{% url 'user_profile_page'%}">{{user.username}}</a></li>

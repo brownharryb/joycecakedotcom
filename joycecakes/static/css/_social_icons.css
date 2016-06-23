@@ -92,6 +92,12 @@
 .soc-pinterest:before {
     content:'d';
 }
+.soc-youtube:before {
+    content:'r';
+}
+.soc-instagram:before {
+    content:'x';
+}
 .soc-linkedin:before {
     content:'j';
 }

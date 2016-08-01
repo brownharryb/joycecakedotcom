@@ -95,17 +95,22 @@ class BankAccountManager(models.Manager):
 		cnt = 1
 		
 		returnVal = []
-		all_objs = self.all()
-		for i in all_objs:
-			temp = []
-			temp.append(cnt)
-			extra_txt = i.account_number
-			if i.name_on_account:
-				extra_txt = '{0} -- {1}'.format(i.account_number,i.name_on_account)
-			temp.append('{0} -- {1}'.format(i.bank_name,extra_txt))
-			returnVal.append(tuple(temp))
-			cnt+=1
-		return tuple(returnVal)
+		try:
+			all_objs = self.all()
+			for i in all_objs:
+				temp = []
+				temp.append(cnt)
+				extra_txt = i.account_number
+				if i.name_on_account:
+					extra_txt = '{0} -- {1}'.format(i.account_number,i.name_on_account)
+				temp.append('{0} -- {1}'.format(i.bank_name,extra_txt))
+				returnVal.append(tuple(temp))
+				cnt+=1
+		except Exception as e:
+			print e.msg
+			pass
+		finally:
+			return tuple(returnVal)
 
 class BankAccount(models.Model):
 	TYPE_CHOICES = (

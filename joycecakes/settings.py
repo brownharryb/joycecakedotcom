@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import dj_database_url
+import db_settings
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,12 +105,16 @@ WSGI_APPLICATION = 'joycecakes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+DATABASES = {}
+DATABASES.update(db_settings.DATABASES)
+
 
 AUTH_PASSWORD_VALIDATORS = (
     {
@@ -137,7 +142,7 @@ USE_TZ = True
 
 # Update database configuration with $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -166,7 +171,7 @@ STATICFILES_DIRS = [
 
 # ***********************************CUSTOM SETTINGS************************
 SITE_TITLE = 'Joyce Cake'
-MOBILE_CONTACT = ['+23480386550030']
+MOBILE_CONTACT = ['+2348038655003']
 CART_EXPIRY = {'time_type':'days','time_value':3}
 MY_EMAIL_ADDRESS = 'brownharryb@gmail.com'
 

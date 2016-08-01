@@ -15,10 +15,13 @@ def default_vals(requests):
 	return  {'default_vals':default_vals}
 
 def cart_items_function(requests):
-	cart_items = requests.session['cart_items']
-	cart_items = [int(i) for i in cart_items]
-	cart_items_as_string = 'a'.join([str(j) for j in cart_items])
-	return {'cart_items':cart_items,'cart_items_string':cart_items_as_string}
+	try:
+		cart_items = requests.session['cart_items']
+		cart_items = [int(i) for i in cart_items]
+		cart_items_as_string = 'a'.join([str(j) for j in cart_items])
+		return {'cart_items':cart_items,'cart_items_string':cart_items_as_string}
+	except KeyError:
+		return {'cart_items':[],'cart_items_string':""}
 
 def get_navlinks(requests):
 	nav_links = {}

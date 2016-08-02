@@ -23,13 +23,12 @@ CUSTOM_MEDIA_HOME = os.path.dirname(os.path.join( os.path.dirname ( __file__), o
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "-re7wmuh77zv1m8)c)9z=o7n3f7455w6-4jtbqt67)(m_i1ynx"
+SECRET_KEY = db_settings.SECRET_KEY
 # ****************************AWS SETTINGS******************************************
-AWS_STORAGE_BUCKET_NAME = 'joycecakes-firstbucket'
-AWS_ACCESS_KEY_ID = 'AKIAJA2SUG43TNCSVYZQ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
+AWS_STORAGE_BUCKET_NAME = db_settings.AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID = db_settings.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = db_settings.AWS_SECRET_ACCESS_KEY
+AWS_S3_CUSTOM_DOMAIN = db_settings.AWS_S3_CUSTOM_DOMAIN 
 
 # STATICFILES_LOCATION = 'static'
 # STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
@@ -192,9 +191,9 @@ MY_EMAIL_ADDRESS = 'brownharryb@gmail.com'
 # -------------------- MAILGUN EMAIL BACKEND
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_HOST_USER = 'postmaster@app8ad4e3a416c44cb89bc7f219a4331060.mailgun.org'
-EMAIL_HOST_PASSWORD = 'f18b5202e2856fe8b9a44a118bf471c5'
-EMAIL_PORT = 587
+EMAIL_HOST = db_settings.EMAIL_HOST
+EMAIL_HOST_USER = db_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = db_settings.EMAIL_HOST_PASSWORD
+EMAIL_PORT = db_settings.EMAIL_PORT
 
 # *****************************************************************************
